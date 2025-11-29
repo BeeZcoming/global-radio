@@ -1,65 +1,58 @@
-name: Update Radio Data
+// 使用 CommonJS 语法
+const fs = require('fs');
+const path = require('path');
 
-on:
-  schedule:
-    - cron: '0 2 * * 1'  # 每周一凌晨2点（UTC）自动更新
-  workflow_dispatch:      # 允许手动触发
-  push:
-    branches: [ main ]
-    paths:
-      - 'scripts/**'      # 脚本更新时也触发
-
-jobs:
-  update-data:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+function verifyData() {
+    console.log('🔍 开始验证数据文件...');
     
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+    const dataDir = path.join(__dirname, '..', 'data');
+    
+    const files = [
+        'curated-stations.json',
+        'asia-stations.json',
+        'europe-stations.json',
+        'americas-stations.json',
+        'africa-stations.json',
+        'oceania-stations.json'
+    ];
+    
+    let totalStations = 0;
+    let allFilesValid = true;
+    
+    files.forEach(file => {
+        const filePath = path.join(dataDir, file);
         
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm install
-      
-    - name: Run data preprocessing
-      run: npm run preprocess
-      env:
-        NODE_OPTIONS: '--max_old_space_size=4096'
-        
-    - name: Split data by region
-      run: npm run split
-      
-    - name: Verify data
-      run: npm run verify
-      
-    - name: Commit and push if changed
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add data/
-        git diff --staged --quiet && echo "没有数据变化" || (git commit -m "🤖 Auto-update radio data [skip ci]" && git push)
-        
-    - name: Create summary
-      run: |
-        echo "## 📻 电台数据更新报告" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "✅ 数据更新完成！" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**更新时间:** $(date)" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**数据文件:**" >> $GITHUB_STEP_SUMMARY
-        echo "- curated-stations.json" >> $GITHUB_STEP_SUMMARY
-        echo "- asia-stations.json" >> $GITHUB_STEP_SUMMARY
-        echo "- europe-stations.json" >> $GITHUB_STEP_SUMMARY
-        echo "- americas-stations.json" >> $GITHUB_STEP_SUMMARY
-        echo "- africa-stations.json" >> $GITHUB_STEP_SUMMARY
-        echo "- oceania-stations.json" >> $GITHUB_STEP_SUMMARY
+        if (fs.existsSync(filePath)) {
+            try {
+                const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+                const stationCount = data.totalStations || 0;
+                totalStations += stationCount;
+                
+                console.log(`✅ ${file}: ${stationCount} 个电台，更新于 ${new Date(data.lastUpdated).toLocaleString()}`);
+                
+            } catch (error) {
+                console.error(`❌ ${file}: JSON解析失败 - ${error.message}`);
+                allFilesValid = false;
+            }
+        } else {
+            console.warn(`⚠️ ${file}: 文件不存在`);
+            allFilesValid = false;
+        }
+    });
+    
+    console.log(`📊 所有数据文件总计: ${totalStations} 个电台`);
+    
+    if (allFilesValid) {
+        console.log('🎉 所有数据文件验证通过！');
+    } else {
+        console.log('💥 部分数据文件存在问题，请检查！');
+        process.exit(1);
+    }
+}
+
+// 如果直接运行此文件
+if (require.main === module) {
+    verifyData();
+}
+
+module.exports = verifyData;
