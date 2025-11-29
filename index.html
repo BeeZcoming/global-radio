@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
-        /* 保持之前的CSS样式不变 */
         * {
             margin: 0;
             padding: 0;
@@ -613,7 +612,7 @@
                 <span id="filtered-stations"></span>
             </div>
             
-            <div class="data-source" id="data-source">数据来源: Radio Browser API</div>
+            <div class="data-source" id="data-source">数据来源: 本地数据</div>
             
             <div class="tabs">
                 <div class="tab active" data-tab="all">全部电台</div>
@@ -703,18 +702,15 @@
         let displayLimit = 50;
         let displayedCount = 0;
 
-        // 数据源配置
+        // 数据源配置 - 使用相对路径
         const DATA_SOURCES = {
-            // 主数据源 - 预处理的精选电台数据
-            primary: 'https://cdn.jsdelivr.net/gh/BeeZcoming/global-radio@main/data/curated-stations.json',
-            asia: 'https://cdn.jsdelivr.net/gh/BeeZcoming/global-radio@main/data/asia-stations.json',
-            europe: 'https://cdn.jsdelivr.net/gh/BeeZcoming/global-radio@main/data/europe-stations.json',
-            americas: 'https://cdn.jsdelivr.net/gh/BeeZcoming/global-radio@main/data/americas-stations.json',
-            africa: 'https://cdn.jsdelivr.net/gh/BeeZcoming/global-radio@main/data/africa-stations.json',
-            oceania: 'https://cdn.jsdelivr.net/gh/BeeZcoming/global-radio@main/data/oceania-stations.json'
-            
-            // 备用数据源 - 原始API
-            fallback: 'https://de1.api.radio-browser.info/json/stations?limit=1000&hidebroken=true&order=votes&reverse=true'
+            primary: 'data/curated-stations.json',
+            asia: 'data/asia-stations.json',
+            europe: 'data/europe-stations.json',
+            americas: 'data/americas-stations.json',
+            africa: 'data/africa-stations.json',
+            oceania: 'data/oceania-stations.json',
+            fallback: 'https://de1.api.radio-browser.info/json/stations?limit=100&hidebroken=true&order=votes&reverse=true'
         };
 
         // 语言映射
@@ -734,31 +730,31 @@
 
         // 从预处理的JSON文件加载数据
         async function loadPreprocessedData() {
+            console.log('开始加载数据...');
             const loadingElement = document.getElementById('radio-list');
             loadingElement.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载电台数据...</div>';
             
             try {
-                // 首先尝试加载本地存储的缓存数据
-                if (loadLocalCache()) {
-                    updateDataSource('本地缓存');
-                    return;
-                }
-
-                // 尝试主数据源
+                // 首先尝试加载主数据文件
+                console.log('尝试加载主数据文件:', DATA_SOURCES.primary);
                 let response = await fetch(DATA_SOURCES.primary);
+                console.log('响应状态:', response.status);
+                
                 if (response.ok) {
                     const data = await response.json();
+                    console.log('成功加载数据，电台数量:', data.stations.length);
                     processStationsData(data.stations);
-                    cacheStationsData(data.stations);
-                    updateDataSource('预处理数据');
+                    updateDataSource('本地数据');
                     return;
+                } else {
+                    console.error('主数据加载失败，状态:', response.status);
                 }
 
                 // 如果主数据源失败，尝试按地区加载
                 await loadRegionalData();
                 
             } catch (error) {
-                console.error('预处理数据加载失败:', error);
+                console.error('本地数据加载失败:', error);
                 // 最后尝试原始API
                 await loadFromOriginalAPI();
             }
@@ -780,7 +776,6 @@
                 
                 if (allStationsData.length > 0) {
                     processStationsData(allStationsData);
-                    cacheStationsData(allStationsData);
                     updateDataSource('地区数据');
                     return true;
                 }
@@ -797,7 +792,6 @@
                 if (response.ok) {
                     const stations = await response.json();
                     processStationsData(stations);
-                    cacheStationsData(stations);
                     updateDataSource('原始API');
                     return;
                 }
@@ -807,43 +801,41 @@
             }
         }
 
-        // 加载本地缓存
-        function loadLocalCache() {
-            try {
-                const cachedData = localStorage.getItem('radioStationsCache');
-                const cacheTimestamp = localStorage.getItem('radioCacheTimestamp');
-                
-                if (cachedData && cacheTimestamp) {
-                    const cacheAge = Date.now() - parseInt(cacheTimestamp);
-                    // 缓存有效期7天
-                    if (cacheAge < 7 * 24 * 60 * 60 * 1000) {
-                        const stations = JSON.parse(cachedData);
-                        processStationsData(stations);
-                        return true;
-                    }
+        // 加载备用数据
+        function loadFallbackData() {
+            console.log('使用备用数据');
+            
+            // 创建示例电台数据
+            allStations = [
+                {
+                    stationuuid: '1',
+                    name: 'BBC Radio 1',
+                    country: 'United Kingdom',
+                    countrycode: 'GB',
+                    url_resolved: 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one',
+                    tags: 'pop,music',
+                    language: 'english',
+                    votes: 1000,
+                    geo_lat: 51.5074,
+                    geo_long: -0.1278
+                },
+                {
+                    stationuuid: '2',
+                    name: 'Radio France Internationale',
+                    country: 'France',
+                    countrycode: 'FR',
+                    url_resolved: 'https://rfien-live.akamaized.net/hls/live/2038566/RFI_WEB/master.m3u8',
+                    tags: 'news,french',
+                    language: 'french',
+                    votes: 800,
+                    geo_lat: 48.8566,
+                    geo_long: 2.3522
                 }
-            } catch (error) {
-                console.warn('本地缓存加载失败:', error);
-            }
-            return false;
-        }
-
-        // 缓存数据到本地存储
-        function cacheStationsData(stations) {
-            try {
-                localStorage.setItem('radioStationsCache', JSON.stringify(stations));
-                localStorage.setItem('radioCacheTimestamp', Date.now().toString());
-            } catch (error) {
-                console.warn('本地存储空间不足，无法缓存数据');
-            }
-        }
-
-        // 更新数据源显示
-        function updateDataSource(source) {
-            const sourceElement = document.getElementById('data-source');
-            if (sourceElement) {
-                sourceElement.textContent = `数据来源: ${source}`;
-            }
+            ];
+            
+            filteredStations = [...allStations];
+            processStationsData(allStations);
+            updateDataSource('示例数据');
         }
 
         // 处理电台数据
@@ -918,6 +910,14 @@
             const currentDisplayCount = Math.min(displayedCount, filteredStations.length);
             const displayedCountText = `显示: ${currentDisplayCount}/${filteredStations.length}`;
             document.getElementById('filtered-stations').textContent = displayedCountText;
+        }
+
+        // 更新数据源显示
+        function updateDataSource(source) {
+            const sourceElement = document.getElementById('data-source');
+            if (sourceElement) {
+                sourceElement.textContent = `数据来源: ${source}`;
+            }
         }
 
         // 提取国家列表
@@ -1211,57 +1211,27 @@
             updateMapMarkers(filteredStations.slice(0, 200));
         }
 
-        // 加载备用数据
-        function loadFallbackData() {
-            // 简化的示例数据
-            allStations = [
-                {
-                    stationuuid: '1',
-                    name: 'BBC Radio 1',
-                    country: 'United Kingdom',
-                    countrycode: 'GB',
-                    url_resolved: 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one',
-                    tags: 'pop,music',
-                    language: 'english',
-                    votes: 1000,
-                    geo_lat: 51.5074,
-                    geo_long: -0.1278
-                },
-                // ... 更多示例数据
-            ];
+        // 加载本地数据
+        function loadLocalData() {
+            const storedFavorites = localStorage.getItem('radioFavorites');
+            const storedHistory = localStorage.getItem('radioHistory');
             
-            filteredStations = [...allStations];
-            processStationsData(allStations);
-            updateDataSource('示例数据');
+            if (storedFavorites) {
+                favoriteStations = JSON.parse(storedFavorites);
+            }
+            
+            if (storedHistory) {
+                historyStations = JSON.parse(storedHistory);
+            }
         }
 
-        // 初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            initMap();
-            loadLocalData();
-            loadPreprocessedData();
-            
-            // 事件监听器
-            document.getElementById('search-input').addEventListener('input', debounceSearch);
-            document.getElementById('country-filter').addEventListener('change', performSearch);
-            document.getElementById('language-filter').addEventListener('change', performSearch);
-            document.getElementById('genre-filter').addEventListener('change', performSearch);
-            document.getElementById('load-more-btn').addEventListener('click', loadMoreStations);
-
-            // 播放控制
-            document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
-            document.getElementById('stop-btn').addEventListener('click', stopPlayback);
-            document.querySelector('.volume-slider').addEventListener('input', updateVolume);
-            document.getElementById('share-btn').addEventListener('click', shareStation);
-        });
-
-        // 其他辅助函数...
-        function getFlagEmoji(countryCode) {
-            if (!countryCode) return '🌐';
-            const codePoints = countryCode.toUpperCase().split('').map(char => 127397 + char.charCodeAt());
-            return String.fromCodePoint(...codePoints);
+        // 保存数据到localStorage
+        function saveLocalData() {
+            localStorage.setItem('radioFavorites', JSON.stringify(favoriteStations));
+            localStorage.setItem('radioHistory', JSON.stringify(historyStations));
         }
 
+        // 切换收藏状态
         function toggleFavorite(stationId) {
             const station = allStations.find(s => s.stationuuid === stationId);
             if (!station) return;
@@ -1283,6 +1253,7 @@
             }
         }
 
+        // 添加到播放历史
         function addToHistory(station) {
             const existingIndex = historyStations.findIndex(item => 
                 item.station.stationuuid === station.stationuuid
@@ -1308,24 +1279,66 @@
             }
         }
 
-        function loadLocalData() {
-            const storedFavorites = localStorage.getItem('radioFavorites');
-            const storedHistory = localStorage.getItem('radioHistory');
+        // 根据国家代码获取国旗emoji
+        function getFlagEmoji(countryCode) {
+            if (!countryCode) return '🌐';
             
-            if (storedFavorites) {
-                favoriteStations = JSON.parse(storedFavorites);
-            }
-            
-            if (storedHistory) {
-                historyStations = JSON.parse(storedHistory);
+            const codePoints = countryCode
+                .toUpperCase()
+                .split('')
+                .map(char => 127397 + char.charCodeAt());
+            return String.fromCodePoint(...codePoints);
+        }
+
+        // 更新标签页内容
+        function updateTabs() {
+            if (activeTab === 'favorites') {
+                renderRadioList(favoriteStations, document.getElementById('favorites-list'), 'favorites');
+            } else if (activeTab === 'history') {
+                renderHistoryList();
             }
         }
 
-        function saveLocalData() {
-            localStorage.setItem('radioFavorites', JSON.stringify(favoriteStations));
-            localStorage.setItem('radioHistory', JSON.stringify(historyStations));
+        // 渲染历史列表
+        function renderHistoryList() {
+            const historyList = document.getElementById('history-list');
+            
+            if (historyStations.length === 0) {
+                historyList.innerHTML = '<div class="loading">暂无播放历史</div>';
+                return;
+            }
+            
+            historyList.innerHTML = '';
+            
+            const recentHistory = historyStations.slice(-20).reverse();
+            
+            recentHistory.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.dataset.id = item.station.stationuuid;
+                
+                const flagEmoji = getFlagEmoji(item.station.countrycode);
+                const timeString = new Date(item.timestamp).toLocaleString();
+                
+                historyItem.innerHTML = `
+                    <div class="radio-flag">${flagEmoji}</div>
+                    <div class="radio-info">
+                        <div class="radio-name">${item.station.name || '未知电台'}</div>
+                        <div class="radio-country">${item.station.country || '未知国家'}</div>
+                        <div class="history-time">${timeString}</div>
+                    </div>
+                    <button class="play-btn" data-id="${item.station.stationuuid}">
+                        <i class="fas fa-play"></i>
+                    </button>
+                `;
+                
+                historyList.appendChild(historyItem);
+            });
+            
+            attachEventListeners();
         }
 
+        // 播放控制
         function togglePlayPause() {
             if (!currentStation) {
                 if (filteredStations.length > 0) {
@@ -1381,51 +1394,50 @@
             }
         }
 
-        function updateTabs() {
-            if (activeTab === 'favorites') {
-                renderRadioList(favoriteStations, document.getElementById('favorites-list'), 'favorites');
-            } else if (activeTab === 'history') {
-                renderHistoryList();
-            }
-        }
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            loadLocalData();
+            loadPreprocessedData();
+            
+            // 事件监听器
+            document.getElementById('search-input').addEventListener('input', debounceSearch);
+            document.getElementById('country-filter').addEventListener('change', performSearch);
+            document.getElementById('language-filter').addEventListener('change', performSearch);
+            document.getElementById('genre-filter').addEventListener('change', performSearch);
+            document.getElementById('load-more-btn').addEventListener('click', loadMoreStations);
 
-        function renderHistoryList() {
-            const historyList = document.getElementById('history-list');
-            
-            if (historyStations.length === 0) {
-                historyList.innerHTML = '<div class="loading">暂无播放历史</div>';
-                return;
-            }
-            
-            historyList.innerHTML = '';
-            
-            const recentHistory = historyStations.slice(-20).reverse();
-            
-            recentHistory.forEach(item => {
-                const historyItem = document.createElement('div');
-                historyItem.className = 'history-item';
-                historyItem.dataset.id = item.station.stationuuid;
-                
-                const flagEmoji = getFlagEmoji(item.station.countrycode);
-                const timeString = new Date(item.timestamp).toLocaleString();
-                
-                historyItem.innerHTML = `
-                    <div class="radio-flag">${flagEmoji}</div>
-                    <div class="radio-info">
-                        <div class="radio-name">${item.station.name || '未知电台'}</div>
-                        <div class="radio-country">${item.station.country || '未知国家'}</div>
-                        <div class="history-time">${timeString}</div>
-                    </div>
-                    <button class="play-btn" data-id="${item.station.stationuuid}">
-                        <i class="fas fa-play"></i>
-                    </button>
-                `;
-                
-                historyList.appendChild(historyItem);
+            // 地区选择
+            document.querySelectorAll('.region-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentRegion = this.dataset.region;
+                    performSearch();
+                });
             });
-            
-            attachEventListeners();
-        }
+
+            // 标签页切换
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    const tabId = this.dataset.tab;
+                    document.getElementById(`${tabId}-stations`).classList.add('active');
+                    
+                    activeTab = tabId;
+                    updateTabs();
+                });
+            });
+
+            // 播放控制
+            document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
+            document.getElementById('stop-btn').addEventListener('click', stopPlayback);
+            document.querySelector('.volume-slider').addEventListener('input', updateVolume);
+            document.getElementById('share-btn').addEventListener('click', shareStation);
+        });
     </script>
 </body>
 </html>
