@@ -7,6 +7,56 @@ from datetime import datetime
 import ssl
 import math
 
+def clean_and_categorize_tags(tags):
+    """清理和分类标签"""
+    if not tags:
+        return '未分类'
+    
+    # 扩展标签映射
+    tag_mapping = {
+        # 音乐风格
+        'top40': '流行金曲', 'hits': '热门金曲', 'oldies': '经典老歌',
+        'rnb': '节奏蓝调', 'r&b': '节奏蓝调', 'edm': '电子舞曲',
+        'kpop': '韩流', 'jpop': '日流', 'cpop': '华语流行',
+        'mandopop': '华语流行', 'cantopop': '粤语流行',
+        'hiphop': '嘻哈', 'rap': '说唱', 'reggae': '雷鬼',
+        'latin': '拉丁', 'world': '世界音乐', 'folk': '民谣',
+        'blues': '蓝调', 'jazz': '爵士', 'classical': '古典',
+        'rock': '摇滚', 'metal': '金属', 'pop': '流行',
+        'electronic': '电子', 'dance': '舞曲', 'house': '浩室',
+        'techno': '科技', 'trance': '迷幻', 'indie': '独立',
+        'country': '乡村',
+        
+        # 电台类型
+        'fm': '调频', 'am': '调幅', 'public': '公共广播',
+        'college': '校园电台', 'community': '社区电台', 'local': '本地',
+        'regional': '区域', 'national': '全国', 'international': '国际',
+        
+        # 内容类型
+        'news': '新闻', 'talk': '谈话', 'sports': '体育',
+        'business': '财经', 'weather': '天气', 'traffic': '交通',
+        'education': '教育', 'culture': '文化', 'religious': '宗教',
+        'entertainment': '娱乐', 'comedy': '喜剧', 'lifestyle': '生活',
+        'health': '健康', 'fashion': '时尚', 'food': '美食',
+        'travel': '旅游', 'children': '儿童', 'family': '家庭'
+    }
+    
+    # 分割标签
+    tag_list = [tag.strip().lower() for tag in tags.split(',')]
+    cleaned_tags = []
+    
+    for tag in tag_list:
+        # 使用映射替换
+        if tag in tag_mapping:
+            if tag_mapping[tag] not in cleaned_tags:
+                cleaned_tags.append(tag_mapping[tag])
+        # 保留有意义的标签
+        elif len(tag) > 2 and not tag.isdigit() and tag not in ['the', 'and', 'radio', 'station']:
+            if tag not in cleaned_tags:
+                cleaned_tags.append(tag)
+    
+    return ', '.join(cleaned_tags[:3]) if cleaned_tags else '未分类'
+
 def test_api_endpoint(base_url):
     """测试 API 端点是否可用"""
     ssl_context = ssl.create_default_context()
@@ -37,28 +87,25 @@ def get_total_count(base_url, ssl_context):
                 print(f"📊 API 报告总数: {total_count} 个电台")
                 return total_count
             else:
-                # 如果没有总数头信息，尝试直接获取大量数据来估算
                 test_url = f"{base_url}/json/stations?limit=5000&hidebroken=true"
                 req = urllib.request.Request(test_url, headers={'User-Agent': 'Mozilla/5.0'})
                 with urllib.request.urlopen(req, context=ssl_context, timeout=30) as resp:
                     data = resp.read().decode('utf-8')
                     stations = json.loads(data)
-                    estimated_count = len(stations) * 6  # 粗略估算
+                    estimated_count = len(stations) * 6
                     print(f"📊 估算总数: {estimated_count} 个电台")
-                    return min(estimated_count, 35000)  # 限制最大数量
+                    return min(estimated_count, 35000)
     except Exception as e:
         print(f"❌ 获取总数失败: {e}")
-        return 30000  # 默认值
+        return 30000
 
 def fetch_all_stations():
     print("🚀 开始获取全球电台数据...")
     
-    # 禁用 SSL 证书验证
     ssl_context = ssl.create_default_context()
     ssl_context.check_hostname = False
     ssl_context.verify_mode = ssl.CERT_NONE
     
-    # 测试可用的端点
     potential_urls = [
         "https://de1.api.radio-browser.info",
         "https://at1.api.radio-browser.info", 
@@ -88,15 +135,11 @@ def fetch_all_stations():
         print(f"\n📡 使用端点: {base_url}")
         
         try:
-            # 获取总数量
             total_count = get_total_count(base_url, ssl_context)
             
-            # 分页获取数据
-            page_size = 1000  # 每页获取1000个，避免过大请求
+            page_size = 1000
             pages = math.ceil(total_count / page_size)
-            
-            # 限制最大页数，但确保能获取足够数据
-            max_pages = 35  # 35000个电台
+            max_pages = 35
             pages = min(pages, max_pages)
             
             print(f"📄 计划获取 {pages} 页数据，目标: {total_count} 个电台...")
@@ -133,10 +176,8 @@ def fetch_all_stations():
                             print(f"  💥 第 {page + 1} 页获取失败，跳过")
                             break
                 
-                # 页间延迟
                 time.sleep(1)
                 
-                # 如果连续3页没有数据，提前结束
                 if page > 2 and len(all_stations) == 0:
                     print("💥 连续多页没有数据，提前结束")
                     break
@@ -147,7 +188,6 @@ def fetch_all_stations():
             print(f"❌ 端点 {base_url} 处理失败: {e}")
             continue
         
-        # 如果从一个端点获取了足够数据，可以提前结束
         if len(all_stations) >= 28000:
             print("🎯 已获取接近完整数据，提前结束")
             break
@@ -165,7 +205,6 @@ def fetch_additional_stations():
     base_url = "https://de1.api.radio-browser.info"
     additional_stations = []
     
-    # 使用不同的排序方式
     sort_methods = [
         "order=votes",
         "order=clickcount", 
@@ -228,18 +267,21 @@ def process_stations_data(raw_stations):
     invalid_count = 0
     
     for station in unique_stations:
-        # 放宽过滤条件，获取更多电台
         has_url = station.get('url_resolved') or station.get('url')
         has_name = station.get('name') and station.get('name', '').strip()
         
         if has_url and has_name:
+            # 优化标签
+            raw_tags = station.get('tags') or ''
+            cleaned_tags = clean_and_categorize_tags(raw_tags)
+            
             processed_station = {
                 'stationuuid': station.get('stationuuid'),
                 'name': station.get('name', '').strip(),
                 'country': station.get('country', 'Unknown'),
                 'countrycode': station.get('countrycode', ''),
                 'url_resolved': station.get('url_resolved') or station.get('url'),
-                'tags': (station.get('tags') or '').lower()[:100],
+                'tags': cleaned_tags,
                 'language': (station.get('language') or '').lower(),
                 'votes': station.get('votes', 0),
                 'geo_lat': station.get('geo_lat'),
@@ -272,7 +314,6 @@ def split_by_region(stations, last_updated):
         print("⚠️ 没有数据可分区")
         return
     
-    # 完整的国家列表
     region_countries = {
         'asia': [
             'China', 'Japan', 'South Korea', 'India', 'Indonesia', 'Thailand', 
@@ -327,7 +368,6 @@ def split_by_region(stations, last_updated):
         for station in stations:
             country = station.get('country', '')
             if country and country != 'Unknown':
-                # 宽松匹配
                 country_lower = country.lower()
                 for country_name in countries:
                     if country_name.lower() in country_lower or country_lower in country_name.lower():
@@ -348,47 +388,26 @@ def split_by_region(stations, last_updated):
         print(f"✅ {region}地区: {len(region_stations)} 个电台")
         total_regional_stations += len(region_stations)
     
-    # 显示详细统计
-    print(f"\n📊 详细统计:")
-    country_stats = {}
-    for station in stations:
-        country = station.get('country', 'Unknown')
-        country_stats[country] = country_stats.get(country, 0) + 1
-    
-    sorted_countries = sorted(country_stats.items(), key=lambda x: x[1], reverse=True)
-    print(f"🌐 总共 {len(sorted_countries)} 个国家/地区")
-    
-    # 显示前30个国家
-    for i, (country, count) in enumerate(sorted_countries[:30], 1):
-        print(f"  {i:2d}. {country}: {count} 个电台")
-    
-    if len(sorted_countries) > 30:
-        print(f"  ... 还有 {len(sorted_countries) - 30} 个国家/地区")
-    
     print(f"📈 地区分片完成！总共 {total_regional_stations} 个地区电台")
 
 def main():
     """主函数"""
     try:
-        # 确保数据目录存在
         os.makedirs('data', exist_ok=True)
         
         current_time = datetime.now().isoformat()
         
         print("=" * 60)
-        print("🎯 全球广播电台数据采集 - 完整版本")
+        print("🎯 全球广播电台数据采集 - 优化版本")
         print("=" * 60)
         
-        # 第一阶段：分页获取主要数据
         raw_stations = fetch_all_stations()
         
-        # 第二阶段：使用不同排序方式获取补充数据
         if len(raw_stations) < 25000:
             print(f"\n🔄 第一阶段只获取了 {len(raw_stations)} 个电台，开始第二阶段...")
             additional_stations = fetch_additional_stations()
             raw_stations.extend(additional_stations)
             
-            # 去重
             unique_raw = []
             seen = set()
             for station in raw_stations:
@@ -399,14 +418,12 @@ def main():
             raw_stations = unique_raw
             print(f"📊 合并后原始数据: {len(raw_stations)} 个电台")
         
-        # 处理数据
         processed_stations = process_stations_data(raw_stations)
         
         if not processed_stations:
             print("💥 没有有效数据")
             processed_stations = []
         
-        # 保存精选数据
         curated_output = {
             'lastUpdated': current_time,
             'totalStations': len(processed_stations),
@@ -423,7 +440,6 @@ def main():
         print(f"  有效电台数: {len(processed_stations)}")
         print(f"  原始电台数: {len(raw_stations)}")
         
-        # 按地区分片
         if processed_stations:
             split_by_region(processed_stations, current_time)
         else:
