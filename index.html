@@ -263,7 +263,7 @@
             flex: 0 0 350px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            padding: 20px;
+            padding: 20px 20px 0px 20px; /* 上 右 下 左 */
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -870,10 +870,6 @@
             </div>
             
             <!-- 数据源显示区域 -->
-            <div class="data-source-container">
-                <div></div> <!-- 占位元素 -->
-                <div class="data-source" id="data-source">数据来源: 本地数据</div>
-            </div>
             
             <div class="tabs">
                 <div class="tab active" data-tab="all">全部电台</div>
@@ -890,6 +886,10 @@
                 <div class="load-more">
                     <button class="load-more-btn" id="load-more-btn" style="display: none;">加载更多电台</button>
                 </div>
+				<div class="data-source-container">
+					<div></div> <!-- 占位元素 -->
+					<div class="data-source" id="data-source">数据来源: 本地数据</div>
+				</div>				
             </div>
             
             <div class="tab-content" id="favorites-stations">
@@ -1215,30 +1215,102 @@
             ]
         };
 
-        // 从预处理的JSON文件加载数据 - 优化版本
+        // 从预处理的JSON文件加载数据 - 保持原有逻辑
         async function loadPreprocessedData() {
             console.log('开始加载数据...');
             const loadingElement = document.getElementById('radio-list');
             loadingElement.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载电台数据...</div>';
             
             try {
-                // 使用备用API数据
-                console.log('正在从Radio Browser API获取数据...');
+                // 首先尝试加载主数据文件
+                let stations = await loadLocalDataFile(DATA_SOURCES.primary);
+                
+                if (stations && stations.length > 0) {
+                    console.log(`✅ 从本地主文件加载了 ${stations.length} 个电台`);
+                    processStationsData(stations);
+                    updateDataSource('本地数据');
+                    return;
+                }
+                
+                // 如果主文件不可用，尝试加载分地区数据
+                console.log('主数据文件不可用，尝试加载分地区数据...');
+                stations = await loadRegionalData();
+                
+                if (stations && stations.length > 0) {
+                    console.log(`✅ 从地区文件加载了 ${stations.length} 个电台`);
+                    processStationsData(stations);
+                    updateDataSource('本地数据 (分地区)');
+                    return;
+                }
+                
+                // 如果本地数据都不可用，使用备用API
+                console.log('本地数据不可用，使用备用API...');
                 await loadFallbackData();
                 
             } catch (error) {
                 console.error('数据加载失败:', error);
-                // 最后使用模拟数据
-                const mockStations = generateMockStations();
-                processStationsData(mockStations);
-                updateDataSource('模拟数据');
+                await loadFallbackData();
             }
+        }
+
+        // 加载本地数据文件
+        async function loadLocalDataFile(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                return data.stations || [];
+            } catch (error) {
+                console.warn(`无法加载 ${url}:`, error);
+                return null;
+            }
+        }
+
+        // 加载地区数据
+        async function loadRegionalData() {
+            const regionalSources = [
+                DATA_SOURCES.asia,
+                DATA_SOURCES.europe,
+                DATA_SOURCES['north-america'],
+                DATA_SOURCES['south-america'],
+                DATA_SOURCES.africa,
+                DATA_SOURCES.oceania
+            ];
+            
+            let allStations = [];
+            
+            for (const source of regionalSources) {
+                try {
+                    const stations = await loadLocalDataFile(source);
+                    if (stations) {
+                        allStations = allStations.concat(stations);
+                        console.log(`✅ 从 ${source} 加载了 ${stations.length} 个电台`);
+                    }
+                } catch (error) {
+                    console.warn(`无法加载地区数据 ${source}:`, error);
+                }
+            }
+            
+            // 去重
+            const uniqueStations = [];
+            const seen = new Set();
+            
+            for (const station of allStations) {
+                if (station.stationuuid && !seen.has(station.stationuuid)) {
+                    seen.add(station.stationuuid);
+                    uniqueStations.push(station);
+                }
+            }
+            
+            console.log(`📊 地区数据去重后: ${uniqueStations.length} 个电台`);
+            return uniqueStations;
         }
 
         // 加载备用API数据
         async function loadFallbackData() {
             console.log('正在从Radio Browser API获取数据...');
-            updateDataSource('Radio Browser API');
+            updateDataSource('Zyds Radio API');
             
             try {
                 const response = await fetch(DATA_SOURCES.fallback);
