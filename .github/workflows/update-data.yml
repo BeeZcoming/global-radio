@@ -13,7 +13,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}  # 使用 GITHUB_TOKEN
+        
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
@@ -24,7 +26,7 @@ jobs:
       
     - name: Commit and push if changed
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         git add data/
         git diff --staged --quiet || (git commit -m "🤖 Auto-update radio data [skip ci]" && git push)
