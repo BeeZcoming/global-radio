@@ -263,7 +263,7 @@
             flex: 0 0 350px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            padding: 20px 20px 0px 20px; /* 上 右 下 左 */
+            padding: 10px 20px 0px 20px; /* 上 右 下 左 */
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -284,7 +284,7 @@
             flex: 1;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            padding: 20px;
+            padding: 10px 20px 20px 20px; /* 上 右 下 左 */
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -835,7 +835,7 @@
             
             <div class="search-container">
                 <div class="search-box">
-                    <input type="text" id="search-input" placeholder="搜索电台名称、国家或类型...">
+                    <input type="text" id="search-input" placeholder="搜索电台名称、国家或电台类型...">
                     <i class="fas fa-search"></i>
                 </div>
             </div>
@@ -858,7 +858,7 @@
                     <option value="">所有语言</option>
                 </select>
                 
-                <!-- 自定义类型选择器 -->
+                <!-- 自定义分类选择器 -->
                 <div class="custom-select" id="genre-select">
                     <!-- 内容由JavaScript动态生成 -->
                 </div>
@@ -888,7 +888,7 @@
                 </div>
 				<div class="data-source-container">
 					<div></div> <!-- 占位元素 -->
-					<div class="data-source" id="data-source">数据来源: 本地数据</div>
+					<div class="data-source" id="data-source">数据来源: 本地数据 | 地区: 所有地区</div>
 				</div>				
             </div>
             
@@ -907,7 +907,7 @@
         
         <div class="main-content">
             <div class="map-container">
-                <h2 class="section-title">世界地图</h2>
+                <h2 class="section-title">世界电台地图</h2>
                 <div id="map"></div>
                 <div class="country-info">
                     <div class="country-name" id="selected-country">全球电台</div>
@@ -1016,9 +1016,8 @@
         let displayedCount = 0;
         let mapUpdateTimeout;
 
-        // 数据源配置 - 7个洲
+        // 数据源配置 - 只使用地区数据源
         const DATA_SOURCES = {
-            primary: 'data/curated-stations.json',
             asia: 'data/asia-stations.json',
             europe: 'data/europe-stations.json',
             'north-america': 'data/north-america-stations.json',
@@ -1026,6 +1025,13 @@
             africa: 'data/africa-stations.json',
             oceania: 'data/oceania-stations.json',
             fallback: 'https://de1.api.radio-browser.info/json/stations?limit=100&hidebroken=true&order=votes&reverse=true'
+        };
+
+        // 地区名称映射
+        const regionNames = {
+            'all': '所有地区',
+            'asia': '亚洲', 'europe': '欧洲', 'africa': '非洲', 
+            'north-america': '北美洲', 'south-america': '南美洲', 'oceania': '大洋洲'
         };
 
         // 扩展语言映射 - 包含更多主流语言
@@ -1059,7 +1065,7 @@
             'other': '其他语言'
         };
 
-        // 国家名称中英文映射 - 完整版
+        // 完整的国家名称中英文映射
         const countryNameMapping = {
             // 亚洲
             'China': '中国', 'Japan': '日本', 'South Korea': '韩国', 'North Korea': '朝鲜',
@@ -1068,12 +1074,12 @@
             'Hong Kong': '香港', 'Macao': '澳门', 'Pakistan': '巴基斯坦', 'Bangladesh': '孟加拉国',
             'Sri Lanka': '斯里兰卡', 'Nepal': '尼泊尔', 'Myanmar': '缅甸', 'Cambodia': '柬埔寨',
             'Laos': '老挝', 'Mongolia': '蒙古', 'Afghanistan': '阿富汗', 'Bhutan': '不丹',
-            'Brunei': '文莱', 'Maldives': '马尔代夫', 'Timor-Leste': '东帝汶',
+            'Brunei': '文莱', 'Maldives': '马尔代夫', 'Timor-Leste': '东帝汶', 'Timor Leste': '东帝汶',
             'Kazakhstan': '哈萨克斯坦', 'Uzbekistan': '乌兹别克斯坦', 'Turkmenistan': '土库曼斯坦',
             'Kyrgyzstan': '吉尔吉斯斯坦', 'Tajikistan': '塔吉克斯坦',
             'Iran': '伊朗', 'Iraq': '伊拉克', 'Saudi Arabia': '沙特阿拉伯', 'United Arab Emirates': '阿联酋',
-            'Turkey': '土耳其', 'Israel': '以色列', 'Lebanon': '黎巴嫩', 'Jordan': '约旦',
-            'Syria': '叙利亚', 'Yemen': '也门', 'Oman': '阿曼', 'Qatar': '卡塔尔',
+            'Turkey': '土耳其', 'Türkiye': '土耳其', 'Israel': '以色列', 'Lebanon': '黎巴嫩', 
+            'Jordan': '约旦', 'Syria': '叙利亚', 'Yemen': '也门', 'Oman': '阿曼', 'Qatar': '卡塔尔',
             'Kuwait': '科威特', 'Bahrain': '巴林', 'Palestine': '巴勒斯坦', 'Cyprus': '塞浦路斯',
             'Armenia': '亚美尼亚', 'Azerbaijan': '阿塞拜疆', 'Georgia': '格鲁吉亚',
             
@@ -1082,11 +1088,12 @@
             'Spain': '西班牙', 'Netherlands': '荷兰', 'Sweden': '瑞典', 'Norway': '挪威',
             'Finland': '芬兰', 'Denmark': '丹麦', 'Switzerland': '瑞士', 'Austria': '奥地利',
             'Russia': '俄罗斯', 'Belgium': '比利时', 'Ireland': '爱尔兰', 'Portugal': '葡萄牙',
-            'Poland': '波兰', 'Ukraine': '乌克兰', 'Czech Republic': '捷克', 'Hungary': '匈牙利',
-            'Romania': '罗马尼亚', 'Greece': '希腊', 'Bulgaria': '保加利亚', 'Serbia': '塞尔维亚',
-            'Croatia': '克罗地亚', 'Slovakia': '斯洛伐克', 'Belarus': '白俄罗斯', 'Lithuania': '立陶宛',
-            'Latvia': '拉脱维亚', 'Estonia': '爱沙尼亚', 'Slovenia': '斯洛文尼亚', 'Luxembourg': '卢森堡',
-            'Malta': '马耳他', 'Iceland': '冰岛', 'Albania': '阿尔巴尼亚', 'Bosnia and Herzegovina': '波黑',
+            'Poland': '波兰', 'Ukraine': '乌克兰', 'Czech Republic': '捷克', 'Czechia': '捷克',
+            'Hungary': '匈牙利', 'Romania': '罗马尼亚', 'Greece': '希腊', 'Bulgaria': '保加利亚',
+            'Serbia': '塞尔维亚', 'Croatia': '克罗地亚', 'Slovakia': '斯洛伐克', 'Belarus': '白俄罗斯',
+            'Lithuania': '立陶宛', 'Latvia': '拉脱维亚', 'Estonia': '爱沙尼亚', 'Slovenia': '斯洛文尼亚',
+            'Luxembourg': '卢森堡', 'Malta': '马耳他', 'Iceland': '冰岛', 'Albania': '阿尔巴尼亚',
+            'Bosnia and Herzegovina': '波黑', 'Bosnia And Herzegovina': '波黑',
             'Macedonia': '北马其顿', 'Montenegro': '黑山', 'Kosovo': '科索沃', 'Moldova': '摩尔多瓦',
             'Andorra': '安道尔', 'Monaco': '摩纳哥', 'San Marino': '圣马力诺', 'Vatican City': '梵蒂冈',
             'Liechtenstein': '列支敦士登',
@@ -1111,28 +1118,46 @@
             'Morocco': '摩洛哥', 'Ethiopia': '埃塞俄比亚', 'Ghana': '加纳', 'Tanzania': '坦桑尼亚',
             'Algeria': '阿尔及利亚', 'Uganda': '乌干达', 'Sudan': '苏丹', 'Angola': '安哥拉',
             'Mozambique': '莫桑比克', 'Madagascar': '马达加斯加', 'Cameroon': '喀麦隆', "Côte d'Ivoire": '科特迪瓦',
-            'Democratic Republic of the Congo': '刚果(金)', 'Republic of the Congo': '刚果(布)',
-            'Zimbabwe': '津巴布韦', 'Zambia': '赞比亚', 'Senegal': '塞内加尔', 'Mali': '马里',
-            'Burkina Faso': '布基纳法索', 'Niger': '尼日尔', 'Chad': '乍得', 'Somalia': '索马里',
-            'Rwanda': '卢旺达', 'Burundi': '布隆迪', 'Tunisia': '突尼斯', 'Libya': '利比亚',
-            'Namibia': '纳米比亚', 'Botswana': '博茨瓦纳', 'Lesotho': '莱索托', 'Eswatini': '斯威士兰',
-            'Mauritania': '毛里塔尼亚', 'Benin': '贝宁', 'Togo': '多哥', 'Sierra Leone': '塞拉利昂',
-            'Liberia': '利比里亚', 'Central African Republic': '中非共和国', 'South Sudan': '南苏丹',
-            'Eritrea': '厄立特里亚', 'Djibouti': '吉布提', 'Comoros': '科摩罗', 'Cape Verde': '佛得角',
-            'Sao Tome and Principe': '圣多美和普林西比', 'Mauritius': '毛里求斯', 'Seychelles': '塞舌尔',
+            'Coted Ivoire': '科特迪瓦', 'Democratic Republic of the Congo': '刚果(金)', 
+            'The Democratic Republic Of The Congo': '刚果(金)', 'Republic of the Congo': '刚果(布)',
+            'The Congo': '刚果', 'Zimbabwe': '津巴布韦', 'Zambia': '赞比亚', 'Senegal': '塞内加尔', 
+            'Mali': '马里', 'Burkina Faso': '布基纳法索', 'Niger': '尼日尔', 'Chad': '乍得', 
+            'Somalia': '索马里', 'Rwanda': '卢旺达', 'Burundi': '布隆迪', 'Tunisia': '突尼斯', 
+            'Libya': '利比亚', 'Namibia': '纳米比亚', 'Botswana': '博茨瓦纳', 'Lesotho': '莱索托', 
+            'Eswatini': '斯威士兰', 'Mauritania': '毛里塔尼亚', 'Benin': '贝宁', 'Togo': '多哥', 
+            'Sierra Leone': '塞拉利昂', 'Liberia': '利比里亚', 'Central African Republic': '中非共和国', 
+            'South Sudan': '南苏丹', 'Eritrea': '厄立特里亚', 'Djibouti': '吉布提', 'Comoros': '科摩罗', 
+            'Cape Verde': '佛得角', 'Cabo Verde': '佛得角', 'Sao Tome and Principe': '圣多美和普林西比',
+            'Sao Tome And Principe': '圣多美和普林西比', 'Mauritius': '毛里求斯', 'Seychelles': '塞舌尔',
             'Guinea': '几内亚', 'Guinea-Bissau': '几内亚比绍', 'Equatorial Guinea': '赤道几内亚',
-            'Gabon': '加蓬', 'Gambia': '冈比亚', 'Western Sahara': '西撒哈拉',
+            'Gabon': '加蓬', 'Gambia': '冈比亚', 'Western Sahara': '西撒哈拉', 'Malawi': '马拉维',
             
             // 大洋洲
             'Australia': '澳大利亚', 'New Zealand': '新西兰', 'Fiji': '斐济', 'Papua New Guinea': '巴布亚新几内亚',
             'Samoa': '萨摩亚', 'Tonga': '汤加', 'Vanuatu': '瓦努阿图', 'Solomon Islands': '所罗门群岛',
             'Kiribati': '基里巴斯', 'Micronesia': '密克罗尼西亚', 'Palau': '帕劳', 'Marshall Islands': '马绍尔群岛',
-            'Nauru': '瑙鲁', 'Tuvalu': '图瓦卢', 'New Caledonia': '新喀里多尼亚', 'French Polynesia': '法属波利尼西亚'
+            'Nauru': '瑙鲁', 'Tuvalu': '图瓦卢', 'New Caledonia': '新喀里多尼亚', 'French Polynesia': '法属波利尼西亚',
+            
+            // 特殊地区
+            'Aland Islands': '奥兰群岛', 'Anguilla': '安圭拉', 'Antarctica': '南极洲', 
+            'Antigua And Barbuda': '安提瓜和巴布达', 'Aruba': '阿鲁巴', 
+            'Ascension And Tristan Da Cunha Saint Helena': '圣赫勒拿', 'Bermuda': '百慕大', 
+            'Bonaire': '博奈尔', 'British Virgin Islands': '英属维尔京群岛', 
+            'Christmas Island': '圣诞岛', 'Curacao': '库拉索', 'Gibraltar': '直布罗陀', 
+            'Greenland': '格陵兰', 'Guadeloupe': '瓜德罗普', 'Guam': '关岛', 'Guernsey': '根西岛', 
+            'Isle Of Man': '马恩岛', 'Martinique': '马提尼克', 'Mayotte': '马约特', 
+            'Montserrat': '蒙特塞拉特', 'Niue': '纽埃', 'Reunion': '留尼汪', 
+            'Saint Pierre And Miquelon': '圣皮埃尔和密克隆', 'Svalbard And Jan Mayen': '斯瓦尔巴', 
+            'The Cayman Islands': '开曼群岛', 'The Cocos Keeling Islands': '科科斯群岛', 
+            'The Cook Islands': '库克群岛', 'The Falkland Islands Malvinas': '福克兰群岛', 
+            'The Faroe Islands': '法罗群岛', 'The French Southern Territories': '法属南部领地', 
+            'The Holy See': '梵蒂冈', 'The Turks And Caicos Islands': '特克斯和凯科斯群岛', 
+            'US Virgin Islands': '美属维尔京群岛', 'Wallis And Futuna': '瓦利斯和富图纳'
         };
 
-        // 扩展类型映射
+        // 扩展分类映射
         const genreMapping = {
-            // 音乐类型
+            // 音乐分类
             'pop': '流行音乐', 'rock': '摇滚音乐', 'classical': '古典音乐', 'jazz': '爵士音乐',
             'electronic': '电子音乐', 'country': '乡村音乐', 'folk': '民谣音乐', 'blues': '蓝调音乐',
             'hiphop': '嘻哈音乐', 'rap': '说唱音乐', 'metal': '金属音乐', 'indie': '独立音乐',
@@ -1152,13 +1177,13 @@
             'entertainment': '娱乐节目', 'comedy': '喜剧节目', 'lifestyle': '生活节目', 'health': '健康节目',
             'fashion': '时尚节目', 'food': '美食节目', 'travel': '旅游节目', 'fitness': '健身节目',
             
-            // 特殊类型
+            // 特殊分类
             'children': '儿童节目', 'family': '家庭节目', 'community': '社区节目', 'local': '本地节目',
             'regional': '区域节目', 'national': '全国节目', 'international': '国际节目', 'public': '公共广播',
             'college': '大学电台', 'student': '学生电台'
         };
 
-        // 热门类型列表
+        // 热门分类列表
         const popularGenres = ['流行音乐', '新闻资讯', '摇滚音乐', '古典音乐', '谈话节目', '体育节目'];
 
         // 地区国家映射 - 7个洲 - 扩展版
@@ -1215,35 +1240,24 @@
             ]
         };
 
-        // 从预处理的JSON文件加载数据 - 保持原有逻辑
+        // 从地区JSON文件加载数据
         async function loadPreprocessedData() {
-            console.log('开始加载数据...');
+            console.log('开始加载地区数据...');
             const loadingElement = document.getElementById('radio-list');
             loadingElement.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载电台数据...</div>';
             
             try {
-                // 首先尝试加载主数据文件
-                let stations = await loadLocalDataFile(DATA_SOURCES.primary);
-                
-                if (stations && stations.length > 0) {
-                    console.log(`✅ 从本地主文件加载了 ${stations.length} 个电台`);
-                    processStationsData(stations);
-                    updateDataSource('本地数据');
-                    return;
-                }
-                
-                // 如果主文件不可用，尝试加载分地区数据
-                console.log('主数据文件不可用，尝试加载分地区数据...');
-                stations = await loadRegionalData();
+                // 直接加载地区数据
+                const stations = await loadRegionalData('all');
                 
                 if (stations && stations.length > 0) {
                     console.log(`✅ 从地区文件加载了 ${stations.length} 个电台`);
                     processStationsData(stations);
-                    updateDataSource('本地数据 (分地区)');
+                    updateDataSource('本地数据', '所有地区');
                     return;
                 }
                 
-                // 如果本地数据都不可用，使用备用API
+                // 如果本地数据不可用，使用备用API
                 console.log('本地数据不可用，使用备用API...');
                 await loadFallbackData();
                 
@@ -1253,22 +1267,8 @@
             }
         }
 
-        // 加载本地数据文件
-        async function loadLocalDataFile(url) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                const data = await response.json();
-                return data.stations || [];
-            } catch (error) {
-                console.warn(`无法加载 ${url}:`, error);
-                return null;
-            }
-        }
-
         // 加载地区数据
-        async function loadRegionalData() {
+        async function loadRegionalData(region = 'all') {
             const regionalSources = [
                 DATA_SOURCES.asia,
                 DATA_SOURCES.europe,
@@ -1279,38 +1279,77 @@
             ];
             
             let allStations = [];
+            const seenUuids = new Set();
             
-            for (const source of regionalSources) {
+            // 如果是特定地区，只加载该地区数据
+            const sourcesToLoad = region === 'all' ? regionalSources : [DATA_SOURCES[region]];
+            
+            for (const source of sourcesToLoad) {
                 try {
-                    const stations = await loadLocalDataFile(source);
-                    if (stations) {
-                        allStations = allStations.concat(stations);
-                        console.log(`✅ 从 ${source} 加载了 ${stations.length} 个电台`);
-                    }
+                    const response = await fetch(source);
+                    if (!response.ok) continue;
+                    
+                    const data = await response.json();
+                    const stations = data.stations || [];
+                    
+                    // 严格去重
+                    stations.forEach(station => {
+                        if (station && station.stationuuid && !seenUuids.has(station.stationuuid)) {
+                            seenUuids.add(station.stationuuid);
+                            allStations.push(station);
+                        }
+                    });
+                    
+                    console.log(`✅ 从 ${source} 加载了 ${stations.length} 个电台，去重后新增 ${allStations.length} 个`);
+                    
                 } catch (error) {
                     console.warn(`无法加载地区数据 ${source}:`, error);
                 }
             }
             
-            // 去重
-            const uniqueStations = [];
-            const seen = new Set();
-            
-            for (const station of allStations) {
-                if (station.stationuuid && !seen.has(station.stationuuid)) {
-                    seen.add(station.stationuuid);
-                    uniqueStations.push(station);
+            console.log(`📊 地区数据总计: ${allStations.length} 个唯一电台`);
+            return allStations;
+        }
+
+        // 加载特定地区数据
+        async function loadRegionData(region) {
+            try {
+                updateDataSource('本地数据', regionNames[region]);
+                
+                const stations = await loadRegionalData(region);
+                if (stations && stations.length > 0) {
+                    // 更新全局数据
+                    allStations = stations;
+                    
+                    // 重置筛选状态
+                    filteredStations = [...allStations];
+                    displayedCount = 0;
+                    displayedStations = [];
+                    
+                    // 重新提取筛选选项
+                    extractFilterOptions();
+                    
+                    // 更新地图
+                    updateMapMarkers(allStations.slice(0, 200));
+                    
+                    // 重新渲染列表
+                    if (activeTab === 'all') {
+                        loadMoreStations();
+                    }
+                    
+                    console.log(`✅ 加载 ${region} 地区数据成功: ${stations.length} 个电台`);
+                    return true;
                 }
+            } catch (error) {
+                console.error(`加载 ${region} 地区数据失败:`, error);
             }
-            
-            console.log(`📊 地区数据去重后: ${uniqueStations.length} 个电台`);
-            return uniqueStations;
+            return false;
         }
 
         // 加载备用API数据
         async function loadFallbackData() {
             console.log('正在从Radio Browser API获取数据...');
-            updateDataSource('Zyds Radio API');
+            updateDataSource('Zyds Radio API', regionNames[currentRegion]);
             
             try {
                 const response = await fetch(DATA_SOURCES.fallback);
@@ -1327,7 +1366,7 @@
                 // 最后使用模拟数据
                 const mockStations = generateMockStations();
                 processStationsData(mockStations);
-                updateDataSource('模拟数据');
+                updateDataSource('模拟数据', regionNames[currentRegion]);
             }
         }
 
@@ -1373,6 +1412,54 @@
                 '巴西': 'BR', '俄罗斯': 'RU'
             };
             return codes[country] || 'UN';
+        }
+
+        // 获取中文国家名称 - 改进版本
+        function getChineseCountryName(englishName) {
+            if (!englishName) return '未知国家';
+            
+            // 清理国家名称（移除 "The" 等前缀）
+            const cleanName = englishName.replace(/^The\s+/i, '').trim();
+            
+            // 1. 直接映射
+            if (countryNameMapping[englishName]) {
+                return countryNameMapping[englishName];
+            }
+            
+            // 2. 清理后的名称映射
+            if (countryNameMapping[cleanName]) {
+                return countryNameMapping[cleanName];
+            }
+            
+            // 3. 模糊匹配 - 处理包含额外信息的国家名
+            for (const [key, value] of Object.entries(countryNameMapping)) {
+                if (englishName.includes(key) || key.includes(englishName)) {
+                    return value;
+                }
+            }
+            
+            // 4. 特殊处理一些常见模式
+            const specialCases = {
+                'Democratic Republic': '民主共和国',
+                'Republic of': '共和国',
+                'Peoples Republic': '人民共和国',
+                'United States': '美国',
+                'United Kingdom': '英国',
+                'Virgin Islands': '维尔京群岛'
+            };
+            
+            for (const [pattern, replacement] of Object.entries(specialCases)) {
+                if (englishName.includes(pattern)) {
+                    // 尝试构建更友好的名称
+                    const baseName = englishName.replace(pattern, '').trim();
+                    const chineseBase = getChineseCountryName(baseName) || baseName;
+                    return chineseBase + replacement;
+                }
+            }
+            
+            // 5. 返回原名称（作为最后手段）
+            console.warn(`未找到国家映射: ${englishName}`);
+            return englishName;
         }
 
         // 处理电台数据 - 严格去重
@@ -1449,27 +1536,7 @@
             document.getElementById('filtered-stations').textContent = displayedCountText;
         }
 
-        // 获取中文国家名称
-        function getChineseCountryName(englishName) {
-            if (!englishName) return '未知国家';
-            
-            // 直接映射
-            if (countryNameMapping[englishName]) {
-                return countryNameMapping[englishName];
-            }
-            
-            // 模糊匹配 - 处理包含额外信息的国家名
-            for (const [key, value] of Object.entries(countryNameMapping)) {
-                if (englishName.includes(key)) {
-                    return value;
-                }
-            }
-            
-            // 返回原名称
-            return englishName;
-        }
-
-        // 格式化类型显示
+        // 格式化分类显示
         function formatGenre(genre) {
             const genreLower = genre.toLowerCase();
             if (genreMapping[genreLower]) {
@@ -1504,10 +1571,10 @@
         }
 
         // 更新数据源显示
-        function updateDataSource(source) {
+        function updateDataSource(source, region = '所有地区') {
             const sourceElement = document.getElementById('data-source');
             if (sourceElement) {
-                sourceElement.textContent = `数据来源: ${source}`;
+                sourceElement.textContent = `数据来源: ${source} | 地区: ${region}`;
             }
         }
 
@@ -2012,10 +2079,6 @@
             const countryCount = document.getElementById('country-station-count');
             
             if (currentRegion !== 'all') {
-                const regionNames = {
-                    'asia': '亚洲', 'europe': '欧洲', 'africa': '非洲', 
-                    'north-america': '北美洲', 'south-america': '南美洲', 'oceania': '大洋洲'
-                };
                 countryName.textContent = `${regionNames[currentRegion]}地区电台`;
                 countryCount.textContent = `找到 ${filteredStations.length} 个电台`;
                 
@@ -2317,19 +2380,19 @@
             
             // 重新构建下拉菜单HTML
             customSelect.innerHTML = `
-                <div class="select-selected" style="font-weight: bold; color: #ff8a00;">所有类型</div>
+                <div class="select-selected" style="font-weight: bold; color: #ff8a00;">所有分类</div>
                 <div class="select-items">
-                    <!-- 顶部：所有类型选项 -->
+                    <!-- 顶部：所有分类选项 -->
                     <div class="select-header">
                         <div class="select-item active" data-value="all" style="background: rgba(255, 138, 0, 0.2); font-weight: bold;">
-                            <i class="fas fa-globe"></i> 所有类型
+                            <i class="fas fa-globe"></i> 所有分类
                         </div>
                     </div>
                     
-                    <!-- 热门类型 -->
+                    <!-- 热门分类 -->
                     <div class="select-category">
                         <div class="category-title">
-                            <i class="fas fa-fire"></i> 热门类型
+                            <i class="fas fa-fire"></i> 热门分类
                         </div>
                         <div class="select-hot-grid">
                             <div class="select-item hot-genre" data-value="流行音乐">流行音乐</div>
@@ -2341,12 +2404,12 @@
                         </div>
                     </div>
                     
-                    <!-- 重新分类的类型 -->
+                    <!-- 重新分类的分类 -->
                     <div class="select-columns">
-                        <!-- 第一列：音乐类型 -->
+                        <!-- 第一列：音乐分类 -->
                         <div class="select-category">
                             <div class="category-title">
-                                <i class="fas fa-music"></i> 音乐类型
+                                <i class="fas fa-music"></i> 音乐分类
                             </div>
                             <div class="select-item" data-value="流行音乐">流行音乐</div>
                             <div class="select-item" data-value="摇滚音乐">摇滚音乐</div>
@@ -2375,10 +2438,10 @@
                             <div class="select-item" data-value="交通信息">交通信息</div>
                         </div>
                         
-                        <!-- 第三列：其他类型 -->
+                        <!-- 第三列：其他分类 -->
                         <div class="select-category">
                             <div class="category-title">
-                                <i class="fas fa-star"></i> 其他类型
+                                <i class="fas fa-star"></i> 其他分类
                             </div>
                             <div class="select-item" data-value="教育节目">教育节目</div>
                             <div class="select-item" data-value="文化节目">文化节目</div>
@@ -2435,8 +2498,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             initMap();
             loadLocalData();
-            loadPreprocessedData();
             initCustomSelect();
+            
+            // 初始加载所有地区数据
+            loadPreprocessedData();
             
             // 事件监听器
             document.getElementById('search-input').addEventListener('input', debounceSearch);
@@ -2444,15 +2509,23 @@
             document.getElementById('language-filter').addEventListener('change', performSearch);
             document.getElementById('load-more-btn').addEventListener('click', loadMoreStations);
 
-            // 地区选择联动
+            // 地区选择联动 - 修改为加载对应地区数据
             document.querySelectorAll('.region-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentRegion = this.dataset.region;
                     
-                    performSearch();
-                    updateCountryInfo();
+                    // 显示加载状态
+                    const radioList = document.getElementById('radio-list');
+                    radioList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载地区数据...</div>';
+                    
+                    // 延迟加载以避免UI阻塞
+                    setTimeout(async () => {
+                        await loadRegionData(currentRegion);
+                        performSearch(); // 重新应用搜索筛选
+                        updateCountryInfo();
+                    }, 10);
                 });
             });
 
