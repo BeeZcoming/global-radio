@@ -835,7 +835,7 @@
             
             <div class="search-container">
                 <div class="search-box">
-                    <input type="text" id="search-input" placeholder="搜索电台名称、国家或电台类型...">
+                    <input type="text" id="search-input" placeholder="搜索电台名称、国家或电台分类...">
                     <i class="fas fa-search"></i>
                 </div>
             </div>
@@ -888,7 +888,7 @@
                 </div>
 				<div class="data-source-container">
 					<div></div> <!-- 占位元素 -->
-					<div class="data-source" id="data-source">数据来源: 本地数据 | 地区: 所有地区</div>
+					<div class="data-source" id="data-source">数据来源: zyds.net | 地区: 所有地区</div>
 				</div>				
             </div>
             
@@ -1065,7 +1065,7 @@
             'other': '其他语言'
         };
 
-        // 完整的国家名称中英文映射
+        // 完整的国家名称中英文映射 - 修复版
         const countryNameMapping = {
             // 亚洲
             'China': '中国', 'Japan': '日本', 'South Korea': '韩国', 'North Korea': '朝鲜',
@@ -1073,7 +1073,8 @@
             'Malaysia': '马来西亚', 'Philippines': '菲律宾', 'Singapore': '新加坡', 'Taiwan': '台湾',
             'Hong Kong': '香港', 'Macao': '澳门', 'Pakistan': '巴基斯坦', 'Bangladesh': '孟加拉国',
             'Sri Lanka': '斯里兰卡', 'Nepal': '尼泊尔', 'Myanmar': '缅甸', 'Cambodia': '柬埔寨',
-            'Laos': '老挝', 'Mongolia': '蒙古', 'Afghanistan': '阿富汗', 'Bhutan': '不丹',
+            'Laos': '老挝', 'The Lao Peoples Democratic Republic': '老挝', 'Lao Peoples Democratic Republic': '老挝',
+            'Mongolia': '蒙古', 'Afghanistan': '阿富汗', 'Bhutan': '不丹',
             'Brunei': '文莱', 'Maldives': '马尔代夫', 'Timor-Leste': '东帝汶', 'Timor Leste': '东帝汶',
             'Kazakhstan': '哈萨克斯坦', 'Uzbekistan': '乌兹别克斯坦', 'Turkmenistan': '土库曼斯坦',
             'Kyrgyzstan': '吉尔吉斯斯坦', 'Tajikistan': '塔吉克斯坦',
@@ -1102,10 +1103,14 @@
             'United States': '美国', 'Canada': '加拿大', 'Mexico': '墨西哥', 'Cuba': '古巴',
             'Dominican Republic': '多米尼加', 'Haiti': '海地', 'Jamaica': '牙买加', 'Bahamas': '巴哈马',
             'Puerto Rico': '波多黎各', 'Guatemala': '危地马拉', 'Honduras': '洪都拉斯', 'El Salvador': '萨尔瓦多',
-            'Nicaragua': '尼加拉瓜', 'Costa Rica': '哥斯达黎加', 'Panama': '巴拿马', 'Trinidad and Tobago': '特立尼达和多巴哥',
+            'Nicaragua': '尼加拉瓜', 'Costa Rica': '哥斯达黎加', 'Panama': '巴拿马', 
+            'Trinidad and Tobago': '特立尼达和多巴哥', 'Trinidad And Tobago': '特立尼达和多巴哥',
             'Barbados': '巴巴多斯', 'Belize': '伯利兹', 'Saint Lucia': '圣卢西亚', 'Grenada': '格林纳达',
-            'Saint Vincent and the Grenadines': '圣文森特和格林纳丁斯', 'Antigua and Barbuda': '安提瓜和巴布达',
-            'Dominica': '多米尼克', 'Saint Kitts and Nevis': '圣基茨和尼维斯',
+            'Saint Vincent and the Grenadines': '圣文森特和格林纳丁斯', 
+            'Saint Vincent And The Grenadines': '圣文森特和格林纳丁斯',
+            'Antigua and Barbuda': '安提瓜和巴布达', 'Antigua And Barbuda': '安提瓜和巴布达',
+            'Dominica': '多米尼克', 
+            'Saint Kitts and Nevis': '圣基茨和尼维斯', 'Saint Kitts And Nevis': '圣基茨和尼维斯',
             
             // 南美洲
             'Brazil': '巴西', 'Argentina': '阿根廷', 'Chile': '智利', 'Colombia': '哥伦比亚',
@@ -1117,32 +1122,36 @@
             'South Africa': '南非', 'Egypt': '埃及', 'Nigeria': '尼日利亚', 'Kenya': '肯尼亚',
             'Morocco': '摩洛哥', 'Ethiopia': '埃塞俄比亚', 'Ghana': '加纳', 'Tanzania': '坦桑尼亚',
             'Algeria': '阿尔及利亚', 'Uganda': '乌干达', 'Sudan': '苏丹', 'Angola': '安哥拉',
-            'Mozambique': '莫桑比克', 'Madagascar': '马达加斯加', 'Cameroon': '喀麦隆', "Côte d'Ivoire": '科特迪瓦',
-            'Coted Ivoire': '科特迪瓦', 'Democratic Republic of the Congo': '刚果(金)', 
-            'The Democratic Republic Of The Congo': '刚果(金)', 'Republic of the Congo': '刚果(布)',
-            'The Congo': '刚果', 'Zimbabwe': '津巴布韦', 'Zambia': '赞比亚', 'Senegal': '塞内加尔', 
+            'Mozambique': '莫桑比克', 'Madagascar': '马达加斯加', 'Cameroon': '喀麦隆', 
+            "Côte d'Ivoire": '科特迪瓦', 'Coted Ivoire': '科特迪瓦', 
+            'Democratic Republic of the Congo': '刚果(金)', 
+            'The Democratic Republic Of The Congo': '刚果(金)', 
+            'Republic of the Congo': '刚果(布)', 'The Congo': '刚果', 
+            'Zimbabwe': '津巴布韦', 'Zambia': '赞比亚', 'Senegal': '塞内加尔', 
             'Mali': '马里', 'Burkina Faso': '布基纳法索', 'Niger': '尼日尔', 'Chad': '乍得', 
             'Somalia': '索马里', 'Rwanda': '卢旺达', 'Burundi': '布隆迪', 'Tunisia': '突尼斯', 
             'Libya': '利比亚', 'Namibia': '纳米比亚', 'Botswana': '博茨瓦纳', 'Lesotho': '莱索托', 
             'Eswatini': '斯威士兰', 'Mauritania': '毛里塔尼亚', 'Benin': '贝宁', 'Togo': '多哥', 
             'Sierra Leone': '塞拉利昂', 'Liberia': '利比里亚', 'Central African Republic': '中非共和国', 
             'South Sudan': '南苏丹', 'Eritrea': '厄立特里亚', 'Djibouti': '吉布提', 'Comoros': '科摩罗', 
-            'Cape Verde': '佛得角', 'Cabo Verde': '佛得角', 'Sao Tome and Principe': '圣多美和普林西比',
-            'Sao Tome And Principe': '圣多美和普林西比', 'Mauritius': '毛里求斯', 'Seychelles': '塞舌尔',
-            'Guinea': '几内亚', 'Guinea-Bissau': '几内亚比绍', 'Equatorial Guinea': '赤道几内亚',
-            'Gabon': '加蓬', 'Gambia': '冈比亚', 'Western Sahara': '西撒哈拉', 'Malawi': '马拉维',
+            'Cape Verde': '佛得角', 'Cabo Verde': '佛得角', 
+            'Sao Tome and Principe': '圣多美和普林西比', 'Sao Tome And Principe': '圣多美和普林西比', 
+            'Mauritius': '毛里求斯', 'Seychelles': '塞舌尔', 'Guinea': '几内亚', 
+            'Guinea-Bissau': '几内亚比绍', 'Equatorial Guinea': '赤道几内亚', 'Gabon': '加蓬', 
+            'Gambia': '冈比亚', 'Western Sahara': '西撒哈拉', 'Malawi': '马拉维',
             
             // 大洋洲
-            'Australia': '澳大利亚', 'New Zealand': '新西兰', 'Fiji': '斐济', 'Papua New Guinea': '巴布亚新几内亚',
-            'Samoa': '萨摩亚', 'Tonga': '汤加', 'Vanuatu': '瓦努阿图', 'Solomon Islands': '所罗门群岛',
-            'Kiribati': '基里巴斯', 'Micronesia': '密克罗尼西亚', 'Palau': '帕劳', 'Marshall Islands': '马绍尔群岛',
-            'Nauru': '瑙鲁', 'Tuvalu': '图瓦卢', 'New Caledonia': '新喀里多尼亚', 'French Polynesia': '法属波利尼西亚',
+            'Australia': '澳大利亚', 'New Zealand': '新西兰', 'Fiji': '斐济', 
+            'Papua New Guinea': '巴布亚新几内亚', 'Samoa': '萨摩亚', 'Tonga': '汤加', 
+            'Vanuatu': '瓦努阿图', 'Solomon Islands': '所罗门群岛', 'Kiribati': '基里巴斯', 
+            'Micronesia': '密克罗尼西亚', 'Palau': '帕劳', 'Marshall Islands': '马绍尔群岛',
+            'Nauru': '瑙鲁', 'Tuvalu': '图瓦卢', 'New Caledonia': '新喀里多尼亚', 
+            'French Polynesia': '法属波利尼西亚',
             
             // 特殊地区
             'Aland Islands': '奥兰群岛', 'Anguilla': '安圭拉', 'Antarctica': '南极洲', 
-            'Antigua And Barbuda': '安提瓜和巴布达', 'Aruba': '阿鲁巴', 
-            'Ascension And Tristan Da Cunha Saint Helena': '圣赫勒拿', 'Bermuda': '百慕大', 
-            'Bonaire': '博奈尔', 'British Virgin Islands': '英属维尔京群岛', 
+            'Aruba': '阿鲁巴', 'Ascension And Tristan Da Cunha Saint Helena': '圣赫勒拿', 
+            'Bermuda': '百慕大', 'Bonaire': '博奈尔', 'British Virgin Islands': '英属维尔京群岛', 
             'Christmas Island': '圣诞岛', 'Curacao': '库拉索', 'Gibraltar': '直布罗陀', 
             'Greenland': '格陵兰', 'Guadeloupe': '瓜德罗普', 'Guam': '关岛', 'Guernsey': '根西岛', 
             'Isle Of Man': '马恩岛', 'Martinique': '马提尼克', 'Mayotte': '马约特', 
@@ -1431,33 +1440,32 @@
                 return countryNameMapping[cleanName];
             }
             
-            // 3. 模糊匹配 - 处理包含额外信息的国家名
+            // 3. 特殊处理老挝的复杂名称
+            if (englishName.includes('Lao Peoples')) {
+                return '老挝';
+            }
+            
+            // 4. 处理"And"和"The"等连接词
+            const normalizedName = englishName
+                .replace(/\s+And\s+/gi, ' and ')
+                .replace(/\s+The\s+/gi, ' the ')
+                .replace(/^\s*The\s+/i, '');
+            
+            if (countryNameMapping[normalizedName]) {
+                return countryNameMapping[normalizedName];
+            }
+            
+            // 5. 模糊匹配 - 处理包含额外信息的国家名
             for (const [key, value] of Object.entries(countryNameMapping)) {
-                if (englishName.includes(key) || key.includes(englishName)) {
+                const normalizedKey = key.toLowerCase().replace(/\s+and\s+/g, ' ').replace(/\s+the\s+/g, ' ');
+                const normalizedInput = englishName.toLowerCase().replace(/\s+and\s+/g, ' ').replace(/\s+the\s+/g, ' ');
+                
+                if (normalizedInput.includes(normalizedKey) || normalizedKey.includes(normalizedInput)) {
                     return value;
                 }
             }
             
-            // 4. 特殊处理一些常见模式
-            const specialCases = {
-                'Democratic Republic': '民主共和国',
-                'Republic of': '共和国',
-                'Peoples Republic': '人民共和国',
-                'United States': '美国',
-                'United Kingdom': '英国',
-                'Virgin Islands': '维尔京群岛'
-            };
-            
-            for (const [pattern, replacement] of Object.entries(specialCases)) {
-                if (englishName.includes(pattern)) {
-                    // 尝试构建更友好的名称
-                    const baseName = englishName.replace(pattern, '').trim();
-                    const chineseBase = getChineseCountryName(baseName) || baseName;
-                    return chineseBase + replacement;
-                }
-            }
-            
-            // 5. 返回原名称（作为最后手段）
+            // 6. 返回原名称（作为最后手段）
             console.warn(`未找到国家映射: ${englishName}`);
             return englishName;
         }
@@ -1493,6 +1501,30 @@
         function extractFilterOptions() {
             extractCountries();
             extractLanguages();
+        }
+
+        // 提取国家列表 - 修复版本
+        function extractCountries() {
+            const countrySet = new Set();
+            allStations.forEach(station => {
+                if (station.country) {
+                    // 将英文国家名转换为中文 - 确保这里正确调用
+                    const chineseName = getChineseCountryName(station.country);
+                    countrySet.add(chineseName);
+                }
+            });
+            
+            countries = Array.from(countrySet).sort();
+            
+            const countryFilter = document.getElementById('country-filter');
+            countryFilter.innerHTML = '<option value="">所有国家</option>';
+            
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countryFilter.appendChild(option);
+            });
         }
 
         // 加载更多电台
@@ -1576,30 +1608,6 @@
             if (sourceElement) {
                 sourceElement.textContent = `数据来源: ${source} | 地区: ${region}`;
             }
-        }
-
-        // 提取国家列表
-        function extractCountries() {
-            const countrySet = new Set();
-            allStations.forEach(station => {
-                if (station.country) {
-                    // 将英文国家名转换为中文
-                    const chineseName = getChineseCountryName(station.country);
-                    countrySet.add(chineseName);
-                }
-            });
-            
-            countries = Array.from(countrySet).sort();
-            
-            const countryFilter = document.getElementById('country-filter');
-            countryFilter.innerHTML = '<option value="">所有国家</option>';
-            
-            countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country;
-                option.textContent = country;
-                countryFilter.appendChild(option);
-            });
         }
 
         // 提取语言列表
