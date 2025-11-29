@@ -14,7 +14,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}  # 使用 GITHUB_TOKEN
+        token: ${{ secrets.PAT_TOKEN }}  # 使用 PAT
+        fetch-depth: 0
         
     - name: Setup Python
       uses: actions/setup-python@v4
