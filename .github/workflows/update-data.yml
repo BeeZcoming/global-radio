@@ -2,13 +2,17 @@ name: Update Radio Data
 
 on:
   schedule:
-    - cron: '0 4 * * 1'  # 每周一凌晨4点自动更新（给更多时间）
+    - cron: '0 4 * * 1'
   workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   update-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 120  # 增加超时到60分钟
+    timeout-minutes: 120
     
     steps:
     - name: Checkout repository
@@ -19,12 +23,17 @@ jobs:
       with:
         python-version: '3.10'
         
+    - name: Install dependencies
+      run: pip install requests
+      
     - name: Run data preprocessing
       run: python scripts/preprocess-data.py
       
-    - name: Commit and push if changed
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add data/
-        git diff --staged --quiet || (git commit -m "🤖 Auto-update radio data [skip ci]" && git push)
+    - name: Create Pull Request for Data Update
+      uses: peter-evans/create-pull-request@v5
+      with:
+        commit-message: "🤖 Auto-update radio data"
+        title: "🤖 Auto-update radio data"
+        body: "自动更新广播电台数据"
+        branch: update-radio-data
+        delete-branch: true
