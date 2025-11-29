@@ -635,6 +635,10 @@
             text-align: center;
             padding: 15px 10px 25px 10px;
             margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
         }
 
         .load-more-btn {
@@ -804,6 +808,7 @@
                         <div class="select-columns">
                             <div class="select-category">
                                 <div class="category-title">音乐类型</div>
+                                <div class="select-item active" data-value="all">所有类型</div>
                                 <div class="select-item hot-genre" data-value="音乐">音乐</div>
                                 <div class="select-item" data-value="流行">流行</div>
                                 <div class="select-item" data-value="摇滚">摇滚</div>
@@ -986,7 +991,7 @@
         let activeTab = 'all';
         let currentRegion = 'all';
         let currentQuality = 'auto';
-        let currentGenre = '';
+        let currentGenre = 'all';
         let displayLimit = 200;
         let displayedCount = 0;
 
@@ -1014,6 +1019,88 @@
             'serbian': '塞尔维亚语', 'slovak': '斯洛伐克语', 'slovenian': '斯洛文尼亚语',
             'ukrainian': '乌克兰语', 'belarusian': '白俄罗斯语', 'estonian': '爱沙尼亚语',
             'latvian': '拉脱维亚语', 'lithuanian': '立陶宛语', 'maltese': '马耳他语'
+        };
+
+        // 国家名称中英文映射
+        const countryNameMapping = {
+            'China': '中国',
+            'United States': '美国',
+            'United Kingdom': '英国',
+            'Japan': '日本',
+            'Germany': '德国',
+            'France': '法国',
+            'Australia': '澳大利亚',
+            'Canada': '加拿大',
+            'Brazil': '巴西',
+            'Russia': '俄罗斯',
+            'South Korea': '韩国',
+            'India': '印度',
+            'Indonesia': '印度尼西亚',
+            'Thailand': '泰国',
+            'Vietnam': '越南',
+            'Malaysia': '马来西亚',
+            'Philippines': '菲律宾',
+            'Singapore': '新加坡',
+            'Taiwan': '台湾',
+            'Hong Kong': '香港',
+            'Macao': '澳门',
+            'Netherlands': '荷兰',
+            'Sweden': '瑞典',
+            'Norway': '挪威',
+            'Finland': '芬兰',
+            'Denmark': '丹麦',
+            'Switzerland': '瑞士',
+            'Austria': '奥地利',
+            'Belgium': '比利时',
+            'Ireland': '爱尔兰',
+            'Portugal': '葡萄牙',
+            'Poland': '波兰',
+            'Ukraine': '乌克兰',
+            'Czech Republic': '捷克',
+            'Hungary': '匈牙利',
+            'Romania': '罗马尼亚',
+            'Greece': '希腊',
+            'Bulgaria': '保加利亚',
+            'Serbia': '塞尔维亚',
+            'Croatia': '克罗地亚',
+            'Slovakia': '斯洛伐克',
+            'Belarus': '白俄罗斯',
+            'Lithuania': '立陶宛',
+            'Latvia': '拉脱维亚',
+            'Estonia': '爱沙尼亚',
+            'Slovenia': '斯洛文尼亚',
+            'Luxembourg': '卢森堡',
+            'Malta': '马耳他',
+            'Cyprus': '塞浦路斯',
+            'Iceland': '冰岛',
+            'Albania': '阿尔巴尼亚',
+            'Mexico': '墨西哥',
+            'Cuba': '古巴',
+            'Dominican Republic': '多米尼加',
+            'Haiti': '海地',
+            'Jamaica': '牙买加',
+            'Argentina': '阿根廷',
+            'Chile': '智利',
+            'Colombia': '哥伦比亚',
+            'Peru': '秘鲁',
+            'Venezuela': '委内瑞拉',
+            'Ecuador': '厄瓜多尔',
+            'Bolivia': '玻利维亚',
+            'South Africa': '南非',
+            'Egypt': '埃及',
+            'Nigeria': '尼日利亚',
+            'Kenya': '肯尼亚',
+            'Morocco': '摩洛哥',
+            'Ethiopia': '埃塞俄比亚',
+            'Ghana': '加纳',
+            'Tanzania': '坦桑尼亚',
+            'Algeria': '阿尔及利亚',
+            'Uganda': '乌干达',
+            'New Zealand': '新西兰',
+            'Fiji': '斐济',
+            'Papua New Guinea': '巴布亚新几内亚',
+            'Samoa': '萨摩亚',
+            'Tonga': '汤加'
         };
 
         // 扩展类型映射
@@ -1329,7 +1416,11 @@
         function extractCountries() {
             const countrySet = new Set();
             allStations.forEach(station => {
-                if (station.country) countrySet.add(station.country);
+                if (station.country) {
+                    // 将英文国家名转换为中文
+                    const chineseName = countryNameMapping[station.country] || station.country;
+                    countrySet.add(chineseName);
+                }
             });
             
             countries = Array.from(countrySet).sort();
@@ -1401,6 +1492,9 @@
                 const flagEmoji = getFlagEmoji(station.countrycode);
                 const isFavorite = favoriteStations.some(fav => fav.stationuuid === station.stationuuid);
                 
+                // 将国家名转换为中文显示
+                const countryName = countryNameMapping[station.country] || station.country;
+                
                 radioItem.innerHTML = `
                     <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${station.stationuuid}">
                         <i class="fas fa-heart"></i>
@@ -1408,7 +1502,7 @@
                     <div class="radio-flag">${flagEmoji}</div>
                     <div class="radio-info">
                         <div class="radio-name">${station.name || '未知电台'}</div>
-                        <div class="radio-country">${station.country || '未知国家'}</div>
+                        <div class="radio-country">${countryName || '未知国家'}</div>
                         <div class="radio-genre">${formatGenres(station.tags)}</div>
                     </div>
                     <button class="play-btn" data-id="${station.stationuuid}">
@@ -1455,7 +1549,10 @@
             
             currentStation = station;
             document.getElementById('current-station').textContent = station.name || '未知电台';
-            document.getElementById('current-country').textContent = `${station.country || '未知国家'} • ${formatGenres(station.tags)}`;
+            
+            // 将国家名转换为中文显示
+            const countryName = countryNameMapping[station.country] || station.country;
+            document.getElementById('current-country').textContent = `${countryName || '未知国家'} • ${formatGenres(station.tags)}`;
             
             const playPauseBtn = document.getElementById('play-pause-btn');
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -1609,13 +1706,14 @@
             stations.forEach(station => {
                 if (station.geo_lat && station.geo_long) {
                     const flagEmoji = getFlagEmoji(station.countrycode);
+                    const countryName = countryNameMapping[station.country] || station.country;
                     
                     const marker = L.marker([station.geo_lat, station.geo_long])
                         .addTo(map)
                         .bindPopup(`
                             <div style="color: black; min-width: 200px;">
                                 <b>${station.name || '未知电台'}</b><br>
-                                ${station.country || ''}<br>
+                                ${countryName || ''}<br>
                                 <small>${formatGenres(station.tags)}</small><br>
                                 <button onclick="window.playStationFromMap('${station.stationuuid}')" 
                                         style="background:#e52e71;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-top:5px;">
@@ -1652,7 +1750,17 @@
                     (station.country && station.country.toLowerCase().includes(searchTerm)) ||
                     (station.tags && station.tags.toLowerCase().includes(searchTerm));
                 
-                const matchesCountry = countryFilter === '' || station.country === countryFilter;
+                // 国家筛选 - 支持中英文匹配
+                let matchesCountry = true;
+                if (countryFilter !== '') {
+                    const englishCountryName = Object.keys(countryNameMapping).find(
+                        key => countryNameMapping[key] === countryFilter
+                    ) || countryFilter;
+                    matchesCountry = station.country && (
+                        station.country.toLowerCase().includes(englishCountryName.toLowerCase()) ||
+                        (countryNameMapping[station.country] && countryNameMapping[station.country] === countryFilter)
+                    );
+                }
                 
                 let matchesLanguage = true;
                 if (languageFilter !== '') {
@@ -1664,7 +1772,7 @@
                 }
                 
                 let matchesGenre = true;
-                if (currentGenre !== '') {
+                if (currentGenre !== 'all' && currentGenre !== '') {
                     const englishKeyword = Object.keys(genreMapping).find(key => 
                         genreMapping[key] === currentGenre
                     ) || '';
@@ -1675,8 +1783,8 @@
                 // 修复：地区筛选
                 let matchesRegion = true;
                 if (currentRegion !== 'all') {
-                    const regionCountries = getRegionCountries(currentRegion);
-                    matchesRegion = regionCountries.some(country => 
+                    const regionCountriesList = getRegionCountries(currentRegion);
+                    matchesRegion = regionCountriesList.some(country => 
                         station.country && station.country.toLowerCase().includes(country.toLowerCase())
                     );
                 }
@@ -1734,6 +1842,9 @@
                 };
                 countryName.textContent = `${regionNames[currentRegion]}地区电台`;
                 countryCount.textContent = `找到 ${filteredStations.length} 个电台`;
+                
+                // 更新国家筛选器为当前地区的国家
+                updateCountryFilterForRegion(currentRegion);
             } else if (document.getElementById('country-filter').value) {
                 const selectedCountry = document.getElementById('country-filter').value;
                 countryName.textContent = `${selectedCountry}电台`;
@@ -1741,6 +1852,59 @@
             } else {
                 countryName.textContent = '全球电台';
                 countryCount.textContent = `点击地图上的标记或使用筛选器选择电台 (${filteredStations.length} 个电台)`;
+                
+                // 重置国家筛选器为所有国家
+                resetCountryFilter();
+            }
+        }
+
+        // 更新国家筛选器为指定地区的国家
+        function updateCountryFilterForRegion(region) {
+            const regionCountriesList = getRegionCountries(region);
+            const countryFilter = document.getElementById('country-filter');
+            
+            // 保存当前选中的国家
+            const currentSelected = countryFilter.value;
+            
+            countryFilter.innerHTML = '<option value="">所有国家</option>';
+            
+            // 获取该地区国家的中文名称
+            const regionCountryNames = regionCountriesList.map(country => 
+                countryNameMapping[country] || country
+            ).sort();
+            
+            regionCountryNames.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countryFilter.appendChild(option);
+            });
+            
+            // 如果之前选中的国家在当前地区中，保持选中状态
+            if (regionCountryNames.includes(currentSelected)) {
+                countryFilter.value = currentSelected;
+            } else {
+                countryFilter.value = '';
+            }
+        }
+
+        // 重置国家筛选器为所有国家
+        function resetCountryFilter() {
+            const countryFilter = document.getElementById('country-filter');
+            const currentSelected = countryFilter.value;
+            
+            countryFilter.innerHTML = '<option value="">所有国家</option>';
+            
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countryFilter.appendChild(option);
+            });
+            
+            // 保持之前选中的国家
+            if (countries.includes(currentSelected)) {
+                countryFilter.value = currentSelected;
             }
         }
 
@@ -1852,12 +2016,13 @@
                 
                 const flagEmoji = getFlagEmoji(item.station.countrycode);
                 const timeString = new Date(item.timestamp).toLocaleString();
+                const countryName = countryNameMapping[item.station.country] || item.station.country;
                 
                 historyItem.innerHTML = `
                     <div class="radio-flag">${flagEmoji}</div>
                     <div class="radio-info">
                         <div class="radio-name">${item.station.name || '未知电台'}</div>
-                        <div class="radio-country">${item.station.country || '未知国家'}</div>
+                        <div class="radio-country">${countryName || '未知国家'}</div>
                         <div class="history-time">${timeString}</div>
                     </div>
                     <button class="play-btn" data-id="${item.station.stationuuid}">
@@ -1977,6 +2142,13 @@
             const selectItems = customSelect.querySelector('.select-items');
             const selectItemsAll = customSelect.querySelectorAll('.select-item');
             
+            // 设置"所有类型"为默认选中
+            selectItemsAll.forEach(item => {
+                if (item.dataset.value === 'all') {
+                    item.classList.add('active');
+                }
+            });
+            
             // 点击选择器显示/隐藏下拉菜单
             selectSelected.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -2029,9 +2201,6 @@
                     document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentRegion = this.dataset.region;
-                    
-                    // 重置国家筛选
-                    document.getElementById('country-filter').value = '';
                     
                     performSearch();
                     updateCountryInfo();
