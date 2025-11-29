@@ -87,17 +87,18 @@ def get_total_count(base_url, ssl_context):
                 print(f"📊 API 报告总数: {total_count} 个电台")
                 return total_count
             else:
+                # 如果没有总数头信息，尝试获取一页数据来估算
                 test_url = f"{base_url}/json/stations?limit=5000&hidebroken=true"
                 req = urllib.request.Request(test_url, headers={'User-Agent': 'Mozilla/5.0'})
                 with urllib.request.urlopen(req, context=ssl_context, timeout=30) as resp:
                     data = resp.read().decode('utf-8')
                     stations = json.loads(data)
-                    estimated_count = len(stations) * 6
-                    print(f"📊 估算总数: {estimated_count} 个电台")
-                    return min(estimated_count, 35000)
+                    print(f"📊 单页获取到 {len(stations)} 个电台，用于估算总数")
+                    # 保守估算，假设有更多数据
+                    return 50000
     except Exception as e:
         print(f"❌ 获取总数失败: {e}")
-        return 30000
+        return 50000
 
 def fetch_all_stations():
     print("🚀 开始获取全球电台数据...")
@@ -139,12 +140,13 @@ def fetch_all_stations():
             
             page_size = 1000
             pages = math.ceil(total_count / page_size)
-            max_pages = 35
-            pages = min(pages, max_pages)
             
+            # 不限制页数，获取完整数据
             print(f"📄 计划获取 {pages} 页数据，目标: {total_count} 个电台...")
             
             successful_pages = 0
+            empty_pages_count = 0
+            
             for page in range(pages):
                 offset = page * page_size
                 url = f"{base_url}/json/stations?offset={offset}&limit={page_size}&hidebroken=true"
@@ -161,11 +163,17 @@ def fetch_all_stations():
                             if stations:
                                 all_stations.extend(stations)
                                 successful_pages += 1
+                                empty_pages_count = 0  # 重置空页计数
                                 print(f"  ✅ 获取到 {len(stations)} 个电台")
                                 print(f"  📈 累计: {len(all_stations)} 个电台")
                                 break
                             else:
-                                print(f"  ⚠️ 第 {page + 1} 页没有数据，可能已到末尾")
+                                empty_pages_count += 1
+                                print(f"  ⚠️ 第 {page + 1} 页没有数据")
+                                # 如果连续3页没有数据，认为已经获取完所有数据
+                                if empty_pages_count >= 3:
+                                    print("  💡 连续多页没有数据，可能已获取完所有可用数据")
+                                    break
                                 break
                                 
                     except Exception as e:
@@ -176,21 +184,23 @@ def fetch_all_stations():
                             print(f"  💥 第 {page + 1} 页获取失败，跳过")
                             break
                 
-                time.sleep(1)
-                
-                if page > 2 and len(all_stations) == 0:
-                    print("💥 连续多页没有数据，提前结束")
+                # 如果连续空页，提前结束
+                if empty_pages_count >= 3:
+                    print("💡 检测到连续空页，提前结束该端点的数据获取")
                     break
                     
-            print(f"📊 从 {base_url} 成功获取 {successful_pages}/{pages} 页数据")
+                time.sleep(0.5)  # 短暂延迟避免请求过快
+                    
+            print(f"📊 从 {base_url} 成功获取 {successful_pages} 页数据，共 {len(all_stations)} 个电台")
+            
+            # 如果从这个端点获取了足够数据，不再尝试其他端点
+            if len(all_stations) >= 30000:
+                print("🎯 已获取大量数据，继续下一个阶段")
+                break
                     
         except Exception as e:
             print(f"❌ 端点 {base_url} 处理失败: {e}")
             continue
-        
-        if len(all_stations) >= 28000:
-            print("🎯 已获取接近完整数据，提前结束")
-            break
     
     return all_stations
 
@@ -217,7 +227,7 @@ def fetch_additional_stations():
     
     for i, sort_method in enumerate(sort_methods):
         try:
-            url = f"{base_url}/json/stations?limit=5000&hidebroken=true&{sort_method}"
+            url = f"{base_url}/json/stations?limit=10000&hidebroken=true&{sort_method}"
             print(f"  补充查询 {i + 1}/{len(sort_methods)}: {sort_method}")
             
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -307,13 +317,14 @@ def process_stations_data(raw_stations):
     return processed_stations
 
 def split_by_region(stations, last_updated):
-    """按地区分片数据"""
+    """按地区分片数据 - 扩展为7个洲"""
     print("🌍 开始按地区分片数据...")
     
     if not stations:
         print("⚠️ 没有数据可分区")
         return
     
+    # 扩展为7个洲
     region_countries = {
         'asia': [
             'China', 'Japan', 'South Korea', 'India', 'Indonesia', 'Thailand', 
@@ -335,13 +346,18 @@ def split_by_region(stations, last_updated):
             'Bosnia', 'Macedonia', 'Montenegro', 'Moldova', 'Monaco', 'San Marino',
             'Vatican', 'Liechtenstein', 'Andorra'
         ],
-        'americas': [
-            'United States', 'Canada', 'Mexico', 'Brazil', 'Argentina', 'Chile',
-            'Colombia', 'Peru', 'Venezuela', 'Cuba', 'Ecuador', 'Dominican Republic',
-            'Guatemala', 'Bolivia', 'Haiti', 'Paraguay', 'Uruguay', 'Jamaica',
-            'Trinidad', 'Bahamas', 'Panama', 'Costa Rica', 'Puerto Rico', 'Honduras',
-            'El Salvador', 'Nicaragua', 'Barbados', 'Saint Lucia', 'Grenada',
-            'Suriname', 'Guyana', 'Belize', 'Bahamas', 'Saint Vincent', 'Antigua', 'Barbuda'
+        'north-america': [
+            'United States', 'Canada', 'Mexico', 'Cuba', 'Dominican Republic', 
+            'Haiti', 'Jamaica', 'Bahamas', 'Puerto Rico', 'Trinidad and Tobago',
+            'Guatemala', 'Honduras', 'El Salvador', 'Nicaragua', 'Costa Rica', 
+            'Panama', 'Belize', 'Barbados', 'Saint Lucia', 'Grenada', 
+            'Saint Vincent and the Grenadines', 'Antigua and Barbuda', 
+            'Dominica', 'Saint Kitts and Nevis'
+        ],
+        'south-america': [
+            'Brazil', 'Argentina', 'Chile', 'Colombia', 'Peru', 'Venezuela',
+            'Ecuador', 'Bolivia', 'Paraguay', 'Uruguay', 'Guyana', 'Suriname',
+            'French Guiana', 'Falkland Islands'
         ],
         'africa': [
             'South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Morocco', 'Ethiopia',
@@ -398,16 +414,19 @@ def main():
         current_time = datetime.now().isoformat()
         
         print("=" * 60)
-        print("🎯 全球广播电台数据采集 - 优化版本")
+        print("🎯 全球广播电台数据采集 - 完整版本")
         print("=" * 60)
         
+        # 第一阶段：分页获取数据
         raw_stations = fetch_all_stations()
         
-        if len(raw_stations) < 25000:
-            print(f"\n🔄 第一阶段只获取了 {len(raw_stations)} 个电台，开始第二阶段...")
+        # 第二阶段：补充获取数据
+        if len(raw_stations) < 40000:
+            print(f"\n🔄 第一阶段获取了 {len(raw_stations)} 个电台，开始第二阶段补充获取...")
             additional_stations = fetch_additional_stations()
             raw_stations.extend(additional_stations)
             
+            # 去重
             unique_raw = []
             seen = set()
             for station in raw_stations:
@@ -418,17 +437,19 @@ def main():
             raw_stations = unique_raw
             print(f"📊 合并后原始数据: {len(raw_stations)} 个电台")
         
+        # 处理数据
         processed_stations = process_stations_data(raw_stations)
         
         if not processed_stations:
             print("💥 没有有效数据")
             processed_stations = []
         
+        # 保存精选数据
         curated_output = {
             'lastUpdated': current_time,
             'totalStations': len(processed_stations),
             'source': 'Radio Browser API',
-            'note': f'通过分页和多种排序方式采集，原始数据: {len(raw_stations)} 个电台',
+            'note': f'通过完整分页和多种排序方式采集，原始数据: {len(raw_stations)} 个电台',
             'stations': processed_stations
         }
         
@@ -440,6 +461,7 @@ def main():
         print(f"  有效电台数: {len(processed_stations)}")
         print(f"  原始电台数: {len(raw_stations)}")
         
+        # 分地区保存
         if processed_stations:
             split_by_region(processed_stations, current_time)
         else:
