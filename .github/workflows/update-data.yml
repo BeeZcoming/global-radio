@@ -2,21 +2,18 @@ name: Update Radio Data
 
 on:
   schedule:
-    - cron: '0 2 * * 1'  # 每周一凌晨2点自动更新
-  workflow_dispatch:      # 允许手动触发
+    - cron: '0 4 * * 1'  # 每周一凌晨4点自动更新（给更多时间）
+  workflow_dispatch:
 
 jobs:
   update-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60  # 增加超时到60分钟
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.PAT_TOKEN }}  # 使用 PAT
-        fetch-depth: 0
-        
+      
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
@@ -27,7 +24,7 @@ jobs:
       
     - name: Commit and push if changed
       run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
         git add data/
         git diff --staged --quiet || (git commit -m "🤖 Auto-update radio data [skip ci]" && git push)
