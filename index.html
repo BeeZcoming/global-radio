@@ -1014,6 +1014,7 @@
         let currentGenre = 'all';
         let displayLimit = 200;
         let displayedCount = 0;
+        let mapUpdateTimeout;
 
         // 数据源配置 - 7个洲
         const DATA_SOURCES = {
@@ -1058,7 +1059,7 @@
             'other': '其他语言'
         };
 
-        // 国家名称中英文映射 - 扩展版
+        // 国家名称中英文映射 - 完整版
         const countryNameMapping = {
             // 亚洲
             'China': '中国', 'Japan': '日本', 'South Korea': '韩国', 'North Korea': '朝鲜',
@@ -1087,13 +1088,17 @@
             'Latvia': '拉脱维亚', 'Estonia': '爱沙尼亚', 'Slovenia': '斯洛文尼亚', 'Luxembourg': '卢森堡',
             'Malta': '马耳他', 'Iceland': '冰岛', 'Albania': '阿尔巴尼亚', 'Bosnia and Herzegovina': '波黑',
             'Macedonia': '北马其顿', 'Montenegro': '黑山', 'Kosovo': '科索沃', 'Moldova': '摩尔多瓦',
+            'Andorra': '安道尔', 'Monaco': '摩纳哥', 'San Marino': '圣马力诺', 'Vatican City': '梵蒂冈',
+            'Liechtenstein': '列支敦士登',
             
             // 北美洲
             'United States': '美国', 'Canada': '加拿大', 'Mexico': '墨西哥', 'Cuba': '古巴',
             'Dominican Republic': '多米尼加', 'Haiti': '海地', 'Jamaica': '牙买加', 'Bahamas': '巴哈马',
             'Puerto Rico': '波多黎各', 'Guatemala': '危地马拉', 'Honduras': '洪都拉斯', 'El Salvador': '萨尔瓦多',
             'Nicaragua': '尼加拉瓜', 'Costa Rica': '哥斯达黎加', 'Panama': '巴拿马', 'Trinidad and Tobago': '特立尼达和多巴哥',
-            'Barbados': '巴巴多斯', 'Belize': '伯利兹',
+            'Barbados': '巴巴多斯', 'Belize': '伯利兹', 'Saint Lucia': '圣卢西亚', 'Grenada': '格林纳达',
+            'Saint Vincent and the Grenadines': '圣文森特和格林纳丁斯', 'Antigua and Barbuda': '安提瓜和巴布达',
+            'Dominica': '多米尼克', 'Saint Kitts and Nevis': '圣基茨和尼维斯',
             
             // 南美洲
             'Brazil': '巴西', 'Argentina': '阿根廷', 'Chile': '智利', 'Colombia': '哥伦比亚',
@@ -1115,12 +1120,14 @@
             'Liberia': '利比里亚', 'Central African Republic': '中非共和国', 'South Sudan': '南苏丹',
             'Eritrea': '厄立特里亚', 'Djibouti': '吉布提', 'Comoros': '科摩罗', 'Cape Verde': '佛得角',
             'Sao Tome and Principe': '圣多美和普林西比', 'Mauritius': '毛里求斯', 'Seychelles': '塞舌尔',
+            'Guinea': '几内亚', 'Guinea-Bissau': '几内亚比绍', 'Equatorial Guinea': '赤道几内亚',
+            'Gabon': '加蓬', 'Gambia': '冈比亚', 'Western Sahara': '西撒哈拉',
             
             // 大洋洲
             'Australia': '澳大利亚', 'New Zealand': '新西兰', 'Fiji': '斐济', 'Papua New Guinea': '巴布亚新几内亚',
             'Samoa': '萨摩亚', 'Tonga': '汤加', 'Vanuatu': '瓦努阿图', 'Solomon Islands': '所罗门群岛',
             'Kiribati': '基里巴斯', 'Micronesia': '密克罗尼西亚', 'Palau': '帕劳', 'Marshall Islands': '马绍尔群岛',
-            'Nauru': '瑙鲁', 'Tuvalu': '图瓦卢'
+            'Nauru': '瑙鲁', 'Tuvalu': '图瓦卢', 'New Caledonia': '新喀里多尼亚', 'French Polynesia': '法属波利尼西亚'
         };
 
         // 扩展类型映射
@@ -1172,13 +1179,16 @@
                 'Ireland', 'Portugal', 'Poland', 'Ukraine', 'Czech Republic', 'Hungary', 'Romania',
                 'Greece', 'Bulgaria', 'Serbia', 'Croatia', 'Slovakia', 'Belarus', 'Lithuania',
                 'Latvia', 'Estonia', 'Slovenia', 'Luxembourg', 'Malta', 'Iceland', 'Albania',
-                'Bosnia and Herzegovina', 'Macedonia', 'Montenegro', 'Kosovo', 'Moldova'
+                'Bosnia and Herzegovina', 'Macedonia', 'Montenegro', 'Kosovo', 'Moldova',
+                'Andorra', 'Monaco', 'San Marino', 'Vatican City', 'Liechtenstein'
             ],
             
             'north-america': [
                 'United States', 'Canada', 'Mexico', 'Cuba', 'Dominican Republic', 'Haiti', 'Jamaica',
                 'Bahamas', 'Puerto Rico', 'Guatemala', 'Honduras', 'El Salvador', 'Nicaragua', 
-                'Costa Rica', 'Panama', 'Trinidad and Tobago', 'Barbados', 'Belize'
+                'Costa Rica', 'Panama', 'Trinidad and Tobago', 'Barbados', 'Belize', 'Saint Lucia',
+                'Grenada', 'Saint Vincent and the Grenadines', 'Antigua and Barbuda', 'Dominica',
+                'Saint Kitts and Nevis'
             ],
             
             'south-america': [
@@ -1194,12 +1204,14 @@
                 'Rwanda', 'Burundi', 'Tunisia', 'Libya', 'Namibia', 'Botswana', 'Lesotho', 'Eswatini',
                 'Mauritania', 'Benin', 'Togo', 'Sierra Leone', 'Liberia', 'Central African Republic',
                 'South Sudan', 'Eritrea', 'Djibouti', 'Comoros', 'Cape Verde', 'Sao Tome and Principe',
-                'Mauritius', 'Seychelles'
+                'Mauritius', 'Seychelles', 'Guinea', 'Guinea-Bissau', 'Equatorial Guinea', 'Gabon',
+                'Gambia', 'Western Sahara'
             ],
             
             'oceania': [
                 'Australia', 'New Zealand', 'Fiji', 'Papua New Guinea', 'Samoa', 'Tonga', 'Vanuatu',
-                'Solomon Islands', 'Kiribati', 'Micronesia', 'Palau', 'Marshall Islands', 'Nauru', 'Tuvalu'
+                'Solomon Islands', 'Kiribati', 'Micronesia', 'Palau', 'Marshall Islands', 'Nauru', 'Tuvalu',
+                'New Caledonia', 'French Polynesia'
             ]
         };
 
@@ -1210,89 +1222,17 @@
             loadingElement.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载电台数据...</div>';
             
             try {
-                // 首先尝试加载主数据文件
-                let stations = await loadLocalDataFile(DATA_SOURCES.primary);
-                
-                if (stations && stations.length > 0) {
-                    console.log(`✅ 从本地主文件加载了 ${stations.length} 个电台`);
-                    processStationsData(stations);
-                    updateDataSource('本地数据');
-                    return;
-                }
-                
-                // 如果主文件不可用，尝试加载分地区数据
-                console.log('主数据文件不可用，尝试加载分地区数据...');
-                stations = await loadRegionalData();
-                
-                if (stations && stations.length > 0) {
-                    console.log(`✅ 从地区文件加载了 ${stations.length} 个电台`);
-                    processStationsData(stations);
-                    updateDataSource('本地数据 (分地区)');
-                    return;
-                }
-                
-                // 如果本地数据都不可用，使用备用API
-                console.log('本地数据不可用，使用备用API...');
+                // 使用备用API数据
+                console.log('正在从Radio Browser API获取数据...');
                 await loadFallbackData();
                 
             } catch (error) {
                 console.error('数据加载失败:', error);
-                await loadFallbackData();
+                // 最后使用模拟数据
+                const mockStations = generateMockStations();
+                processStationsData(mockStations);
+                updateDataSource('模拟数据');
             }
-        }
-
-        // 加载本地数据文件
-        async function loadLocalDataFile(url) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                const data = await response.json();
-                return data.stations || [];
-            } catch (error) {
-                console.warn(`无法加载 ${url}:`, error);
-                return null;
-            }
-        }
-
-        // 加载地区数据
-        async function loadRegionalData() {
-            const regionalSources = [
-                DATA_SOURCES.asia,
-                DATA_SOURCES.europe,
-                DATA_SOURCES['north-america'],
-                DATA_SOURCES['south-america'],
-                DATA_SOURCES.africa,
-                DATA_SOURCES.oceania
-            ];
-            
-            let allStations = [];
-            
-            for (const source of regionalSources) {
-                try {
-                    const stations = await loadLocalDataFile(source);
-                    if (stations) {
-                        allStations = allStations.concat(stations);
-                        console.log(`✅ 从 ${source} 加载了 ${stations.length} 个电台`);
-                    }
-                } catch (error) {
-                    console.warn(`无法加载地区数据 ${source}:`, error);
-                }
-            }
-            
-            // 去重
-            const uniqueStations = [];
-            const seen = new Set();
-            
-            for (const station of allStations) {
-                if (station.stationuuid && !seen.has(station.stationuuid)) {
-                    seen.add(station.stationuuid);
-                    uniqueStations.push(station);
-                }
-            }
-            
-            console.log(`📊 地区数据去重后: ${uniqueStations.length} 个电台`);
-            return uniqueStations;
         }
 
         // 加载备用API数据
@@ -1816,7 +1756,7 @@
             return R * c;
         }
 
-        // 更新地图标记
+        // 更新地图标记 - 优化版本
         function updateMapMarkers(stations) {
             // 清除现有标记
             markers.forEach(marker => map.removeLayer(marker));
@@ -1824,35 +1764,52 @@
             
             const displayLimit = 300; // 增加显示数量限制
             
-            stations.slice(0, displayLimit).forEach(station => {
-                if (station.geo_lat && station.geo_long) {
-                    const flagEmoji = getFlagEmoji(station.countrycode);
-                    const countryName = getChineseCountryName(station.country);
-                    
-                    const marker = L.marker([station.geo_lat, station.geo_long])
-                        .addTo(map)
-                        .bindPopup(`
-                            <div style="color: black; min-width: 200px;">
-                                <b>${station.name || '未知电台'}</b><br>
-                                ${countryName || ''}<br>
-                                <small>${formatGenres(station.tags)}</small><br>
-                                <button onclick="window.playStationFromMap('${station.stationuuid}')" 
-                                        style="background:#e52e71;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-top:5px;">
-                                    播放
-                                </button>
-                            </div>
-                        `);
-                    
-                    // 添加点击事件
-                    marker.on('click', function() {
-                        playStation(station.stationuuid);
-                    });
-                    
-                    markers.push(marker);
-                }
-            });
+            // 使用requestAnimationFrame分批处理，避免阻塞UI
+            const batchSize = 50;
+            let index = 0;
             
-            console.log(`更新了 ${markers.length} 个地图标记`);
+            function processBatch() {
+                const batchEnd = Math.min(index + batchSize, Math.min(stations.length, displayLimit));
+                
+                for (let i = index; i < batchEnd; i++) {
+                    const station = stations[i];
+                    if (station.geo_lat && station.geo_long) {
+                        const flagEmoji = getFlagEmoji(station.countrycode);
+                        const countryName = getChineseCountryName(station.country);
+                        
+                        const marker = L.marker([station.geo_lat, station.geo_long])
+                            .addTo(map)
+                            .bindPopup(`
+                                <div style="color: black; min-width: 200px;">
+                                    <b>${station.name || '未知电台'}</b><br>
+                                    ${countryName || ''}<br>
+                                    <small>${formatGenres(station.tags)}</small><br>
+                                    <button onclick="window.playStationFromMap('${station.stationuuid}')" 
+                                            style="background:#e52e71;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-top:5px;">
+                                        播放
+                                    </button>
+                                </div>
+                            `);
+                        
+                        // 添加点击事件
+                        marker.on('click', function() {
+                            playStation(station.stationuuid);
+                        });
+                        
+                        markers.push(marker);
+                    }
+                }
+                
+                index = batchEnd;
+                
+                if (index < Math.min(stations.length, displayLimit)) {
+                    requestAnimationFrame(processBatch);
+                } else {
+                    console.log(`更新了 ${markers.length} 个地图标记`);
+                }
+            }
+            
+            processBatch();
         }
 
         // 从地图播放电台
@@ -1866,98 +1823,110 @@
             searchTimeout = setTimeout(performSearch, 300);
         }
 
-        // 执行搜索
+        // 执行搜索 - 优化版本
         function performSearch() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const countryFilter = document.getElementById('country-filter').value;
             const languageFilter = document.getElementById('language-filter').value;
             
-            filteredStations = allStations.filter(station => {
-                const matchesSearch = searchTerm === '' || 
-                    (station.name && station.name.toLowerCase().includes(searchTerm)) || 
-                    (station.country && station.country.toLowerCase().includes(searchTerm)) ||
-                    (station.tags && station.tags.toLowerCase().includes(searchTerm));
-                
-                // 国家筛选 - 支持中英文匹配
-                let matchesCountry = true;
-                if (countryFilter !== '') {
-                    const englishCountryName = Object.keys(countryNameMapping).find(
-                        key => countryNameMapping[key] === countryFilter
-                    ) || countryFilter;
-                    matchesCountry = station.country && (
-                        station.country.toLowerCase().includes(englishCountryName.toLowerCase()) ||
-                        (getChineseCountryName(station.country) && getChineseCountryName(station.country) === countryFilter)
-                    );
-                }
-                
-                let matchesLanguage = true;
-                if (languageFilter !== '') {
-                    const englishKeyword = Object.keys(languageMapping).find(key => 
-                        languageMapping[key] === languageFilter
-                    ) || '';
-                    matchesLanguage = station.language && 
-                        station.language.toLowerCase().includes(englishKeyword.toLowerCase());
-                }
-                
-                let matchesGenre = true;
-                if (currentGenre !== 'all' && currentGenre !== '') {
-                    const englishKeyword = Object.keys(genreMapping).find(key => 
-                        genreMapping[key] === currentGenre
-                    ) || '';
-                    matchesGenre = station.tags && 
-                        station.tags.toLowerCase().includes(englishKeyword.toLowerCase());
-                }
-                
-                // 修复：地区筛选
-                let matchesRegion = true;
-                if (currentRegion !== 'all') {
-                    const regionCountriesList = getRegionCountries(currentRegion);
-                    matchesRegion = regionCountriesList.some(country => {
-                        const chineseCountryName = getChineseCountryName(country);
-                        const stationChineseName = getChineseCountryName(station.country);
-                        
-                        return station.country && (
-                            station.country.toLowerCase().includes(country.toLowerCase()) ||
-                            stationChineseName.includes(chineseCountryName) ||
-                            chineseCountryName.includes(stationChineseName)
-                        );
-                    });
-                }
-                
-                // 音质筛选
-                let matchesQuality = true;
-                if (currentQuality !== 'auto') {
-                    if (currentQuality === 'high') {
-                        matchesQuality = station.tags && (
-                            station.tags.toLowerCase().includes('high') || 
-                            station.tags.toLowerCase().includes('hq') ||
-                            station.tags.toLowerCase().includes('320')
-                        );
-                    } else if (currentQuality === 'medium') {
-                        matchesQuality = station.tags && (
-                            station.tags.toLowerCase().includes('medium') || 
-                            station.tags.toLowerCase().includes('128')
-                        );
-                    } else if (currentQuality === 'low') {
-                        matchesQuality = station.tags && (
-                            station.tags.toLowerCase().includes('low') || 
-                            station.tags.toLowerCase().includes('64')
+            // 显示加载状态
+            const radioList = document.getElementById('radio-list');
+            radioList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在搜索电台...</div>';
+            
+            // 使用setTimeout让UI有机会更新
+            setTimeout(() => {
+                filteredStations = allStations.filter(station => {
+                    const matchesSearch = searchTerm === '' || 
+                        (station.name && station.name.toLowerCase().includes(searchTerm)) || 
+                        (station.country && station.country.toLowerCase().includes(searchTerm)) ||
+                        (station.tags && station.tags.toLowerCase().includes(searchTerm));
+                    
+                    // 国家筛选 - 支持中英文匹配
+                    let matchesCountry = true;
+                    if (countryFilter !== '') {
+                        const englishCountryName = Object.keys(countryNameMapping).find(
+                            key => countryNameMapping[key] === countryFilter
+                        ) || countryFilter;
+                        matchesCountry = station.country && (
+                            station.country.toLowerCase().includes(englishCountryName.toLowerCase()) ||
+                            (getChineseCountryName(station.country) && getChineseCountryName(station.country) === countryFilter)
                         );
                     }
+                    
+                    let matchesLanguage = true;
+                    if (languageFilter !== '') {
+                        const englishKeyword = Object.keys(languageMapping).find(key => 
+                            languageMapping[key] === languageFilter
+                        ) || '';
+                        matchesLanguage = station.language && 
+                            station.language.toLowerCase().includes(englishKeyword.toLowerCase());
+                    }
+                    
+                    let matchesGenre = true;
+                    if (currentGenre !== 'all' && currentGenre !== '') {
+                        const englishKeyword = Object.keys(genreMapping).find(key => 
+                            genreMapping[key] === currentGenre
+                        ) || '';
+                        matchesGenre = station.tags && 
+                            station.tags.toLowerCase().includes(englishKeyword.toLowerCase());
+                    }
+                    
+                    // 修复：地区筛选
+                    let matchesRegion = true;
+                    if (currentRegion !== 'all') {
+                        const regionCountriesList = getRegionCountries(currentRegion);
+                        matchesRegion = regionCountriesList.some(country => {
+                            const chineseCountryName = getChineseCountryName(country);
+                            const stationChineseName = getChineseCountryName(station.country);
+                            
+                            return station.country && (
+                                station.country.toLowerCase().includes(country.toLowerCase()) ||
+                                stationChineseName.includes(chineseCountryName) ||
+                                chineseCountryName.includes(stationChineseName)
+                            );
+                        });
+                    }
+                    
+                    // 音质筛选
+                    let matchesQuality = true;
+                    if (currentQuality !== 'auto') {
+                        if (currentQuality === 'high') {
+                            matchesQuality = station.tags && (
+                                station.tags.toLowerCase().includes('high') || 
+                                station.tags.toLowerCase().includes('hq') ||
+                                station.tags.toLowerCase().includes('320')
+                            );
+                        } else if (currentQuality === 'medium') {
+                            matchesQuality = station.tags && (
+                                station.tags.toLowerCase().includes('medium') || 
+                                station.tags.toLowerCase().includes('128')
+                            );
+                        } else if (currentQuality === 'low') {
+                            matchesQuality = station.tags && (
+                                station.tags.toLowerCase().includes('low') || 
+                                station.tags.toLowerCase().includes('64')
+                            );
+                        }
+                    }
+                    
+                    return matchesSearch && matchesCountry && matchesLanguage && matchesGenre && matchesRegion && matchesQuality;
+                });
+                
+                displayedCount = 0;
+                displayedStations = [];
+                
+                if (activeTab === 'all') {
+                    loadMoreStations();
                 }
                 
-                return matchesSearch && matchesCountry && matchesLanguage && matchesGenre && matchesRegion && matchesQuality;
-            });
-            
-            displayedCount = 0;
-            displayedStations = [];
-            
-            if (activeTab === 'all') {
-                loadMoreStations();
-            }
-            
-            updateMapMarkers(filteredStations.slice(0, 200));
-            updateCountryInfo();
+                // 延迟更新地图标记，避免阻塞UI
+                clearTimeout(mapUpdateTimeout);
+                mapUpdateTimeout = setTimeout(() => {
+                    updateMapMarkers(filteredStations.slice(0, 200));
+                }, 100);
+                
+                updateCountryInfo();
+            }, 10);
         }
 
         // 获取地区对应的国家列表
