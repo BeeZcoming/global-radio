@@ -689,12 +689,15 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 5px;
+            padding: 8px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .data-source {
             font-size: 0.7rem;
             color: #aaa;
             text-align: right;
+            flex: 1;
         }
 
         /* 响应式设计 */
@@ -780,9 +783,9 @@
                 <button class="region-btn active" data-region="all">全部</button>
                 <button class="region-btn" data-region="asia">亚洲</button>
                 <button class="region-btn" data-region="europe">欧洲</button>
-                <button class="region-btn" data-region="africa">非洲</button>
                 <button class="region-btn" data-region="north-america">北美洲</button>
                 <button class="region-btn" data-region="south-america">南美洲</button>
+                <button class="region-btn" data-region="africa">非洲</button>
                 <button class="region-btn" data-region="oceania">大洋洲</button>
             </div>
             
@@ -841,6 +844,7 @@
                 <span id="filtered-stations"></span>
             </div>
             
+            <!-- 数据源显示区域 -->
             <div class="data-source-container">
                 <div></div> <!-- 占位元素 -->
                 <div class="data-source" id="data-source">数据来源: 本地数据</div>
@@ -986,12 +990,13 @@
         let displayLimit = 200;
         let displayedCount = 0;
 
-        // 数据源配置
+        // 数据源配置 - 7个洲
         const DATA_SOURCES = {
             primary: 'data/curated-stations.json',
             asia: 'data/asia-stations.json',
             europe: 'data/europe-stations.json',
-            americas: 'data/americas-stations.json',
+            'north-america': 'data/north-america-stations.json',
+            'south-america': 'data/south-america-stations.json',
             africa: 'data/africa-stations.json',
             oceania: 'data/oceania-stations.json',
             fallback: 'https://de1.api.radio-browser.info/json/stations?limit=100&hidebroken=true&order=votes&reverse=true'
@@ -1011,7 +1016,7 @@
             'latvian': '拉脱维亚语', 'lithuanian': '立陶宛语', 'maltese': '马耳他语'
         };
 
-        // 扩展类型映射 - 已整理归类
+        // 扩展类型映射
         const genreMapping = {
             // 音乐类型
             'music': '音乐', 'classical': '古典', 'rock': '摇滚', 'pop': '流行', 'jazz': '爵士',
@@ -1020,65 +1025,151 @@
             'house': '浩室', 'techno': '科技', 'trance': '迷幻', 'latin': '拉丁', 'world': '世界音乐',
             'oldies': '经典老歌', 'top40': '流行金曲', 'hits': '热门金曲', 'rnb': '节奏蓝调', 
             'r&b': '节奏蓝调', 'edm': '电子舞曲', 'kpop': '韩流', 'jpop': '日流', 'cpop': '华语流行',
-            'ambient': '氛围音乐', 'chillout': '弛放音乐', 'lounge': '沙发音乐', 'disco': '迪斯科',
-            'funk': '放克', 'soul': '灵魂乐', 'gospel': '福音音乐', 'christian': '基督教音乐',
-            'opera': '歌剧', 'orchestral': '管弦乐', 'instrumental': '器乐', 'acoustic': '原声音乐',
-            'alternative': '另类音乐', 'punk': '朋克', 'grunge': '垃圾摇滚', 'emo': '情绪摇滚',
-            'hardcore': '硬核', 'progressive': '前卫', 'experimental': '实验音乐',
             
             // 新闻资讯
             'news': '新闻', 'talk': '谈话', 'business': '财经', 'politics': '政治', 'sports': '体育',
-            'weather': '天气', 'traffic': '交通', 'current affairs': '时事', 'magazine': '杂志',
-            'documentary': '纪录片', 'investigative': '调查报道',
+            'weather': '天气', 'traffic': '交通', 'current affairs': '时事',
             
             // 文化教育
             'education': '教育', 'culture': '文化', 'religious': '宗教', 'history': '历史',
             'science': '科学', 'technology': '科技', 'arts': '艺术', 'literature': '文学',
-            'philosophy': '哲学', 'psychology': '心理学', 'language': '语言', 'academic': '学术',
             
             // 娱乐生活
             'entertainment': '娱乐', 'comedy': '喜剧', 'lifestyle': '生活', 'health': '健康',
-            'fashion': '时尚', 'food': '美食', 'travel': '旅游', 'fitness': '健身', 'beauty': '美容',
-            'dating': '婚恋', 'relationships': '人际关系', 'parenting': '育儿', 'home': '家居',
-            'garden': '园艺', 'diy': '手工制作', 'crafts': '手工艺',
+            'fashion': '时尚', 'food': '美食', 'travel': '旅游', 'fitness': '健身',
             
             // 特殊类型
             'children': '儿童', 'family': '家庭', 'community': '社区', 'local': '本地',
             'regional': '区域', 'national': '全国', 'international': '国际', 'public': '公共广播',
-            'college': '大学电台', 'student': '学生电台', 'amateur': '业余电台', 'ham': '业余无线电',
-            'emergency': '紧急广播', 'alert': '警报', 'test': '测试'
+            'college': '大学电台', 'student': '学生电台'
         };
 
         // 热门类型列表
         const popularGenres = ['音乐', '新闻', '古典', '摇滚', '流行', '爵士', '电子', '谈话', '体育', '教育'];
 
-        // 地区国家映射 - 已扩展为7个洲
+        // 地区国家映射 - 7个洲
         const regionCountries = {
             'asia': ['China', 'Japan', 'South Korea', 'India', 'Indonesia', 'Thailand', 'Vietnam', 'Malaysia', 'Philippines', 'Singapore', 'Taiwan', 'Hong Kong', 'Macao'],
             'europe': ['United Kingdom', 'Germany', 'France', 'Italy', 'Spain', 'Netherlands', 'Sweden', 'Norway', 'Finland', 'Denmark', 'Switzerland', 'Austria', 'Russia'],
-            'africa': ['South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Morocco', 'Ethiopia', 'Ghana', 'Tanzania', 'Algeria', 'Uganda'],
             'north-america': ['United States', 'Canada', 'Mexico', 'Cuba', 'Dominican Republic', 'Haiti', 'Jamaica'],
             'south-america': ['Brazil', 'Argentina', 'Chile', 'Colombia', 'Peru', 'Venezuela', 'Ecuador', 'Bolivia'],
+            'africa': ['South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Morocco', 'Ethiopia', 'Ghana', 'Tanzania', 'Algeria', 'Uganda'],
             'oceania': ['Australia', 'New Zealand', 'Fiji', 'Papua New Guinea', 'Samoa', 'Tonga']
         };
 
-        // 从预处理的JSON文件加载数据
+        // 从预处理的JSON文件加载数据 - 优化版本
         async function loadPreprocessedData() {
             console.log('开始加载数据...');
             const loadingElement = document.getElementById('radio-list');
             loadingElement.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载电台数据...</div>';
             
             try {
-                // 模拟数据加载
-                setTimeout(() => {
-                    const mockStations = generateMockStations();
-                    processStationsData(mockStations);
-                    updateDataSource('模拟数据');
-                }, 1000);
+                // 首先尝试加载主数据文件
+                let stations = await loadLocalDataFile(DATA_SOURCES.primary);
+                
+                if (stations && stations.length > 0) {
+                    console.log(`✅ 从本地主文件加载了 ${stations.length} 个电台`);
+                    processStationsData(stations);
+                    updateDataSource('本地数据');
+                    return;
+                }
+                
+                // 如果主文件不可用，尝试加载分地区数据
+                console.log('主数据文件不可用，尝试加载分地区数据...');
+                stations = await loadRegionalData();
+                
+                if (stations && stations.length > 0) {
+                    console.log(`✅ 从地区文件加载了 ${stations.length} 个电台`);
+                    processStationsData(stations);
+                    updateDataSource('本地数据 (分地区)');
+                    return;
+                }
+                
+                // 如果本地数据都不可用，使用备用API
+                console.log('本地数据不可用，使用备用API...');
+                await loadFallbackData();
                 
             } catch (error) {
                 console.error('数据加载失败:', error);
-                loadFallbackData();
+                await loadFallbackData();
+            }
+        }
+
+        // 加载本地数据文件
+        async function loadLocalDataFile(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                return data.stations || [];
+            } catch (error) {
+                console.warn(`无法加载 ${url}:`, error);
+                return null;
+            }
+        }
+
+        // 加载地区数据
+        async function loadRegionalData() {
+            const regionalSources = [
+                DATA_SOURCES.asia,
+                DATA_SOURCES.europe,
+                DATA_SOURCES['north-america'],
+                DATA_SOURCES['south-america'],
+                DATA_SOURCES.africa,
+                DATA_SOURCES.oceania
+            ];
+            
+            let allStations = [];
+            
+            for (const source of regionalSources) {
+                try {
+                    const stations = await loadLocalDataFile(source);
+                    if (stations) {
+                        allStations = allStations.concat(stations);
+                        console.log(`✅ 从 ${source} 加载了 ${stations.length} 个电台`);
+                    }
+                } catch (error) {
+                    console.warn(`无法加载地区数据 ${source}:`, error);
+                }
+            }
+            
+            // 去重
+            const uniqueStations = [];
+            const seen = new Set();
+            
+            for (const station of allStations) {
+                if (station.stationuuid && !seen.has(station.stationuuid)) {
+                    seen.add(station.stationuuid);
+                    uniqueStations.push(station);
+                }
+            }
+            
+            console.log(`📊 地区数据去重后: ${uniqueStations.length} 个电台`);
+            return uniqueStations;
+        }
+
+        // 加载备用API数据
+        async function loadFallbackData() {
+            console.log('正在从Radio Browser API获取数据...');
+            updateDataSource('Radio Browser API');
+            
+            try {
+                const response = await fetch(DATA_SOURCES.fallback);
+                const stations = await response.json();
+                
+                if (stations && stations.length > 0) {
+                    processStationsData(stations);
+                    console.log(`✅ 从API加载了 ${stations.length} 个电台`);
+                } else {
+                    throw new Error('API返回空数据');
+                }
+            } catch (error) {
+                console.error('备用API加载失败:', error);
+                // 最后使用模拟数据
+                const mockStations = generateMockStations();
+                processStationsData(mockStations);
+                updateDataSource('模拟数据');
             }
         }
 
@@ -1449,7 +1540,7 @@
             qualityIndicator.textContent = `(${quality})`;
         }
 
-        // 初始化地图 - 已调整默认缩放级别
+        // 初始化地图
         function initMap() {
             map = L.map('map').setView([20, 0], 3);
             
@@ -1465,7 +1556,7 @@
                 });
                 
                 // 查找附近的电台
-                const nearbyStations = findStationsNearLocation(e.latlng.lat, e.latlng.lng, 500); // 500公里范围内
+                const nearbyStations = findStationsNearLocation(e.latlng.lat, e.latlng.lng, 500);
                 
                 if (nearbyStations.length > 0) {
                     // 更新电台列表显示附近的电台
@@ -1499,7 +1590,7 @@
 
         // 计算两点间距离（公里）
         function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371; // 地球半径（公里）
+            const R = 6371;
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLon = (lon2 - lon1) * Math.PI / 180;
             const a = 
@@ -1593,8 +1684,6 @@
                 // 音质筛选
                 let matchesQuality = true;
                 if (currentQuality !== 'auto') {
-                    // 这里可以根据实际数据中的音质信息进行筛选
-                    // 目前使用简单的模拟逻辑
                     if (currentQuality === 'high') {
                         matchesQuality = station.tags && (
                             station.tags.toLowerCase().includes('high') || 
@@ -1836,7 +1925,6 @@
             
             switch(platform) {
                 case 'wechat':
-                    // 微信分享需要特殊处理，这里只是示例
                     alert('请使用微信内置分享功能');
                     break;
                 case 'weibo':
@@ -1852,7 +1940,6 @@
                     window.open(shareUrl, '_blank');
                     break;
                 case 'redbook':
-                    // 小红书没有官方分享API，这里只是示例
                     alert('请使用小红书内置分享功能');
                     break;
                 case 'twitter':
@@ -1936,7 +2023,7 @@
             document.getElementById('language-filter').addEventListener('change', performSearch);
             document.getElementById('load-more-btn').addEventListener('click', loadMoreStations);
 
-            // 修复：地区选择联动
+            // 地区选择联动
             document.querySelectorAll('.region-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
