@@ -1,0 +1,43 @@
+name: Update Radio Data
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'  # 每周一凌晨2点更新
+  workflow_dispatch:      # 手动触发
+  push:
+    branches: [ main ]
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm init -y && npm install node-fetch@2
+      
+    - name: Run data preprocessing
+      run: node scripts/preprocess-data.js
+      env:
+        NODE_OPTIONS: '--max_old_space_size=4096'
+        
+    - name: Split data by region
+      run: node scripts/split-by-region.js
+      
+    - name: Commit and push if changed
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/
+        git diff --staged --quiet || git commit -m "Auto-update radio data [skip ci]"
+        git push
