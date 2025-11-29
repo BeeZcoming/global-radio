@@ -14,10 +14,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
-    - name: Setup Node.js
+    - name: Setup Node.js (no cache)
       uses: actions/setup-node@v4
       with:
         node-version: '18'
+        cache: ''  # 明确设置为空字符串来禁用缓存
         
     - name: Create data directory
       run: mkdir -p data
