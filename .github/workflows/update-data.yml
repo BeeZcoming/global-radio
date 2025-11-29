@@ -14,23 +14,26 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
-    - name: Setup Node.js (no cache)
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: ''  # 明确设置为空字符串来禁用缓存
+        cache: 'npm'  # 现在有 package.json 和 package-lock.json 了
         
+    - name: Install dependencies (none needed)
+      run: npm install
+      
     - name: Create data directory
       run: mkdir -p data
       
     - name: Run data preprocessing
-      run: node scripts/preprocess-data.js
+      run: npm run preprocess
       
     - name: Split data by region
-      run: node scripts/split-by-region.js
+      run: npm run split
       
     - name: Verify data
-      run: node scripts/verify-data.js
+      run: npm run verify
       
     - name: Commit and push if changed
       run: |
