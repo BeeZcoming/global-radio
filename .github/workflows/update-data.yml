@@ -2,7 +2,7 @@ name: Update Radio Data
 
 on:
   schedule:
-    - cron: '0 2 * * 1'  # 每周一凌晨2点（UTC）自动更新
+    - cron: '0 2 * * 1'  # 每周一凌晨2点自动更新
   workflow_dispatch:      # 允许手动触发
 
 jobs:
@@ -14,26 +14,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
+    - name: Setup Python
+      uses: actions/setup-python@v4
       with:
-        node-version: '18'
-        cache: 'npm'  # 现在有 package.json 和 package-lock.json 了
+        python-version: '3.10'
         
-    - name: Install dependencies (none needed)
-      run: npm install
-      
-    - name: Create data directory
-      run: mkdir -p data
-      
     - name: Run data preprocessing
-      run: npm run preprocess
-      
-    - name: Split data by region
-      run: npm run split
-      
-    - name: Verify data
-      run: npm run verify
+      run: python scripts/preprocess-data.py
       
     - name: Commit and push if changed
       run: |
