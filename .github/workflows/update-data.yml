@@ -32,19 +32,20 @@ jobs:
     - name: Run data preprocessing
       run: python scripts/preprocess-data.py
       
-    - name: Configure Git
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Actions"
-        
-    - name: Commit and push changes
-      run: |
-        git add data/
-        # 检查是否有更改
-        if git diff --staged --quiet; then
-          echo "没有数据更改，跳过提交"
-        else
-          git commit -m "🤖 Auto-update radio data [skip ci]"
-          git push
-          echo "数据更新成功推送！"
-        fi
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.PAT_TOKEN }}
+        commit-message: "🤖 Auto-update radio data"
+        title: "🤖 Auto-update radio data"
+        body: |
+          自动更新广播电台数据
+          
+          - 更新电台列表
+          - 刷新地区数据
+          - 优化数据质量
+        branch: update-radio-data
+        delete-branch: true
+        labels: |
+          automated
+          data-update
