@@ -4,8 +4,6 @@ on:
   schedule:
     - cron: '0 2 * * 1'  # 每周一凌晨2点（UTC）自动更新
   workflow_dispatch:      # 允许手动触发
-  push:
-    branches: [ main ]
 
 jobs:
   update-data:
@@ -15,20 +13,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
+      
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'  # 移除这行如果没有package-lock.json
         
-    - name: Install node-fetch directly
-      run: |
-        npm init -y
-        npm install node-fetch@3
-      
     - name: Create data directory
       run: mkdir -p data
       
