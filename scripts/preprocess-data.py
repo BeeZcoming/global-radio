@@ -9,14 +9,14 @@ import ssl
 def fetch_radio_stations():
     print("🚀 开始获取全球电台数据...")
     
-    # 禁用 SSL 证书验证（避免证书问题）
+    # 禁用 SSL 证书验证
     ssl_context = ssl.create_default_context()
     ssl_context.check_hostname = False
     ssl_context.verify_mode = ssl.CERT_NONE
     
     endpoints = [
-        "https://de1.api.radio-browser.info/json/stations?limit=300&hidebroken=true&order=votes",
-        "https://at1.api.radio-browser.info/json/stations?limit=300&hidebroken=true&order=votes"
+        "https://de1.api.radio-browser.info/json/stations?limit=800&hidebroken=true&order=votes",
+        "https://at1.api.radio-browser.info/json/stations?limit=800&hidebroken=true&order=votes"
     ]
     
     all_stations = []
@@ -25,31 +25,23 @@ def fetch_radio_stations():
         try:
             print(f"📡 正在从 {endpoint} 获取数据...")
             
-            # 创建请求对象
             req = urllib.request.Request(
                 endpoint,
-                headers={
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                    'Accept': 'application/json'
-                }
+                headers={'User-Agent': 'Mozilla/5.0'}
             )
             
-            # 发送请求
             with urllib.request.urlopen(req, context=ssl_context, timeout=30) as response:
                 data = response.read().decode('utf-8')
                 stations = json.loads(data)
-                print(f"✅ 从 {endpoint} 获取到 {len(stations)} 个电台")
+                print(f"✅ 获取到 {len(stations)} 个电台")
                 all_stations.extend(stations)
                 
-            # 添加延迟避免请求过快
             time.sleep(2)
             
         except Exception as e:
-            print(f"❌ 从 {endpoint} 获取数据失败: {e}")
+            print(f"❌ 获取失败: {e}")
     
     if not all_stations:
-        # 如果在线获取失败，使用备用数据
-        print("⚠️ 在线获取失败，使用备用示例数据")
         return create_fallback_data()
     
     print(f"📊 总共获取到 {len(all_stations)} 个电台")
@@ -69,7 +61,6 @@ def fetch_radio_stations():
     # 数据清洗和优化
     processed_stations = []
     for station in unique_stations:
-        # 过滤有效电台
         has_url = station.get('url_resolved') or station.get('url')
         has_name = station.get('name') and station.get('name', '').strip()
         
@@ -101,7 +92,7 @@ def create_fallback_data():
         {
             "stationuuid": "1",
             "name": "BBC Radio 1",
-            "country": "United Kingdom", 
+            "country": "United Kingdom",
             "countrycode": "GB",
             "url_resolved": "https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one",
             "tags": "pop,music",
@@ -116,7 +107,7 @@ def create_fallback_data():
             "country": "France",
             "countrycode": "FR",
             "url_resolved": "https://rfien-live.akamaized.net/hls/live/2038566/RFI_WEB/master.m3u8",
-            "tags": "news,french", 
+            "tags": "news,french",
             "language": "french",
             "votes": 800,
             "geo_lat": 48.8566,
@@ -129,7 +120,7 @@ def create_fallback_data():
             "countrycode": "DE",
             "url_resolved": "https://st01.sslstream.dlf.de/dlf/01/128/mp3/stream.mp3",
             "tags": "news,german",
-            "language": "german", 
+            "language": "german",
             "votes": 700,
             "geo_lat": 52.5200,
             "geo_long": 13.4050
@@ -147,7 +138,7 @@ def create_fallback_data():
             "geo_long": 116.4074
         },
         {
-            "stationuuid": "5", 
+            "stationuuid": "5",
             "name": "NHK Radio 1",
             "country": "Japan",
             "countrycode": "JP",
@@ -157,22 +148,67 @@ def create_fallback_data():
             "votes": 500,
             "geo_lat": 35.6762,
             "geo_long": 139.6503
+        },
+        {
+            "stationuuid": "6",
+            "name": "South Africa Radio",
+            "country": "South Africa",
+            "countrycode": "ZA",
+            "url_resolved": "https://stream.radio.co/sd5add5ec9/listen",
+            "tags": "music,african",
+            "language": "english",
+            "votes": 300,
+            "geo_lat": -33.9249,
+            "geo_long": 18.4241
+        },
+        {
+            "stationuuid": "7",
+            "name": "Egypt Radio",
+            "country": "Egypt", 
+            "countrycode": "EG",
+            "url_resolved": "https://stream.radio.co/sd5add5ec9/listen",
+            "tags": "arabic,music",
+            "language": "arabic",
+            "votes": 250,
+            "geo_lat": 30.0444,
+            "geo_long": 31.2357
         }
     ]
-    
     print("🔄 使用备用示例数据")
     return fallback_stations
 
 def split_by_region(stations, last_updated):
-    """按地区分片数据"""
+    """按地区分片数据 - 修复匹配逻辑"""
     print("🌍 开始按地区分片数据...")
     
+    # 扩展国家列表，包含更多常见国家
     region_countries = {
-        'asia': ['China', 'Japan', 'South Korea', 'India', 'Indonesia', 'Thailand'],
-        'europe': ['United Kingdom', 'Germany', 'France', 'Italy', 'Spain', 'Netherlands'],
-        'americas': ['United States', 'Canada', 'Mexico', 'Brazil', 'Argentina'],
-        'africa': ['South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Morocco'],
-        'oceania': ['Australia', 'New Zealand', 'Fiji']
+        'asia': [
+            'China', 'Japan', 'South Korea', 'India', 'Indonesia', 'Thailand', 
+            'Vietnam', 'Malaysia', 'Philippines', 'Singapore', 'Taiwan', 'Hong Kong',
+            'Bangladesh', 'Pakistan', 'Sri Lanka', 'Nepal', 'Bhutan', 'Maldives',
+            'Myanmar', 'Cambodia', 'Laos', 'Mongolia', 'North Korea', 'Brunei'
+        ],
+        'europe': [
+            'United Kingdom', 'Germany', 'France', 'Italy', 'Spain', 'Netherlands',
+            'Sweden', 'Norway', 'Finland', 'Denmark', 'Switzerland', 'Austria',
+            'Belgium', 'Ireland', 'Portugal', 'Poland', 'Russia', 'Ukraine',
+            'Czech', 'Hungary', 'Romania', 'Greece', 'Bulgaria', 'Serbia'
+        ],
+        'americas': [
+            'United States', 'Canada', 'Mexico', 'Brazil', 'Argentina', 'Chile',
+            'Colombia', 'Peru', 'Venezuela', 'Cuba', 'Ecuador', 'Dominican',
+            'Guatemala', 'Bolivia', 'Haiti', 'Paraguay', 'Uruguay', 'Jamaica'
+        ],
+        'africa': [
+            'South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Morocco', 'Ethiopia',
+            'Ghana', 'Tanzania', 'Algeria', 'Uganda', 'Sudan', 'Angola',
+            'Mozambique', 'Madagascar', 'Cameroon', 'Ivory Coast', 'Senegal'
+        ],
+        'oceania': [
+            'Australia', 'New Zealand', 'Fiji', 'Papua New Guinea', 'New Caledonia',
+            'Solomon Islands', 'Vanuatu', 'Samoa', 'Tonga'
+        ]
     }
     
     total_regional_stations = 0
@@ -182,9 +218,10 @@ def split_by_region(stations, last_updated):
         for station in stations:
             country = station.get('country', '')
             if country and country != 'Unknown':
-                # 检查是否匹配地区中的国家
+                # 改进匹配逻辑：检查国家是否完全匹配或包含
+                country_lower = country.lower()
                 for country_name in countries:
-                    if country_name.lower() in country.lower():
+                    if country_name.lower() in country_lower:
                         region_stations.append(station)
                         break
         
@@ -201,6 +238,18 @@ def split_by_region(stations, last_updated):
         
         print(f"✅ {region}地区: {len(region_stations)} 个电台")
         total_regional_stations += len(region_stations)
+    
+    # 调试信息：显示所有国家的分布
+    print("\n📊 国家分布统计:")
+    country_stats = {}
+    for station in stations:
+        country = station.get('country', 'Unknown')
+        country_stats[country] = country_stats.get(country, 0) + 1
+    
+    # 显示前20个最多的国家
+    sorted_countries = sorted(country_stats.items(), key=lambda x: x[1], reverse=True)[:20]
+    for country, count in sorted_countries:
+        print(f"  {country}: {count} 个电台")
     
     print(f"📈 地区分片完成！总共 {total_regional_stations} 个地区电台")
 
