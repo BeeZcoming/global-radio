@@ -1,13 +1,38 @@
 {
-  "lastUpdated": "2025-11-29T14:59:49.709284",
-  "totalStations": 0,
+  "lastUpdated": "2025-11-29T15:15:50.127570",
+  "totalStations": 1,
   "region": "africa",
   "countries": [
     "South Africa",
     "Egypt",
     "Nigeria",
     "Kenya",
-    "Morocco"
+    "Morocco",
+    "Ethiopia",
+    "Ghana",
+    "Tanzania",
+    "Algeria",
+    "Uganda",
+    "Sudan",
+    "Angola",
+    "Mozambique",
+    "Madagascar",
+    "Cameroon",
+    "Ivory Coast",
+    "Senegal"
   ],
-  "stations": []
+  "stations": [
+    {
+      "stationuuid": "6d608cbb-bb82-4e18-b5da-2982e66e6752",
+      "name": "Diamond Radio",
+      "country": "South Africa",
+      "countrycode": "ZA",
+      "url_resolved": "https://vm65162.streamerr.co/listen/diamond_fm/radio.mp3",
+      "tags": "",
+      "language": "",
+      "votes": 1,
+      "geo_lat": -29.55315050898206,
+      "geo_long": 23.8623046875
+    }
+  ]
 }

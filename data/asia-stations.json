@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2025-11-29T14:59:49.709284",
-  "totalStations": 0,
+  "lastUpdated": "2025-11-29T15:15:50.127570",
+  "totalStations": 1,
   "region": "asia",
   "countries": [
     "China",
@@ -8,7 +8,38 @@
     "South Korea",
     "India",
     "Indonesia",
-    "Thailand"
+    "Thailand",
+    "Vietnam",
+    "Malaysia",
+    "Philippines",
+    "Singapore",
+    "Taiwan",
+    "Hong Kong",
+    "Bangladesh",
+    "Pakistan",
+    "Sri Lanka",
+    "Nepal",
+    "Bhutan",
+    "Maldives",
+    "Myanmar",
+    "Cambodia",
+    "Laos",
+    "Mongolia",
+    "North Korea",
+    "Brunei"
   ],
-  "stations": []
+  "stations": [
+    {
+      "stationuuid": "6067d6d4-4a1a-4661-97e1-41cbe1e6a232",
+      "name": "Capital FM2",
+      "country": "The Philippines",
+      "countrycode": "PH",
+      "url_resolved": "https://ice.audionow.com/4800DWBRBusinessRadioopus.ogg",
+      "tags": "",
+      "language": "",
+      "votes": 1,
+      "geo_lat": null,
+      "geo_long": null
+    }
+  ]
 }
