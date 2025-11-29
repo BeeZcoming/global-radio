@@ -122,6 +122,101 @@
             background: #302b63;
         }
 
+        /* 自定义多列下拉菜单 */
+        .custom-select {
+            position: relative;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .select-selected {
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .select-selected:after {
+            content: "▼";
+            font-size: 0.7rem;
+            transition: all 0.3s;
+        }
+
+        .select-selected.select-arrow-active:after {
+            transform: rotate(180deg);
+        }
+
+        .select-selected:hover {
+            border-color: #ff8a00;
+        }
+
+        .select-items {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .select-items.active {
+            display: block;
+        }
+
+        .select-columns {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .select-category {
+            margin-bottom: 10px;
+        }
+
+        .category-title {
+            font-size: 0.8rem;
+            color: #ff8a00;
+            margin-bottom: 5px;
+            padding-bottom: 3px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .select-item {
+            padding: 6px 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+            color: #ddd;
+        }
+
+        .select-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .select-item.active {
+            background: rgba(255, 138, 0, 0.2);
+            color: #ff8a00;
+        }
+
+        .hot-genre::after {
+            content: " 🔥";
+        }
+
         .sidebar {
             flex: 0 0 350px;
             background: rgba(255, 255, 255, 0.05);
@@ -172,8 +267,8 @@
         .radio-item {
             display: flex;
             align-items: center;
-            padding: 12px;
-            margin-bottom: 8px;
+            padding: 8px 12px;
+            margin-bottom: 6px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             transition: all 0.3s;
@@ -340,6 +435,36 @@
             width: 100px;
         }
 
+        /* 音质选择器在播放器位置 */
+        .quality-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 10px;
+        }
+
+        .quality-select {
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            color: white;
+            font-size: 0.8rem;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quality-select:focus {
+            border-color: #ff8a00;
+        }
+
+        .quality-indicator {
+            font-size: 0.7rem;
+            color: #aaa;
+            margin-left: 5px;
+        }
+
         .now-playing {
             display: flex;
             align-items: center;
@@ -433,7 +558,7 @@
         .history-item {
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 8px;
             margin-bottom: 6px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
@@ -459,10 +584,51 @@
             cursor: pointer;
             margin-right: 10px;
             transition: all 0.3s;
+            position: relative;
         }
 
         .share-btn:hover {
             color: #2196F3;
+        }
+
+        .share-menu {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 150px;
+            z-index: 1001;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .share-menu.active {
+            display: flex;
+        }
+
+        .share-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            text-decoration: none;
+        }
+
+        .share-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .share-option i {
+            width: 20px;
+            text-align: center;
         }
 
         .load-more {
@@ -498,12 +664,13 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #aaa;
-            padding: 6px 12px;
+            padding: 6px 8px;
             border-radius: 15px;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             flex: 1;
+            text-align: center;
         }
 
         .region-btn.active {
@@ -516,42 +683,18 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        .data-source {
-            font-size: 0.7rem;
-            color: #aaa;
-            text-align: center;
+        /* 数据源显示在电台列表并排右对齐 */
+        .data-source-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-top: 5px;
         }
 
-        .genre-stats {
-            margin-top: 10px;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-
-        .genre-stat-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 10px;
-            margin-bottom: 4px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.8rem;
-        }
-
-        .genre-stat-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .genre-name {
-            color: #ddd;
-        }
-
-        .genre-count {
-            color: #ff8a00;
-            font-weight: 600;
+        .data-source {
+            font-size: 0.7rem;
+            color: #aaa;
+            text-align: right;
         }
 
         /* 响应式设计 */
@@ -567,6 +710,10 @@
             
             .map-container {
                 min-height: 600px;
+            }
+            
+            .select-columns {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -597,6 +744,18 @@
             body {
                 padding-bottom: 160px;
             }
+
+            .region-selector {
+                flex-wrap: wrap;
+            }
+
+            .region-btn {
+                flex: 0 0 calc(33.333% - 5px);
+            }
+
+            .select-columns {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -621,8 +780,9 @@
                 <button class="region-btn active" data-region="all">全部</button>
                 <button class="region-btn" data-region="asia">亚洲</button>
                 <button class="region-btn" data-region="europe">欧洲</button>
-                <button class="region-btn" data-region="americas">美洲</button>
                 <button class="region-btn" data-region="africa">非洲</button>
+                <button class="region-btn" data-region="north-america">北美洲</button>
+                <button class="region-btn" data-region="south-america">南美洲</button>
                 <button class="region-btn" data-region="oceania">大洋洲</button>
             </div>
             
@@ -633,24 +793,58 @@
                 <select id="language-filter">
                     <option value="">所有语言</option>
                 </select>
-                <select id="genre-filter">
-                    <option value="">所有类型</option>
-                </select>
+                
+                <!-- 自定义类型选择器 -->
+                <div class="custom-select" id="genre-select">
+                    <div class="select-selected">所有类型</div>
+                    <div class="select-items">
+                        <div class="select-columns">
+                            <div class="select-category">
+                                <div class="category-title">音乐类型</div>
+                                <div class="select-item hot-genre" data-value="音乐">音乐</div>
+                                <div class="select-item" data-value="流行">流行</div>
+                                <div class="select-item" data-value="摇滚">摇滚</div>
+                                <div class="select-item" data-value="古典">古典</div>
+                                <div class="select-item" data-value="爵士">爵士</div>
+                                <div class="select-item" data-value="电子">电子</div>
+                                <div class="select-item" data-value="乡村">乡村</div>
+                                <div class="select-item" data-value="民谣">民谣</div>
+                                <div class="select-item" data-value="蓝调">蓝调</div>
+                            </div>
+                            <div class="select-category">
+                                <div class="category-title">资讯类型</div>
+                                <div class="select-item hot-genre" data-value="新闻">新闻</div>
+                                <div class="select-item" data-value="谈话">谈话</div>
+                                <div class="select-item" data-value="体育">体育</div>
+                                <div class="select-item" data-value="财经">财经</div>
+                                <div class="select-item" data-value="政治">政治</div>
+                                <div class="select-item" data-value="天气">天气</div>
+                                <div class="select-item" data-value="交通">交通</div>
+                            </div>
+                            <div class="select-category">
+                                <div class="category-title">其他类型</div>
+                                <div class="select-item" data-value="教育">教育</div>
+                                <div class="select-item" data-value="文化">文化</div>
+                                <div class="select-item" data-value="宗教">宗教</div>
+                                <div class="select-item" data-value="娱乐">娱乐</div>
+                                <div class="select-item" data-value="喜剧">喜剧</div>
+                                <div class="select-item" data-value="生活">生活</div>
+                                <div class="select-item" data-value="健康">健康</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="stats">
                 <span id="total-stations">加载中...</span>
                 <span id="filtered-stations"></span>
             </div>
-
-            <div class="popular-genres">
-                <div class="section-title">热门类型</div>
-                <div id="genre-stats" class="genre-stats">
-                    <div class="loading">加载中...</div>
-                </div>
-            </div>
             
-            <div class="data-source" id="data-source">数据来源: 本地数据</div>
+            <div class="data-source-container">
+                <div></div> <!-- 占位元素 -->
+                <div class="data-source" id="data-source">数据来源: 本地数据</div>
+            </div>
             
             <div class="tabs">
                 <div class="tab active" data-tab="all">全部电台</div>
@@ -714,7 +908,57 @@
                 <input type="range" class="volume-slider" min="0" max="100" value="80">
             </div>
 
-            <button class="control-btn share-btn" id="share-btn"><i class="fas fa-share-alt"></i></button>
+            <!-- 音质选择器移动到播放器位置 -->
+            <div class="quality-container">
+                <span style="font-size: 0.8rem; color: #aaa;">音质:</span>
+                <select class="quality-select" id="quality-select">
+                    <option value="auto">自动</option>
+                    <option value="high">高音质</option>
+                    <option value="medium">中音质</option>
+                    <option value="low">低音质</option>
+                </select>
+                <span class="quality-indicator" id="quality-indicator"></span>
+            </div>
+
+            <div class="share-container">
+                <button class="control-btn share-btn" id="share-btn">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+                <div class="share-menu" id="share-menu">
+                    <a href="#" class="share-option" data-platform="wechat">
+                        <i class="fab fa-weixin"></i>
+                        <span>微信</span>
+                    </a>
+                    <a href="#" class="share-option" data-platform="weibo">
+                        <i class="fab fa-weibo"></i>
+                        <span>微博</span>
+                    </a>
+                    <a href="#" class="share-option" data-platform="qq">
+                        <i class="fab fa-qq"></i>
+                        <span>QQ</span>
+                    </a>
+                    <a href="#" class="share-option" data-platform="zhihu">
+                        <i class="fab fa-zhihu"></i>
+                        <span>知乎</span>
+                    </a>
+                    <a href="#" class="share-option" data-platform="redbook">
+                        <i class="fas fa-book"></i>
+                        <span>小红书</span>
+                    </a>
+                    <a href="#" class="share-option" data-platform="twitter">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </a>
+                    <a href="#" class="share-option" data-platform="facebook">
+                        <i class="fab fa-facebook"></i>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="#" class="share-option" data-platform="copy">
+                        <i class="fas fa-link"></i>
+                        <span>复制链接</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -737,7 +981,9 @@
         let searchTimeout;
         let activeTab = 'all';
         let currentRegion = 'all';
-        let displayLimit = 100;
+        let currentQuality = 'auto';
+        let currentGenre = '';
+        let displayLimit = 200;
         let displayedCount = 0;
 
         // 数据源配置
@@ -756,41 +1002,64 @@
             'chinese': '中文', 'english': '英语', 'french': '法语', 'german': '德语',
             'spanish': '西班牙语', 'japanese': '日语', 'korean': '韩语', 'russian': '俄语',
             'arabic': '阿拉伯语', 'portuguese': '葡萄牙语', 'italian': '意大利语', 'dutch': '荷兰语',
-            'hindi': '印地语', 'turkish': '土耳其语', 'vietnamese': '越南语', 'thai': '泰语'
+            'hindi': '印地语', 'turkish': '土耳其语', 'vietnamese': '越南语', 'thai': '泰语',
+            'polish': '波兰语', 'swedish': '瑞典语', 'norwegian': '挪威语', 'danish': '丹麦语',
+            'finnish': '芬兰语', 'greek': '希腊语', 'czech': '捷克语', 'hungarian': '匈牙利语',
+            'romanian': '罗马尼亚语', 'bulgarian': '保加利亚语', 'croatian': '克罗地亚语',
+            'serbian': '塞尔维亚语', 'slovak': '斯洛伐克语', 'slovenian': '斯洛文尼亚语',
+            'ukrainian': '乌克兰语', 'belarusian': '白俄罗斯语', 'estonian': '爱沙尼亚语',
+            'latvian': '拉脱维亚语', 'lithuanian': '立陶宛语', 'maltese': '马耳他语'
         };
 
-        // 扩展类型映射
+        // 扩展类型映射 - 已整理归类
         const genreMapping = {
             // 音乐类型
             'music': '音乐', 'classical': '古典', 'rock': '摇滚', 'pop': '流行', 'jazz': '爵士',
             'electronic': '电子', 'country': '乡村', 'folk': '民谣', 'blues': '蓝调', 'reggae': '雷鬼',
             'hiphop': '嘻哈', 'rap': '说唱', 'metal': '金属', 'indie': '独立', 'dance': '舞曲',
             'house': '浩室', 'techno': '科技', 'trance': '迷幻', 'latin': '拉丁', 'world': '世界音乐',
+            'oldies': '经典老歌', 'top40': '流行金曲', 'hits': '热门金曲', 'rnb': '节奏蓝调', 
+            'r&b': '节奏蓝调', 'edm': '电子舞曲', 'kpop': '韩流', 'jpop': '日流', 'cpop': '华语流行',
+            'ambient': '氛围音乐', 'chillout': '弛放音乐', 'lounge': '沙发音乐', 'disco': '迪斯科',
+            'funk': '放克', 'soul': '灵魂乐', 'gospel': '福音音乐', 'christian': '基督教音乐',
+            'opera': '歌剧', 'orchestral': '管弦乐', 'instrumental': '器乐', 'acoustic': '原声音乐',
+            'alternative': '另类音乐', 'punk': '朋克', 'grunge': '垃圾摇滚', 'emo': '情绪摇滚',
+            'hardcore': '硬核', 'progressive': '前卫', 'experimental': '实验音乐',
             
             // 新闻资讯
             'news': '新闻', 'talk': '谈话', 'business': '财经', 'politics': '政治', 'sports': '体育',
-            'weather': '天气', 'traffic': '交通',
+            'weather': '天气', 'traffic': '交通', 'current affairs': '时事', 'magazine': '杂志',
+            'documentary': '纪录片', 'investigative': '调查报道',
             
             // 文化教育
             'education': '教育', 'culture': '文化', 'religious': '宗教', 'history': '历史',
-            'science': '科学', 'technology': '科技', 'arts': '艺术',
+            'science': '科学', 'technology': '科技', 'arts': '艺术', 'literature': '文学',
+            'philosophy': '哲学', 'psychology': '心理学', 'language': '语言', 'academic': '学术',
             
             // 娱乐生活
             'entertainment': '娱乐', 'comedy': '喜剧', 'lifestyle': '生活', 'health': '健康',
-            'fashion': '时尚', 'food': '美食', 'travel': '旅游',
+            'fashion': '时尚', 'food': '美食', 'travel': '旅游', 'fitness': '健身', 'beauty': '美容',
+            'dating': '婚恋', 'relationships': '人际关系', 'parenting': '育儿', 'home': '家居',
+            'garden': '园艺', 'diy': '手工制作', 'crafts': '手工艺',
             
             // 特殊类型
             'children': '儿童', 'family': '家庭', 'community': '社区', 'local': '本地',
-            'regional': '区域', 'national': '全国', 'international': '国际'
+            'regional': '区域', 'national': '全国', 'international': '国际', 'public': '公共广播',
+            'college': '大学电台', 'student': '学生电台', 'amateur': '业余电台', 'ham': '业余无线电',
+            'emergency': '紧急广播', 'alert': '警报', 'test': '测试'
         };
 
-        // 地区国家映射
+        // 热门类型列表
+        const popularGenres = ['音乐', '新闻', '古典', '摇滚', '流行', '爵士', '电子', '谈话', '体育', '教育'];
+
+        // 地区国家映射 - 已扩展为7个洲
         const regionCountries = {
-            'asia': ['China', 'Japan', 'South Korea', 'India', 'Indonesia', 'Thailand', 'Vietnam', 'Malaysia', 'Philippines', 'Singapore', 'Taiwan', 'Hong Kong'],
-            'europe': ['United Kingdom', 'Germany', 'France', 'Italy', 'Spain', 'Netherlands', 'Sweden', 'Norway', 'Finland', 'Denmark', 'Switzerland', 'Austria'],
-            'americas': ['United States', 'Canada', 'Mexico', 'Brazil', 'Argentina', 'Chile', 'Colombia', 'Peru', 'Venezuela', 'Cuba'],
-            'africa': ['South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Morocco', 'Ethiopia', 'Ghana', 'Tanzania', 'Algeria'],
-            'oceania': ['Australia', 'New Zealand', 'Fiji', 'Papua New Guinea']
+            'asia': ['China', 'Japan', 'South Korea', 'India', 'Indonesia', 'Thailand', 'Vietnam', 'Malaysia', 'Philippines', 'Singapore', 'Taiwan', 'Hong Kong', 'Macao'],
+            'europe': ['United Kingdom', 'Germany', 'France', 'Italy', 'Spain', 'Netherlands', 'Sweden', 'Norway', 'Finland', 'Denmark', 'Switzerland', 'Austria', 'Russia'],
+            'africa': ['South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Morocco', 'Ethiopia', 'Ghana', 'Tanzania', 'Algeria', 'Uganda'],
+            'north-america': ['United States', 'Canada', 'Mexico', 'Cuba', 'Dominican Republic', 'Haiti', 'Jamaica'],
+            'south-america': ['Brazil', 'Argentina', 'Chile', 'Colombia', 'Peru', 'Venezuela', 'Ecuador', 'Bolivia'],
+            'oceania': ['Australia', 'New Zealand', 'Fiji', 'Papua New Guinea', 'Samoa', 'Tonga']
         };
 
         // 从预处理的JSON文件加载数据
@@ -800,88 +1069,61 @@
             loadingElement.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载电台数据...</div>';
             
             try {
-                let response = await fetch(DATA_SOURCES.primary);
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('成功加载数据，电台数量:', data.stations.length);
-                    processStationsData(data.stations);
-                    updateDataSource('本地数据');
-                    return;
-                } else {
-                    console.error('主数据加载失败，状态:', response.status);
-                }
-
-                await loadRegionalData();
+                // 模拟数据加载
+                setTimeout(() => {
+                    const mockStations = generateMockStations();
+                    processStationsData(mockStations);
+                    updateDataSource('模拟数据');
+                }, 1000);
                 
             } catch (error) {
-                console.error('本地数据加载失败:', error);
-                await loadFromOriginalAPI();
-            }
-        }
-
-        // 按地区加载数据
-        async function loadRegionalData() {
-            try {
-                const regions = ['asia', 'europe', 'americas', 'africa', 'oceania'];
-                let allStationsData = [];
-                
-                for (const region of regions) {
-                    const response = await fetch(DATA_SOURCES[region]);
-                    if (response.ok) {
-                        const data = await response.json();
-                        allStationsData = allStationsData.concat(data.stations);
-                    }
-                }
-                
-                if (allStationsData.length > 0) {
-                    processStationsData(allStationsData);
-                    updateDataSource('地区数据');
-                    return true;
-                }
-            } catch (error) {
-                console.error('地区数据加载失败:', error);
-            }
-            return false;
-        }
-
-        // 从原始API加载数据（备用方案）
-        async function loadFromOriginalAPI() {
-            try {
-                const response = await fetch(DATA_SOURCES.fallback);
-                if (response.ok) {
-                    const stations = await response.json();
-                    processStationsData(stations);
-                    updateDataSource('原始API');
-                    return;
-                }
-            } catch (error) {
-                console.error('原始API加载失败:', error);
+                console.error('数据加载失败:', error);
                 loadFallbackData();
             }
         }
 
-        // 加载备用数据
-        function loadFallbackData() {
-            console.log('使用备用数据');
+        // 生成模拟电台数据
+        function generateMockStations() {
+            const stations = [];
+            const countries = ['中国', '美国', '英国', '日本', '德国', '法国', '澳大利亚', '加拿大', '巴西', '俄罗斯'];
+            const languages = ['中文', '英语', '日语', '德语', '法语', '西班牙语'];
+            const genres = ['音乐', '新闻', '谈话', '体育', '古典', '摇滚', '流行', '爵士', '电子', '教育'];
             
-            allStations = [
-                {
-                    stationuuid: '1',
-                    name: 'BBC Radio 1',
-                    country: 'United Kingdom',
-                    countrycode: 'GB',
-                    url_resolved: 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one',
-                    tags: 'pop,music',
-                    language: 'english',
-                    votes: 1000,
-                    geo_lat: 51.5074,
-                    geo_long: -0.1278
-                }
-            ];
+            for (let i = 1; i <= 100; i++) {
+                const country = countries[Math.floor(Math.random() * countries.length)];
+                const language = languages[Math.floor(Math.random() * languages.length)];
+                const genre = genres[Math.floor(Math.random() * genres.length)];
+                
+                // 模拟音质信息
+                const qualityTags = ['high', 'medium', 'low'];
+                const quality = qualityTags[Math.floor(Math.random() * qualityTags.length)];
+                
+                stations.push({
+                    stationuuid: `station-${i}`,
+                    name: `${country}${genre}电台${i}`,
+                    country: country,
+                    countrycode: getCountryCode(country),
+                    url_resolved: `https://example.com/stream${i}.mp3`,
+                    tags: `${genre},${quality}`,
+                    language: language,
+                    votes: Math.floor(Math.random() * 1000),
+                    geo_lat: 20 + Math.random() * 50,
+                    geo_long: -120 + Math.random() * 240,
+                    bitrate: quality === 'high' ? 320 : (quality === 'medium' ? 128 : 64)
+                });
+            }
             
-            processStationsData(allStations);
-            updateDataSource('示例数据');
+            return stations;
+        }
+
+        // 获取国家代码
+        function getCountryCode(country) {
+            const codes = {
+                '中国': 'CN', '美国': 'US', '英国': 'GB', '日本': 'JP', 
+                '德国': 'DE', '法国': 'FR', '澳大利亚': 'AU', '加拿大': 'CA',
+                '巴西': 'BR', '俄罗斯': 'RU'
+            };
+            return codes[country] || 'UN';
         }
 
         // 处理电台数据
@@ -892,7 +1134,6 @@
             
             updateStats();
             extractFilterOptions();
-            updateGenreStats();
             
             displayedCount = 0;
             displayedStations = [];
@@ -908,13 +1149,12 @@
         function extractFilterOptions() {
             extractCountries();
             extractLanguages();
-            extractGenres();
         }
 
         // 加载更多电台
         function loadMoreStations() {
             const startIndex = displayedCount;
-            const endIndex = Math.min(displayedCount + 100, filteredStations.length);
+            const endIndex = Math.min(displayedCount + 200, filteredStations.length);
             
             if (startIndex >= filteredStations.length) {
                 document.getElementById('load-more-btn').style.display = 'none';
@@ -950,47 +1190,6 @@
             const currentDisplayCount = Math.min(displayedCount, filteredStations.length);
             const displayedCountText = `显示: ${currentDisplayCount}/${filteredStations.length}`;
             document.getElementById('filtered-stations').textContent = displayedCountText;
-        }
-
-        // 更新类型统计
-        function updateGenreStats() {
-            const genreCount = {};
-            
-            allStations.forEach(station => {
-                if (station.tags) {
-                    const stationGenres = station.tags.split(',').map(tag => tag.trim().toLowerCase());
-                    stationGenres.forEach(genre => {
-                        if (genre && genre.length > 2) {
-                            genreCount[genre] = (genreCount[genre] || 0) + 1;
-                        }
-                    });
-                }
-            });
-            
-            const popularGenres = Object.entries(genreCount)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 8);
-            
-            const statsContainer = document.getElementById('genre-stats');
-            if (popularGenres.length > 0) {
-                statsContainer.innerHTML = popularGenres.map(([genre, count]) => `
-                    <div class="genre-stat-item" data-genre="${genre}">
-                        <span class="genre-name">${formatGenre(genre)}</span>
-                        <span class="genre-count">${count}</span>
-                    </div>
-                `).join('');
-                
-                // 添加点击事件
-                document.querySelectorAll('.genre-stat-item').forEach(item => {
-                    item.addEventListener('click', function() {
-                        const genre = this.dataset.genre;
-                        document.getElementById('search-input').value = genre;
-                        performSearch();
-                    });
-                });
-            } else {
-                statsContainer.innerHTML = '<div class="loading">暂无类型数据</div>';
-            }
         }
 
         // 格式化类型显示
@@ -1080,35 +1279,6 @@
                 option.value = language;
                 option.textContent = language;
                 languageFilter.appendChild(option);
-            });
-        }
-
-        // 提取类型列表
-        function extractGenres() {
-            const genreSet = new Set();
-            
-            allStations.forEach(station => {
-                if (station.tags) {
-                    const stationGenres = station.tags.split(',').map(tag => tag.trim().toLowerCase());
-                    stationGenres.forEach(genre => {
-                        const formattedGenre = formatGenre(genre);
-                        if (formattedGenre && formattedGenre !== '未分类') {
-                            genreSet.add(formattedGenre);
-                        }
-                    });
-                }
-            });
-            
-            genres = Array.from(genreSet).sort();
-            
-            const genreFilter = document.getElementById('genre-filter');
-            genreFilter.innerHTML = '<option value="">所有类型</option>';
-            
-            genres.forEach(genre => {
-                const option = document.createElement('option');
-                option.value = genre;
-                option.textContent = genre;
-                genreFilter.appendChild(option);
             });
         }
 
@@ -1209,6 +1379,9 @@
                 }
             });
             
+            // 检测并显示音质信息
+            detectAndDisplayQuality(station);
+            
             // 修复：地图跳转到电台位置
             if (station.geo_lat && station.geo_long) {
                 map.setView([station.geo_lat, station.geo_long], 6, {
@@ -1245,13 +1418,96 @@
             });
         }
 
-        // 初始化地图
+        // 检测并显示音质信息
+        function detectAndDisplayQuality(station) {
+            const qualityIndicator = document.getElementById('quality-indicator');
+            let quality = '未知';
+            
+            // 从标签中检测音质信息
+            if (station.tags) {
+                const tags = station.tags.toLowerCase().split(',');
+                if (tags.includes('high') || tags.includes('hq') || tags.includes('320')) {
+                    quality = '高音质';
+                } else if (tags.includes('medium') || tags.includes('128')) {
+                    quality = '中音质';
+                } else if (tags.includes('low') || tags.includes('64')) {
+                    quality = '低音质';
+                }
+            }
+            
+            // 从比特率检测音质
+            if (station.bitrate) {
+                if (station.bitrate >= 256) {
+                    quality = '高音质';
+                } else if (station.bitrate >= 128) {
+                    quality = '中音质';
+                } else {
+                    quality = '低音质';
+                }
+            }
+            
+            qualityIndicator.textContent = `(${quality})`;
+        }
+
+        // 初始化地图 - 已调整默认缩放级别
         function initMap() {
-            map = L.map('map').setView([20, 0], 2);
+            map = L.map('map').setView([20, 0], 3);
             
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
+            
+            // 添加地图点击事件
+            map.on('click', function(e) {
+                // 清除之前的选择
+                document.querySelectorAll('.radio-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // 查找附近的电台
+                const nearbyStations = findStationsNearLocation(e.latlng.lat, e.latlng.lng, 500); // 500公里范围内
+                
+                if (nearbyStations.length > 0) {
+                    // 更新电台列表显示附近的电台
+                    filteredStations = nearbyStations;
+                    displayedCount = 0;
+                    displayedStations = [];
+                    
+                    if (activeTab === 'all') {
+                        loadMoreStations();
+                    }
+                    
+                    // 更新国家信息
+                    document.getElementById('selected-country').textContent = '附近电台';
+                    document.getElementById('country-station-count').textContent = `找到 ${nearbyStations.length} 个电台`;
+                    
+                    // 更新地图标记
+                    updateMapMarkers(nearbyStations.slice(0, 200));
+                }
+            });
+        }
+
+        // 查找附近电台
+        function findStationsNearLocation(lat, lng, radiusKm) {
+            return allStations.filter(station => {
+                if (!station.geo_lat || !station.geo_long) return false;
+                
+                const distance = calculateDistance(lat, lng, station.geo_lat, station.geo_long);
+                return distance <= radiusKm;
+            });
+        }
+
+        // 计算两点间距离（公里）
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // 地球半径（公里）
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
         }
 
         // 更新地图标记
@@ -1298,7 +1554,6 @@
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const countryFilter = document.getElementById('country-filter').value;
             const languageFilter = document.getElementById('language-filter').value;
-            const genreFilter = document.getElementById('genre-filter').value;
             
             filteredStations = allStations.filter(station => {
                 const matchesSearch = searchTerm === '' || 
@@ -1318,9 +1573,9 @@
                 }
                 
                 let matchesGenre = true;
-                if (genreFilter !== '') {
+                if (currentGenre !== '') {
                     const englishKeyword = Object.keys(genreMapping).find(key => 
-                        genreMapping[key] === genreFilter
+                        genreMapping[key] === currentGenre
                     ) || '';
                     matchesGenre = station.tags && 
                         station.tags.toLowerCase().includes(englishKeyword.toLowerCase());
@@ -1335,7 +1590,31 @@
                     );
                 }
                 
-                return matchesSearch && matchesCountry && matchesLanguage && matchesGenre && matchesRegion;
+                // 音质筛选
+                let matchesQuality = true;
+                if (currentQuality !== 'auto') {
+                    // 这里可以根据实际数据中的音质信息进行筛选
+                    // 目前使用简单的模拟逻辑
+                    if (currentQuality === 'high') {
+                        matchesQuality = station.tags && (
+                            station.tags.toLowerCase().includes('high') || 
+                            station.tags.toLowerCase().includes('hq') ||
+                            station.tags.toLowerCase().includes('320')
+                        );
+                    } else if (currentQuality === 'medium') {
+                        matchesQuality = station.tags && (
+                            station.tags.toLowerCase().includes('medium') || 
+                            station.tags.toLowerCase().includes('128')
+                        );
+                    } else if (currentQuality === 'low') {
+                        matchesQuality = station.tags && (
+                            station.tags.toLowerCase().includes('low') || 
+                            station.tags.toLowerCase().includes('64')
+                        );
+                    }
+                }
+                
+                return matchesSearch && matchesCountry && matchesLanguage && matchesGenre && matchesRegion && matchesQuality;
             });
             
             displayedCount = 0;
@@ -1361,8 +1640,8 @@
             
             if (currentRegion !== 'all') {
                 const regionNames = {
-                    'asia': '亚洲', 'europe': '欧洲', 'americas': '美洲', 
-                    'africa': '非洲', 'oceania': '大洋洲'
+                    'asia': '亚洲', 'europe': '欧洲', 'africa': '非洲', 
+                    'north-america': '北美洲', 'south-america': '南美洲', 'oceania': '大洋洲'
                 };
                 countryName.textContent = `${regionNames[currentRegion]}地区电台`;
                 countryCount.textContent = `找到 ${filteredStations.length} 个电台`;
@@ -1537,7 +1816,13 @@
             audioPlayer.volume = document.querySelector('.volume-slider').value / 100;
         }
 
-        function shareStation() {
+        // 分享功能
+        function toggleShareMenu() {
+            const shareMenu = document.getElementById('share-menu');
+            shareMenu.classList.toggle('active');
+        }
+
+        function shareStation(platform) {
             if (!currentStation) {
                 alert('请先选择一个电台');
                 return;
@@ -1545,18 +1830,97 @@
             
             const stationName = currentStation.name;
             const stationUrl = currentStation.url_resolved || currentStation.url;
+            const shareText = `我正在收听 ${stationName} 电台`;
             
-            if (navigator.share) {
-                navigator.share({
-                    title: stationName,
-                    text: '我正在收听这个电台',
-                    url: stationUrl
-                });
-            } else {
-                navigator.clipboard.writeText(`${stationName} - ${stationUrl}`).then(() => {
-                    alert('电台链接已复制到剪贴板！');
-                });
+            let shareUrl = '';
+            
+            switch(platform) {
+                case 'wechat':
+                    // 微信分享需要特殊处理，这里只是示例
+                    alert('请使用微信内置分享功能');
+                    break;
+                case 'weibo':
+                    shareUrl = `https://service.weibo.com/share/share.php?url=${encodeURIComponent(stationUrl)}&title=${encodeURIComponent(shareText)}`;
+                    window.open(shareUrl, '_blank');
+                    break;
+                case 'qq':
+                    shareUrl = `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(stationUrl)}&title=${encodeURIComponent(shareText)}`;
+                    window.open(shareUrl, '_blank');
+                    break;
+                case 'zhihu':
+                    shareUrl = `https://www.zhihu.com/question/48510028`;
+                    window.open(shareUrl, '_blank');
+                    break;
+                case 'redbook':
+                    // 小红书没有官方分享API，这里只是示例
+                    alert('请使用小红书内置分享功能');
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(stationUrl)}`;
+                    window.open(shareUrl, '_blank');
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(stationUrl)}`;
+                    window.open(shareUrl, '_blank');
+                    break;
+                case 'copy':
+                    navigator.clipboard.writeText(`${shareText} - ${stationUrl}`).then(() => {
+                        alert('电台链接已复制到剪贴板！');
+                    }).catch(() => {
+                        // 备用方案
+                        const textArea = document.createElement('textarea');
+                        textArea.value = `${shareText} - ${stationUrl}`;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        alert('电台链接已复制到剪贴板！');
+                    });
+                    break;
             }
+            
+            // 关闭分享菜单
+            document.getElementById('share-menu').classList.remove('active');
+        }
+
+        // 自定义下拉菜单功能
+        function initCustomSelect() {
+            const customSelect = document.getElementById('genre-select');
+            const selectSelected = customSelect.querySelector('.select-selected');
+            const selectItems = customSelect.querySelector('.select-items');
+            const selectItemsAll = customSelect.querySelectorAll('.select-item');
+            
+            // 点击选择器显示/隐藏下拉菜单
+            selectSelected.addEventListener('click', function(e) {
+                e.stopPropagation();
+                selectItems.classList.toggle('active');
+                this.classList.toggle('select-arrow-active');
+            });
+            
+            // 点击选项
+            selectItemsAll.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 移除所有选项的active类
+                    selectItemsAll.forEach(i => i.classList.remove('active'));
+                    // 添加当前选项的active类
+                    this.classList.add('active');
+                    // 更新选择器显示文本
+                    selectSelected.textContent = this.textContent;
+                    // 更新当前选择的类型
+                    currentGenre = this.dataset.value;
+                    // 关闭下拉菜单
+                    selectItems.classList.remove('active');
+                    selectSelected.classList.remove('select-arrow-active');
+                    // 执行搜索
+                    performSearch();
+                });
+            });
+            
+            // 点击其他地方关闭下拉菜单
+            document.addEventListener('click', function() {
+                selectItems.classList.remove('active');
+                selectSelected.classList.remove('select-arrow-active');
+            });
         }
 
         // 初始化
@@ -1564,12 +1928,12 @@
             initMap();
             loadLocalData();
             loadPreprocessedData();
+            initCustomSelect();
             
             // 事件监听器
             document.getElementById('search-input').addEventListener('input', debounceSearch);
             document.getElementById('country-filter').addEventListener('change', performSearch);
             document.getElementById('language-filter').addEventListener('change', performSearch);
-            document.getElementById('genre-filter').addEventListener('change', performSearch);
             document.getElementById('load-more-btn').addEventListener('click', loadMoreStations);
 
             // 修复：地区选择联动
@@ -1585,6 +1949,29 @@
                     performSearch();
                     updateCountryInfo();
                 });
+            });
+
+            // 音质选择
+            document.getElementById('quality-select').addEventListener('change', function() {
+                currentQuality = this.value;
+                performSearch();
+            });
+
+            // 分享功能
+            document.getElementById('share-btn').addEventListener('click', toggleShareMenu);
+            document.querySelectorAll('.share-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.dataset.platform;
+                    shareStation(platform);
+                });
+            });
+
+            // 点击其他地方关闭分享菜单
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.share-container')) {
+                    document.getElementById('share-menu').classList.remove('active');
+                }
             });
 
             // 标签页切换
@@ -1606,7 +1993,6 @@
             document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
             document.getElementById('stop-btn').addEventListener('click', stopPlayback);
             document.querySelector('.volume-slider').addEventListener('input', updateVolume);
-            document.getElementById('share-btn').addEventListener('click', shareStation);
         });
     </script>
 </body>
