@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全球广播电台在线收听-资源大师网(zyds.net)提供接口API</title>
+    <title>全球广播电台在线收听</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
@@ -523,6 +523,37 @@
             margin-top: 5px;
         }
 
+        .genre-stats {
+            margin-top: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .genre-stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 10px;
+            margin-bottom: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .genre-stat-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .genre-name {
+            color: #ddd;
+        }
+
+        .genre-count {
+            color: #ff8a00;
+            font-weight: 600;
+        }
+
         /* 响应式设计 */
         @media (max-width: 1200px) {
             .container {
@@ -610,6 +641,13 @@
             <div class="stats">
                 <span id="total-stations">加载中...</span>
                 <span id="filtered-stations"></span>
+            </div>
+
+            <div class="popular-genres">
+                <div class="section-title">热门类型</div>
+                <div id="genre-stats" class="genre-stats">
+                    <div class="loading">加载中...</div>
+                </div>
             </div>
             
             <div class="data-source" id="data-source">数据来源: 本地数据</div>
@@ -699,10 +737,10 @@
         let searchTimeout;
         let activeTab = 'all';
         let currentRegion = 'all';
-        let displayLimit = 200;
+        let displayLimit = 100;
         let displayedCount = 0;
 
-        // 数据源配置 - 使用相对路径
+        // 数据源配置
         const DATA_SOURCES = {
             primary: 'data/curated-stations.json',
             asia: 'data/asia-stations.json',
@@ -713,19 +751,46 @@
             fallback: 'https://de1.api.radio-browser.info/json/stations?limit=100&hidebroken=true&order=votes&reverse=true'
         };
 
-        // 语言映射
+        // 扩展语言映射
         const languageMapping = {
             'chinese': '中文', 'english': '英语', 'french': '法语', 'german': '德语',
             'spanish': '西班牙语', 'japanese': '日语', 'korean': '韩语', 'russian': '俄语',
-            'arabic': '阿拉伯语', 'portuguese': '葡萄牙语', 'italian': '意大利语', 'dutch': '荷兰语'
+            'arabic': '阿拉伯语', 'portuguese': '葡萄牙语', 'italian': '意大利语', 'dutch': '荷兰语',
+            'hindi': '印地语', 'turkish': '土耳其语', 'vietnamese': '越南语', 'thai': '泰语'
         };
 
-        // 类型映射
+        // 扩展类型映射
         const genreMapping = {
-            'news': '新闻', 'music': '音乐', 'talk': '谈话', 'sports': '体育',
-            'business': '财经', 'education': '教育', 'religious': '宗教', 'culture': '文化',
-            'entertainment': '娱乐', 'classical': '古典', 'rock': '摇滚', 'pop': '流行',
-            'jazz': '爵士', 'electronic': '电子', 'country': '乡村'
+            // 音乐类型
+            'music': '音乐', 'classical': '古典', 'rock': '摇滚', 'pop': '流行', 'jazz': '爵士',
+            'electronic': '电子', 'country': '乡村', 'folk': '民谣', 'blues': '蓝调', 'reggae': '雷鬼',
+            'hiphop': '嘻哈', 'rap': '说唱', 'metal': '金属', 'indie': '独立', 'dance': '舞曲',
+            'house': '浩室', 'techno': '科技', 'trance': '迷幻', 'latin': '拉丁', 'world': '世界音乐',
+            
+            // 新闻资讯
+            'news': '新闻', 'talk': '谈话', 'business': '财经', 'politics': '政治', 'sports': '体育',
+            'weather': '天气', 'traffic': '交通',
+            
+            // 文化教育
+            'education': '教育', 'culture': '文化', 'religious': '宗教', 'history': '历史',
+            'science': '科学', 'technology': '科技', 'arts': '艺术',
+            
+            // 娱乐生活
+            'entertainment': '娱乐', 'comedy': '喜剧', 'lifestyle': '生活', 'health': '健康',
+            'fashion': '时尚', 'food': '美食', 'travel': '旅游',
+            
+            // 特殊类型
+            'children': '儿童', 'family': '家庭', 'community': '社区', 'local': '本地',
+            'regional': '区域', 'national': '全国', 'international': '国际'
+        };
+
+        // 地区国家映射
+        const regionCountries = {
+            'asia': ['China', 'Japan', 'South Korea', 'India', 'Indonesia', 'Thailand', 'Vietnam', 'Malaysia', 'Philippines', 'Singapore', 'Taiwan', 'Hong Kong'],
+            'europe': ['United Kingdom', 'Germany', 'France', 'Italy', 'Spain', 'Netherlands', 'Sweden', 'Norway', 'Finland', 'Denmark', 'Switzerland', 'Austria'],
+            'americas': ['United States', 'Canada', 'Mexico', 'Brazil', 'Argentina', 'Chile', 'Colombia', 'Peru', 'Venezuela', 'Cuba'],
+            'africa': ['South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Morocco', 'Ethiopia', 'Ghana', 'Tanzania', 'Algeria'],
+            'oceania': ['Australia', 'New Zealand', 'Fiji', 'Papua New Guinea']
         };
 
         // 从预处理的JSON文件加载数据
@@ -735,10 +800,7 @@
             loadingElement.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载电台数据...</div>';
             
             try {
-                // 首先尝试加载主数据文件
-                console.log('尝试加载主数据文件:', DATA_SOURCES.primary);
                 let response = await fetch(DATA_SOURCES.primary);
-                console.log('响应状态:', response.status);
                 
                 if (response.ok) {
                     const data = await response.json();
@@ -750,12 +812,10 @@
                     console.error('主数据加载失败，状态:', response.status);
                 }
 
-                // 如果主数据源失败，尝试按地区加载
                 await loadRegionalData();
                 
             } catch (error) {
                 console.error('本地数据加载失败:', error);
-                // 最后尝试原始API
                 await loadFromOriginalAPI();
             }
         }
@@ -805,7 +865,6 @@
         function loadFallbackData() {
             console.log('使用备用数据');
             
-            // 创建示例电台数据
             allStations = [
                 {
                     stationuuid: '1',
@@ -818,18 +877,6 @@
                     votes: 1000,
                     geo_lat: 51.5074,
                     geo_long: -0.1278
-                },
-                {
-                    stationuuid: '2',
-                    name: 'Radio France Internationale',
-                    country: 'France',
-                    countrycode: 'FR',
-                    url_resolved: 'https://rfien-live.akamaized.net/hls/live/2038566/RFI_WEB/master.m3u8',
-                    tags: 'news,french',
-                    language: 'french',
-                    votes: 800,
-                    geo_lat: 48.8566,
-                    geo_long: 2.3522
                 }
             ];
             
@@ -839,25 +886,19 @@
 
         // 处理电台数据
         function processStationsData(stations) {
-            // 过滤有效电台
             allStations = stations.filter(station => 
                 station && (station.url_resolved || station.url)
             );
             
-            // 更新统计信息
             updateStats();
-            
-            // 提取筛选选项
             extractFilterOptions();
+            updateGenreStats();
             
-            // 重置显示状态
             displayedCount = 0;
             displayedStations = [];
             filteredStations = [...allStations];
             
             loadMoreStations();
-            
-            // 更新地图（限制数量避免性能问题）
             updateMapMarkers(allStations.slice(0, 500));
             
             console.log(`成功加载 ${allStations.length} 个电台`);
@@ -873,7 +914,7 @@
         // 加载更多电台
         function loadMoreStations() {
             const startIndex = displayedCount;
-            const endIndex = Math.min(displayedCount + 200, filteredStations.length);
+            const endIndex = Math.min(displayedCount + 100, filteredStations.length);
             
             if (startIndex >= filteredStations.length) {
                 document.getElementById('load-more-btn').style.display = 'none';
@@ -909,6 +950,81 @@
             const currentDisplayCount = Math.min(displayedCount, filteredStations.length);
             const displayedCountText = `显示: ${currentDisplayCount}/${filteredStations.length}`;
             document.getElementById('filtered-stations').textContent = displayedCountText;
+        }
+
+        // 更新类型统计
+        function updateGenreStats() {
+            const genreCount = {};
+            
+            allStations.forEach(station => {
+                if (station.tags) {
+                    const stationGenres = station.tags.split(',').map(tag => tag.trim().toLowerCase());
+                    stationGenres.forEach(genre => {
+                        if (genre && genre.length > 2) {
+                            genreCount[genre] = (genreCount[genre] || 0) + 1;
+                        }
+                    });
+                }
+            });
+            
+            const popularGenres = Object.entries(genreCount)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 8);
+            
+            const statsContainer = document.getElementById('genre-stats');
+            if (popularGenres.length > 0) {
+                statsContainer.innerHTML = popularGenres.map(([genre, count]) => `
+                    <div class="genre-stat-item" data-genre="${genre}">
+                        <span class="genre-name">${formatGenre(genre)}</span>
+                        <span class="genre-count">${count}</span>
+                    </div>
+                `).join('');
+                
+                // 添加点击事件
+                document.querySelectorAll('.genre-stat-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const genre = this.dataset.genre;
+                        document.getElementById('search-input').value = genre;
+                        performSearch();
+                    });
+                });
+            } else {
+                statsContainer.innerHTML = '<div class="loading">暂无类型数据</div>';
+            }
+        }
+
+        // 格式化类型显示
+        function formatGenre(genre) {
+            const genreLower = genre.toLowerCase();
+            if (genreMapping[genreLower]) {
+                return genreMapping[genreLower];
+            }
+            
+            // 模糊匹配
+            const fuzzyMap = {
+                'oldies': '经典老歌', 'top40': '流行金曲', 'hits': '热门金曲',
+                'rnb': '节奏蓝调', 'r&b': '节奏蓝调', 'edm': '电子舞曲',
+                'kpop': '韩流', 'jpop': '日流', 'cpop': '华语流行'
+            };
+            
+            for (const [key, value] of Object.entries(fuzzyMap)) {
+                if (genreLower.includes(key)) {
+                    return value;
+                }
+            }
+            
+            return genre;
+        }
+
+        // 格式化标签显示
+        function formatGenres(tags) {
+            if (!tags) return '未分类';
+            
+            const genreList = tags.split(',').slice(0, 2).map(genre => {
+                return formatGenre(genre.trim());
+            });
+            
+            return genreList.join(' · ');
         }
 
         // 更新数据源显示
@@ -975,8 +1091,9 @@
                 if (station.tags) {
                     const stationGenres = station.tags.split(',').map(tag => tag.trim().toLowerCase());
                     stationGenres.forEach(genre => {
-                        if (genre && genreMapping[genre]) {
-                            genreSet.add(genreMapping[genre]);
+                        const formattedGenre = formatGenre(genre);
+                        if (formattedGenre && formattedGenre !== '未分类') {
+                            genreSet.add(formattedGenre);
                         }
                     });
                 }
@@ -1031,7 +1148,7 @@
                     <div class="radio-info">
                         <div class="radio-name">${station.name || '未知电台'}</div>
                         <div class="radio-country">${station.country || '未知国家'}</div>
-                        <div class="radio-genre">${station.tags || '未分类'}</div>
+                        <div class="radio-genre">${formatGenres(station.tags)}</div>
                     </div>
                     <button class="play-btn" data-id="${station.stationuuid}">
                         <i class="fas fa-play"></i>
@@ -1041,7 +1158,6 @@
                 container.appendChild(radioItem);
             });
             
-            // 添加事件监听器
             attachEventListeners();
         }
 
@@ -1078,7 +1194,7 @@
             
             currentStation = station;
             document.getElementById('current-station').textContent = station.name || '未知电台';
-            document.getElementById('current-country').textContent = `${station.country || '未知国家'} • ${station.tags || '未分类'}`;
+            document.getElementById('current-country').textContent = `${station.country || '未知国家'} • ${formatGenres(station.tags)}`;
             
             const playPauseBtn = document.getElementById('play-pause-btn');
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -1093,8 +1209,21 @@
                 }
             });
             
+            // 修复：地图跳转到电台位置
             if (station.geo_lat && station.geo_long) {
-                map.setView([station.geo_lat, station.geo_long], 6);
+                map.setView([station.geo_lat, station.geo_long], 6, {
+                    animate: true,
+                    duration: 1
+                });
+                
+                // 高亮对应的地图标记
+                markers.forEach(marker => {
+                    const markerLat = marker.getLatLng().lat;
+                    const markerLng = marker.getLatLng().lng;
+                    if (markerLat === station.geo_lat && markerLng === station.geo_long) {
+                        marker.openPopup();
+                    }
+                });
             }
             
             audioPlayer.pause();
@@ -1140,7 +1269,7 @@
                             <div style="color: black; min-width: 200px;">
                                 <b>${station.name || '未知电台'}</b><br>
                                 ${station.country || ''}<br>
-                                <small>${station.tags || ''}</small><br>
+                                <small>${formatGenres(station.tags)}</small><br>
                                 <button onclick="window.playStationFromMap('${station.stationuuid}')" 
                                         style="background:#e52e71;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-top:5px;">
                                     播放
@@ -1197,7 +1326,16 @@
                         station.tags.toLowerCase().includes(englishKeyword.toLowerCase());
                 }
                 
-                return matchesSearch && matchesCountry && matchesLanguage && matchesGenre;
+                // 修复：地区筛选
+                let matchesRegion = true;
+                if (currentRegion !== 'all') {
+                    const regionCountries = getRegionCountries(currentRegion);
+                    matchesRegion = regionCountries.some(country => 
+                        station.country && station.country.toLowerCase().includes(country.toLowerCase())
+                    );
+                }
+                
+                return matchesSearch && matchesCountry && matchesLanguage && matchesGenre && matchesRegion;
             });
             
             displayedCount = 0;
@@ -1208,6 +1346,34 @@
             }
             
             updateMapMarkers(filteredStations.slice(0, 200));
+            updateCountryInfo();
+        }
+
+        // 获取地区对应的国家列表
+        function getRegionCountries(region) {
+            return regionCountries[region] || [];
+        }
+
+        // 更新国家信息显示
+        function updateCountryInfo() {
+            const countryName = document.getElementById('selected-country');
+            const countryCount = document.getElementById('country-station-count');
+            
+            if (currentRegion !== 'all') {
+                const regionNames = {
+                    'asia': '亚洲', 'europe': '欧洲', 'americas': '美洲', 
+                    'africa': '非洲', 'oceania': '大洋洲'
+                };
+                countryName.textContent = `${regionNames[currentRegion]}地区电台`;
+                countryCount.textContent = `找到 ${filteredStations.length} 个电台`;
+            } else if (document.getElementById('country-filter').value) {
+                const selectedCountry = document.getElementById('country-filter').value;
+                countryName.textContent = `${selectedCountry}电台`;
+                countryCount.textContent = `找到 ${filteredStations.length} 个电台`;
+            } else {
+                countryName.textContent = '全球电台';
+                countryCount.textContent = `点击地图上的标记或使用筛选器选择电台 (${filteredStations.length} 个电台)`;
+            }
         }
 
         // 加载本地数据
@@ -1406,13 +1572,18 @@
             document.getElementById('genre-filter').addEventListener('change', performSearch);
             document.getElementById('load-more-btn').addEventListener('click', loadMoreStations);
 
-            // 地区选择
+            // 修复：地区选择联动
             document.querySelectorAll('.region-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentRegion = this.dataset.region;
+                    
+                    // 重置国家筛选
+                    document.getElementById('country-filter').value = '';
+                    
                     performSearch();
+                    updateCountryInfo();
                 });
             });
 
