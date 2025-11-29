@@ -7,6 +7,49 @@ from datetime import datetime
 import ssl
 import math
 
+def test_api_endpoint(base_url):
+    """测试 API 端点是否可用"""
+    ssl_context = ssl.create_default_context()
+    ssl_context.check_hostname = False
+    ssl_context.verify_mode = ssl.CERT_NONE
+    
+    try:
+        test_url = f"{base_url}/json/stations?limit=1"
+        req = urllib.request.Request(test_url, headers={'User-Agent': 'Mozilla/5.0'})
+        
+        with urllib.request.urlopen(req, context=ssl_context, timeout=10) as response:
+            data = response.read().decode('utf-8')
+            stations = json.loads(data)
+            return len(stations) > 0
+    except Exception as e:
+        print(f"  ❌ 端点测试失败: {e}")
+        return False
+
+def get_total_count(base_url, ssl_context):
+    """获取电台总数"""
+    try:
+        count_url = f"{base_url}/json/stations?limit=1&hidebroken=true"
+        req = urllib.request.Request(count_url, headers={'User-Agent': 'Mozilla/5.0'})
+        
+        with urllib.request.urlopen(req, context=ssl_context, timeout=30) as response:
+            if 'x-total-count' in response.headers:
+                total_count = int(response.headers['x-total-count'])
+                print(f"📊 API 报告总数: {total_count} 个电台")
+                return total_count
+            else:
+                # 如果没有总数头信息，尝试直接获取大量数据来估算
+                test_url = f"{base_url}/json/stations?limit=5000&hidebroken=true"
+                req = urllib.request.Request(test_url, headers={'User-Agent': 'Mozilla/5.0'})
+                with urllib.request.urlopen(req, context=ssl_context, timeout=30) as resp:
+                    data = resp.read().decode('utf-8')
+                    stations = json.loads(data)
+                    estimated_count = len(stations) * 6  # 粗略估算
+                    print(f"📊 估算总数: {estimated_count} 个电台")
+                    return min(estimated_count, 35000)  # 限制最大数量
+    except Exception as e:
+        print(f"❌ 获取总数失败: {e}")
+        return 30000  # 默认值
+
 def fetch_all_stations():
     print("🚀 开始获取全球电台数据...")
     
@@ -15,44 +58,53 @@ def fetch_all_stations():
     ssl_context.check_hostname = False
     ssl_context.verify_mode = ssl.CERT_NONE
     
-    # 使用多个 API 端点
-    base_urls = [
+    # 测试可用的端点
+    potential_urls = [
         "https://de1.api.radio-browser.info",
         "https://at1.api.radio-browser.info", 
         "https://nl1.api.radio-browser.info"
     ]
     
+    available_urls = []
+    print("🔍 测试 API 端点可用性...")
+    for url in potential_urls:
+        print(f"  测试 {url}...")
+        if test_api_endpoint(url):
+            available_urls.append(url)
+            print(f"  ✅ 可用")
+        else:
+            print(f"  ❌ 不可用")
+    
+    if not available_urls:
+        print("💥 所有端点都不可用，使用 de1 作为备用")
+        available_urls = ["https://de1.api.radio-browser.info"]
+    
+    print(f"🎯 可用端点: {available_urls}")
+    
     all_stations = []
     max_attempts = 3
     
-    for base_url in base_urls:
+    for base_url in available_urls:
         print(f"\n📡 使用端点: {base_url}")
         
-        # 首先获取总数量
         try:
-            count_url = f"{base_url}/json/stations?limit=1&hidebroken=true"
-            req = urllib.request.Request(count_url, headers={'User-Agent': 'Mozilla/5.0'})
-            
-            with urllib.request.urlopen(req, context=ssl_context, timeout=30) as response:
-                # 从响应头获取总数
-                total_count = 0
-                if 'x-total-count' in response.headers:
-                    total_count = int(response.headers['x-total-count'])
-                    print(f"📊 该端点共有 {total_count} 个电台")
-                else:
-                    # 如果没有总数头信息，使用默认值
-                    total_count = 10000
-                    print(f"⚠️ 无法获取总数，使用默认值: {total_count}")
+            # 获取总数量
+            total_count = get_total_count(base_url, ssl_context)
             
             # 分页获取数据
-            page_size = 1000  # 每页获取1000个
+            page_size = 1000  # 每页获取1000个，避免过大请求
             pages = math.ceil(total_count / page_size)
             
-            print(f"📄 需要获取 {pages} 页数据...")
+            # 限制最大页数，但确保能获取足够数据
+            max_pages = 35  # 35000个电台
+            pages = min(pages, max_pages)
             
+            print(f"📄 计划获取 {pages} 页数据，目标: {total_count} 个电台...")
+            
+            successful_pages = 0
             for page in range(pages):
                 offset = page * page_size
-                url = f"{base_url}/json/stations?offset={offset}&limit={page_size}&hidebroken=true&order=votes"
+                url = f"{base_url}/json/stations?offset={offset}&limit={page_size}&hidebroken=true"
                 
                 for attempt in range(max_attempts):
                     try:
@@ -65,92 +117,98 @@ def fetch_all_stations():
                             
                             if stations:
                                 all_stations.extend(stations)
+                                successful_pages += 1
                                 print(f"  ✅ 获取到 {len(stations)} 个电台")
-                                break  # 成功，跳出重试循环
+                                print(f"  📈 累计: {len(all_stations)} 个电台")
+                                break
                             else:
-                                print(f"  ⚠️ 第 {page + 1} 页没有数据")
+                                print(f"  ⚠️ 第 {page + 1} 页没有数据，可能已到末尾")
                                 break
                                 
                     except Exception as e:
                         print(f"  ❌ 第 {page + 1} 页获取失败 (尝试 {attempt + 1}/{max_attempts}): {e}")
                         if attempt < max_attempts - 1:
-                            time.sleep(2)  # 等待后重试
+                            time.sleep(2)
                         else:
                             print(f"  💥 第 {page + 1} 页获取失败，跳过")
+                            break
                 
                 # 页间延迟
                 time.sleep(1)
                 
-                # 如果已经获取足够数据，提前结束
-                if len(all_stations) >= 20000:
-                    print("🎯 已获取足够数据，提前结束")
+                # 如果连续3页没有数据，提前结束
+                if page > 2 and len(all_stations) == 0:
+                    print("💥 连续多页没有数据，提前结束")
                     break
                     
+            print(f"📊 从 {base_url} 成功获取 {successful_pages}/{pages} 页数据")
+                    
         except Exception as e:
-            print(f"❌ 端点 {base_url} 初始化失败: {e}")
+            print(f"❌ 端点 {base_url} 处理失败: {e}")
             continue
+        
+        # 如果从一个端点获取了足够数据，可以提前结束
+        if len(all_stations) >= 28000:
+            print("🎯 已获取接近完整数据，提前结束")
+            break
     
-    if not all_stations:
-        print("⚠️ 所有端点都失败，使用备用数据")
-        return create_fallback_data()
-    
-    print(f"\n📊 总共获取到 {len(all_stations)} 个电台")
     return all_stations
 
-def fetch_radio_stations_alternative():
-    """备选方案：使用多个查询条件获取数据"""
-    print("🔄 使用备选方案获取数据...")
+def fetch_additional_stations():
+    """使用不同排序方式获取更多数据"""
+    print("\n🔄 使用不同排序方式获取补充数据...")
     
     ssl_context = ssl.create_default_context()
     ssl_context.check_hostname = False
     ssl_context.verify_mode = ssl.CERT_NONE
     
-    base_urls = [
-        "https://de1.api.radio-browser.info",
-        "https://at1.api.radio-browser.info"
+    base_url = "https://de1.api.radio-browser.info"
+    additional_stations = []
+    
+    # 使用不同的排序方式
+    sort_methods = [
+        "order=votes",
+        "order=clickcount", 
+        "order=name",
+        "order=country",
+        "order=state",
+        "order=language",
+        "order=tags"
     ]
     
-    all_stations = []
-    
-    # 使用不同的排序和过滤条件来获取更多数据
-    queries = [
-        "?limit=3000&hidebroken=true&order=votes",  # 按投票数
-        "?limit=3000&hidebroken=true&order=clickcount",  # 按点击量
-        "?limit=3000&hidebroken=true&order=name",  # 按名称
-        "?limit=3000&hidebroken=true&order=country",  # 按国家
-        "?limit=3000&hidebroken=true&order=language",  # 按语言
-    ]
-    
-    for base_url in base_urls:
-        print(f"\n📡 使用端点: {base_url}")
-        
-        for i, query in enumerate(queries):
-            try:
-                url = f"{base_url}/json/stations{query}"
-                print(f"  查询 {i + 1}/{len(queries)}: {query}")
+    for i, sort_method in enumerate(sort_methods):
+        try:
+            url = f"{base_url}/json/stations?limit=5000&hidebroken=true&{sort_method}"
+            print(f"  补充查询 {i + 1}/{len(sort_methods)}: {sort_method}")
+            
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req, context=ssl_context, timeout=60) as response:
+                data = response.read().decode('utf-8')
+                stations = json.loads(data)
                 
-                req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-                with urllib.request.urlopen(req, context=ssl_context, timeout=60) as response:
-                    data = response.read().decode('utf-8')
-                    stations = json.loads(data)
-                    
-                    if stations:
-                        all_stations.extend(stations)
-                        print(f"  ✅ 获取到 {len(stations)} 个电台")
-                    else:
-                        print(f"  ⚠️ 查询没有返回数据")
-                
-                time.sleep(2)  # 查询间延迟
-                
-            except Exception as e:
-                print(f"  ❌ 查询失败: {e}")
-                continue
+                if stations:
+                    additional_stations.extend(stations)
+                    print(f"  ✅ 获取到 {len(stations)} 个电台")
+                else:
+                    print(f"  ⚠️ 查询没有返回数据")
+            
+            time.sleep(1)
+            
+        except Exception as e:
+            print(f"  ❌ 补充查询失败: {e}")
+            continue
     
-    return all_stations
+    return additional_stations
 
 def process_stations_data(raw_stations):
     """处理原始电台数据"""
     print("🔄 开始处理数据...")
+    
+    if not raw_stations:
+        print("💥 没有原始数据可处理")
+        return []
+    
+    print(f"📊 原始数据: {len(raw_stations)} 个电台")
     
     # 数据去重
     unique_stations = []
@@ -170,12 +228,11 @@ def process_stations_data(raw_stations):
     invalid_count = 0
     
     for station in unique_stations:
-        # 过滤有效电台
+        # 放宽过滤条件，获取更多电台
         has_url = station.get('url_resolved') or station.get('url')
         has_name = station.get('name') and station.get('name', '').strip()
-        is_working = station.get('lastcheckok', True)  # 默认为True
         
-        if has_url and has_name and is_working:
+        if has_url and has_name:
             processed_station = {
                 'stationuuid': station.get('stationuuid'),
                 'name': station.get('name', '').strip(),
@@ -207,15 +264,13 @@ def process_stations_data(raw_stations):
     
     return processed_stations
 
-def create_fallback_data():
-    """创建备用示例数据"""
-    print("🔄 使用备用示例数据")
-    # 返回空数组，让前端知道是备用数据
-    return []
-
 def split_by_region(stations, last_updated):
     """按地区分片数据"""
     print("🌍 开始按地区分片数据...")
+    
+    if not stations:
+        print("⚠️ 没有数据可分区")
+        return
     
     # 完整的国家列表
     region_countries = {
@@ -303,12 +358,12 @@ def split_by_region(stations, last_updated):
     sorted_countries = sorted(country_stats.items(), key=lambda x: x[1], reverse=True)
     print(f"🌐 总共 {len(sorted_countries)} 个国家/地区")
     
-    # 显示前50个国家
-    for i, (country, count) in enumerate(sorted_countries[:50], 1):
+    # 显示前30个国家
+    for i, (country, count) in enumerate(sorted_countries[:30], 1):
         print(f"  {i:2d}. {country}: {count} 个电台")
     
-    if len(sorted_countries) > 50:
-        print(f"  ... 还有 {len(sorted_countries) - 50} 个国家/地区")
+    if len(sorted_countries) > 30:
+        print(f"  ... 还有 {len(sorted_countries) - 30} 个国家/地区")
     
     print(f"📈 地区分片完成！总共 {total_regional_stations} 个地区电台")
 
@@ -321,19 +376,19 @@ def main():
         current_time = datetime.now().isoformat()
         
         print("=" * 60)
-        print("🎯 全球广播电台数据采集")
+        print("🎯 全球广播电台数据采集 - 完整版本")
         print("=" * 60)
         
-        # 尝试获取完整数据
+        # 第一阶段：分页获取主要数据
         raw_stations = fetch_all_stations()
         
-        # 如果数据太少，尝试备选方案
-        if len(raw_stations) < 10000:
-            print("\n🔄 数据量不足，尝试备选方案...")
-            additional_stations = fetch_radio_stations_alternative()
+        # 第二阶段：使用不同排序方式获取补充数据
+        if len(raw_stations) < 25000:
+            print(f"\n🔄 第一阶段只获取了 {len(raw_stations)} 个电台，开始第二阶段...")
+            additional_stations = fetch_additional_stations()
             raw_stations.extend(additional_stations)
             
-            # 再次去重
+            # 去重
             unique_raw = []
             seen = set()
             for station in raw_stations:
@@ -342,14 +397,13 @@ def main():
                     seen.add(uuid)
                     unique_raw.append(station)
             raw_stations = unique_raw
-        
-        print(f"\n📊 原始数据: {len(raw_stations)} 个电台")
+            print(f"📊 合并后原始数据: {len(raw_stations)} 个电台")
         
         # 处理数据
         processed_stations = process_stations_data(raw_stations)
         
         if not processed_stations:
-            print("💥 没有有效数据，创建空数据集")
+            print("💥 没有有效数据")
             processed_stations = []
         
         # 保存精选数据
@@ -357,7 +411,7 @@ def main():
             'lastUpdated': current_time,
             'totalStations': len(processed_stations),
             'source': 'Radio Browser API',
-            'note': '数据通过分页和多端点采集',
+            'note': f'通过分页和多种排序方式采集，原始数据: {len(raw_stations)} 个电台',
             'stations': processed_stations
         }
         
@@ -366,7 +420,8 @@ def main():
         
         print(f"\n💾 精选数据保存完成！")
         print(f"  文件: data/curated-stations.json")
-        print(f"  电台数: {len(processed_stations)}")
+        print(f"  有效电台数: {len(processed_stations)}")
+        print(f"  原始电台数: {len(raw_stations)}")
         
         # 按地区分片
         if processed_stations:
