@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全球广播电台在线收听</title>
+    <title>全球广播电台在线收听-资源大师网提供接口API</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
@@ -833,7 +833,6 @@
                 }
             ];
             
-            filteredStations = [...allStations];
             processStationsData(allStations);
             updateDataSource('示例数据');
         }
@@ -845,17 +844,17 @@
                 station && (station.url_resolved || station.url)
             );
             
-            filteredStations = [...allStations];
-            
             // 更新统计信息
             updateStats();
             
             // 提取筛选选项
             extractFilterOptions();
             
-            // 初始显示
+            // 重置显示状态
             displayedCount = 0;
             displayedStations = [];
+            filteredStations = [...allStations];
+            
             loadMoreStations();
             
             // 更新地图（限制数量避免性能问题）
