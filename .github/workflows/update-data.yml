@@ -8,13 +8,13 @@ on:
 jobs:
   update-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 120  # 延长超时到120分钟
+    timeout-minutes: 120
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PAT_TOKEN }}
         
     - name: Setup Python
       uses: actions/setup-python@v4
@@ -32,9 +32,19 @@ jobs:
     - name: Run data preprocessing
       run: python scripts/preprocess-data.py
       
-    - name: Commit and push if changed
+    - name: Configure Git
       run: |
         git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config --local user.name "GitHub Actions"
+        
+    - name: Commit and push changes
+      run: |
         git add data/
-        git diff --staged --quiet || (git commit -m "🤖 Auto-update radio data [skip ci]" && git push)
+        # 检查是否有更改
+        if git diff --staged --quiet; then
+          echo "没有数据更改，跳过提交"
+        else
+          git commit -m "🤖 Auto-update radio data [skip ci]"
+          git push
+          echo "数据更新成功推送！"
+        fi
