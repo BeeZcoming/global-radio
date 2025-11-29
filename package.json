@@ -1,0 +1,10 @@
+{
+  "name": "global-radio",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "preprocess": "node scripts/preprocess-data.js",
+    "split": "node scripts/split-by-region.js",
+    "verify": "node scripts/verify-data.js"
+  }
+}
