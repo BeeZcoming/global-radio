@@ -6,6 +6,7 @@
     <title>全球广播电台在线收听</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -263,7 +264,7 @@
             flex: 0 0 350px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            padding: 10px 20px 0px 20px; /* 上 右 下 左 */
+            padding: 10px 20px 0px 20px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -284,7 +285,7 @@
             flex: 1;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            padding: 10px 20px 20px 20px; /* 上 右 下 左 */
+            padding: 10px 20px 20px 20px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -316,6 +317,9 @@
             transition: all 0.3s;
             cursor: pointer;
             border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+            min-height: 60px;
         }
 
         .radio-item:hover {
@@ -855,6 +859,129 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        /* 通知样式 */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            z-index: 1002;
+            max-width: 300px;
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        .notification.info {
+            background: rgba(33, 150, 243, 0.9);
+        }
+
+        .notification.success {
+            background: rgba(76, 175, 80, 0.9);
+        }
+
+        .notification.warning {
+            background: rgba(255, 152, 0, 0.9);
+        }
+
+        .notification.error {
+            background: rgba(244, 67, 54, 0.9);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* 骨架屏样式 */
+        .skeleton-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            animation: skeleton-pulse 1.5s ease-in-out infinite;
+        }
+
+        .skeleton-flag {
+            width: 30px;
+            height: 20px;
+            border-radius: 3px;
+            margin-right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .skeleton-info {
+            flex: 1;
+        }
+
+        .skeleton-name {
+            height: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 6px;
+            width: 70%;
+        }
+
+        .skeleton-details {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            width: 50%;
+        }
+
+        .skeleton-map {
+            height: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            animation: skeleton-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes skeleton-pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* 缓冲指示器 */
+        .buffering {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 跳过导航链接 */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #000;
+            color: white;
+            padding: 8px;
+            z-index: 10000;
+            text-decoration: none;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+        }
+
         /* 响应式设计 */
         @media (max-width: 1200px) {
             .container {
@@ -909,6 +1036,7 @@
 
             .region-btn {
                 flex: 0 0 calc(33.333% - 5px);
+                min-height: 44px; /* 更大的触摸目标 */
             }
 
             .select-columns {
@@ -926,10 +1054,23 @@
                 transform: none;
                 max-width: none;
             }
+
+            .radio-item {
+                min-height: 60px; /* 更大的触摸目标 */
+                padding: 12px 15px;
+            }
+            
+            .play-btn {
+                width: 44px;
+                height: 44px; /* 更大的按钮 */
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 跳过导航链接 -->
+    <a href="#main-content" class="skip-link">跳过导航</a>
+
     <header>
         <h1><i class="fas fa-globe-americas"></i> 全球广播电台</h1>
         <p class="tagline">探索世界各地的广播电台，随时收听全球声音</p>
@@ -975,8 +1116,6 @@
                 <span id="filtered-stations"></span>
             </div>
             
-            <!-- 数据源显示区域 -->
-            
             <div class="tabs">
                 <div class="tab active" data-tab="all">全部电台</div>
                 <div class="tab" data-tab="favorites">收藏</div>
@@ -993,7 +1132,7 @@
                     <button class="load-more-btn" id="load-more-btn" style="display: none;">加载更多电台</button>
                 </div>
 				<div class="data-source-container">
-					<div></div> <!-- 占位元素 -->
+					<div></div>
 					<div class="data-source" id="data-source">数据来源: ZYDS.NET | 地区: 所有地区</div>
 				</div>				
             </div>
@@ -1011,7 +1150,7 @@
             </div>
         </div>
         
-        <div class="main-content">
+        <div class="main-content" id="main-content">
             <div class="map-container">
                 <h2 class="section-title">世界电台地图</h2>
                 <div id="map"></div>
@@ -1043,7 +1182,6 @@
                 <input type="range" class="volume-slider" min="0" max="100" value="80">
             </div>
 
-            <!-- 音质选择器移动到播放器位置 -->
             <div class="quality-container">
                 <span style="font-size: 0.8rem; color: #aaa;">音质:</span>
                 <select class="quality-select" id="quality-select">
@@ -1091,1451 +1229,1112 @@
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        // 初始化变量
-        let currentStation = null;
-        let isPlaying = false;
-        let audioPlayer = new Audio();
-        let allStations = [];
-        let filteredStations = [];
-        let displayedStations = [];
-        let favoriteStations = [];
-        let historyStations = [];
-        let map;
-        let markers = [];
-        let countries = [];
-        let languages = [];
-        let genres = [];
-        let searchTimeout;
-        let activeTab = 'all';
-        let currentRegion = 'all';
-        let currentQuality = 'auto';
-        let currentGenre = 'all';
-        let displayLimit = 200;
-        let displayedCount = 0;
-        let mapUpdateTimeout;
-
-        // 数据源配置 - 只使用地区数据源
-        const DATA_SOURCES = {
-            asia: 'data/asia-stations.json',
-            europe: 'data/europe-stations.json',
-            'north-america': 'data/north-america-stations.json',
-            'south-america': 'data/south-america-stations.json',
-            africa: 'data/africa-stations.json',
-            oceania: 'data/oceania-stations.json',
-            fallback: 'https://de1.api.radio-browser.info/json/stations?limit=100&hidebroken=true&order=votes&reverse=true'
-        };
-
-        // 地区名称映射
-        const regionNames = {
-            'all': '所有地区',
-            'asia': '亚洲', 'europe': '欧洲', 'africa': '非洲', 
-            'north-america': '北美洲', 'south-america': '南美洲', 'oceania': '大洋洲'
-        };
-
-        // 扩展语言映射 - 包含更多主流语言
-        const languageMapping = {
-            // 联合国官方语言
-            'chinese': '中文', 'english': '英语', 'french': '法语', 'russian': '俄语',
-            'spanish': '西班牙语', 'arabic': '阿拉伯语',
-            
-            // 欧洲主要语言
-            'german': '德语', 'italian': '意大利语', 'portuguese': '葡萄牙语', 'dutch': '荷兰语',
-            'polish': '波兰语', 'ukrainian': '乌克兰语', 'romanian': '罗马尼亚语', 'greek': '希腊语',
-            'czech': '捷克语', 'hungarian': '匈牙利语', 'bulgarian': '保加利亚语', 'swedish': '瑞典语',
-            'norwegian': '挪威语', 'danish': '丹麦语', 'finnish': '芬兰语', 'croatian': '克罗地亚语',
-            'serbian': '塞尔维亚语', 'slovak': '斯洛伐克语', 'slovenian': '斯洛文尼亚语',
-            
-            // 亚洲主要语言
-            'japanese': '日语', 'korean': '韩语', 'hindi': '印地语', 'bengali': '孟加拉语',
-            'urdu': '乌尔都语', 'persian': '波斯语', 'turkish': '土耳其语', 'thai': '泰语',
-            'vietnamese': '越南语', 'malay': '马来语', 'indonesian': '印尼语', 'filipino': '菲律宾语',
-            'burmese': '缅甸语', 'khmer': '柬埔寨语', 'lao': '老挝语', 'mongolian': '蒙古语',
-            
-            // 非洲主要语言
-            'swahili': '斯瓦希里语', 'hausa': '豪萨语', 'yoruba': '约鲁巴语', 'amharic': '阿姆哈拉语',
-            'somali': '索马里语', 'zulu': '祖鲁语', 'afrikaans': '南非荷兰语',
-            
-            // 其他重要语言
-            'hebrew': '希伯来语', 'tamil': '泰米尔语', 'telugu': '泰卢固语', 'marathi': '马拉地语',
-            'gujarati': '古吉拉特语', 'punjabi': '旁遮普语', 'kannada': '卡纳达语', 'malayalam': '马拉雅拉姆语',
-            
-            // 其他语言归类
-            'other': '其他语言'
-        };
-
-        // 完整的国家名称中英文映射 - 修复版
-        const countryNameMapping = {
-            // 亚洲
-            'China': '中国', 'Japan': '日本', 'South Korea': '韩国', 'North Korea': '朝鲜',
-            'India': '印度', 'Indonesia': '印度尼西亚', 'Thailand': '泰国', 'Vietnam': '越南',
-            'Malaysia': '马来西亚', 'Philippines': '菲律宾', 'Singapore': '新加坡', 'Taiwan': '台湾',
-            'Hong Kong': '香港', 'Macao': '澳门', 'Pakistan': '巴基斯坦', 'Bangladesh': '孟加拉国',
-            'Sri Lanka': '斯里兰卡', 'Nepal': '尼泊尔', 'Myanmar': '缅甸', 'Cambodia': '柬埔寨',
-            'Laos': '老挝', 'The Lao Peoples Democratic Republic': '老挝', 'Lao Peoples Democratic Republic': '老挝',
-            'Mongolia': '蒙古', 'Afghanistan': '阿富汗', 'Bhutan': '不丹',
-            'Brunei': '文莱', 'Maldives': '马尔代夫', 'Timor-Leste': '东帝汶', 'Timor Leste': '东帝汶',
-            'Kazakhstan': '哈萨克斯坦', 'Uzbekistan': '乌兹别克斯坦', 'Turkmenistan': '土库曼斯坦',
-            'Kyrgyzstan': '吉尔吉斯斯坦', 'Tajikistan': '塔吉克斯坦',
-            'Iran': '伊朗', 'Iraq': '伊拉克', 'Saudi Arabia': '沙特阿拉伯', 'United Arab Emirates': '阿联酋',
-            'Turkey': '土耳其', 'Türkiye': '土耳其', 'Israel': '以色列', 'Lebanon': '黎巴嫩', 
-            'Jordan': '约旦', 'Syria': '叙利亚', 'Yemen': '也门', 'Oman': '阿曼', 'Qatar': '卡塔尔',
-            'Kuwait': '科威特', 'Bahrain': '巴林', 'Palestine': '巴勒斯坦', 'Cyprus': '塞浦路斯',
-            'Armenia': '亚美尼亚', 'Azerbaijan': '阿塞拜疆', 'Georgia': '格鲁吉亚',
-            
-            // 欧洲
-            'United Kingdom': '英国', 'Germany': '德国', 'France': '法国', 'Italy': '意大利',
-            'Spain': '西班牙', 'Netherlands': '荷兰', 'Sweden': '瑞典', 'Norway': '挪威',
-            'Finland': '芬兰', 'Denmark': '丹麦', 'Switzerland': '瑞士', 'Austria': '奥地利',
-            'Russia': '俄罗斯', 'Belgium': '比利时', 'Ireland': '爱尔兰', 'Portugal': '葡萄牙',
-            'Poland': '波兰', 'Ukraine': '乌克兰', 'Czech Republic': '捷克', 'Czechia': '捷克',
-            'Hungary': '匈牙利', 'Romania': '罗马尼亚', 'Greece': '希腊', 'Bulgaria': '保加利亚',
-            'Serbia': '塞尔维亚', 'Croatia': '克罗地亚', 'Slovakia': '斯洛伐克', 'Belarus': '白俄罗斯',
-            'Lithuania': '立陶宛', 'Latvia': '拉脱维亚', 'Estonia': '爱沙尼亚', 'Slovenia': '斯洛文尼亚',
-            'Luxembourg': '卢森堡', 'Malta': '马耳他', 'Iceland': '冰岛', 'Albania': '阿尔巴尼亚',
-            'Bosnia and Herzegovina': '波黑', 'Bosnia And Herzegovina': '波黑',
-            'Macedonia': '北马其顿', 'Montenegro': '黑山', 'Kosovo': '科索沃', 'Moldova': '摩尔多瓦',
-            'Andorra': '安道尔', 'Monaco': '摩纳哥', 'San Marino': '圣马力诺', 'Vatican City': '梵蒂冈',
-            'Liechtenstein': '列支敦士登',
-            
-            // 北美洲
-            'United States': '美国', 'Canada': '加拿大', 'Mexico': '墨西哥', 'Cuba': '古巴',
-            'Dominican Republic': '多米尼加', 'Haiti': '海地', 'Jamaica': '牙买加', 'Bahamas': '巴哈马',
-            'Puerto Rico': '波多黎各', 'Guatemala': '危地马拉', 'Honduras': '洪都拉斯', 'El Salvador': '萨尔瓦多',
-            'Nicaragua': '尼加拉瓜', 'Costa Rica': '哥斯达黎加', 'Panama': '巴拿马', 
-            'Trinidad and Tobago': '特立尼达和多巴哥', 'Trinidad And Tobago': '特立尼达和多巴哥',
-            'Barbados': '巴巴多斯', 'Belize': '伯利兹', 'Saint Lucia': '圣卢西亚', 'Grenada': '格林纳达',
-            'Saint Vincent and the Grenadines': '圣文森特和格林纳丁斯', 
-            'Saint Vincent And The Grenadines': '圣文森特和格林纳丁斯',
-            'Antigua and Barbuda': '安提瓜和巴布达', 'Antigua And Barbuda': '安提瓜和巴布达',
-            'Dominica': '多米尼克', 
-            'Saint Kitts and Nevis': '圣基茨和尼维斯', 'Saint Kitts And Nevis': '圣基茨和尼维斯',
-            
-            // 南美洲
-            'Brazil': '巴西', 'Argentina': '阿根廷', 'Chile': '智利', 'Colombia': '哥伦比亚',
-            'Peru': '秘鲁', 'Venezuela': '委内瑞拉', 'Ecuador': '厄瓜多尔', 'Bolivia': '玻利维亚',
-            'Paraguay': '巴拉圭', 'Uruguay': '乌拉圭', 'Guyana': '圭亚那', 'Suriname': '苏里南',
-            'French Guiana': '法属圭亚那',
-            
-            // 非洲
-            'South Africa': '南非', 'Egypt': '埃及', 'Nigeria': '尼日利亚', 'Kenya': '肯尼亚',
-            'Morocco': '摩洛哥', 'Ethiopia': '埃塞俄比亚', 'Ghana': '加纳', 'Tanzania': '坦桑尼亚',
-            'Algeria': '阿尔及利亚', 'Uganda': '乌干达', 'Sudan': '苏丹', 'Angola': '安哥拉',
-            'Mozambique': '莫桑比克', 'Madagascar': '马达加斯加', 'Cameroon': '喀麦隆', 
-            "Côte d'Ivoire": '科特迪瓦', 'Coted Ivoire': '科特迪瓦', 
-            'Democratic Republic of the Congo': '刚果(金)', 
-            'The Democratic Republic Of The Congo': '刚果(金)', 
-            'Republic of the Congo': '刚果(布)', 'The Congo': '刚果', 
-            'Zimbabwe': '津巴布韦', 'Zambia': '赞比亚', 'Senegal': '塞内加尔', 
-            'Mali': '马里', 'Burkina Faso': '布基纳法索', 'Niger': '尼日尔', 'Chad': '乍得', 
-            'Somalia': '索马里', 'Rwanda': '卢旺达', 'Burundi': '布隆迪', 'Tunisia': '突尼斯', 
-            'Libya': '利比亚', 'Namibia': '纳米比亚', 'Botswana': '博茨瓦纳', 'Lesotho': '莱索托', 
-            'Eswatini': '斯威士兰', 'Mauritania': '毛里塔尼亚', 'Benin': '贝宁', 'Togo': '多哥', 
-            'Sierra Leone': '塞拉利昂', 'Liberia': '利比里亚', 'Central African Republic': '中非共和国', 
-            'South Sudan': '南苏丹', 'Eritrea': '厄立特里亚', 'Djibouti': '吉布提', 'Comoros': '科摩罗', 
-            'Cape Verde': '佛得角', 'Cabo Verde': '佛得角', 
-            'Sao Tome and Principe': '圣多美和普林西比', 'Sao Tome And Principe': '圣多美和普林西比', 
-            'Mauritius': '毛里求斯', 'Seychelles': '塞舌尔', 'Guinea': '几内亚', 
-            'Guinea-Bissau': '几内亚比绍', 'Equatorial Guinea': '赤道几内亚', 'Gabon': '加蓬', 
-            'Gambia': '冈比亚', 'Western Sahara': '西撒哈拉', 'Malawi': '马拉维',
-            
-            // 大洋洲
-            'Australia': '澳大利亚', 'New Zealand': '新西兰', 'Fiji': '斐济', 
-            'Papua New Guinea': '巴布亚新几内亚', 'Samoa': '萨摩亚', 'Tonga': '汤加', 
-            'Vanuatu': '瓦努阿图', 'Solomon Islands': '所罗门群岛', 'Kiribati': '基里巴斯', 
-            'Micronesia': '密克罗尼西亚', 'Palau': '帕劳', 'Marshall Islands': '马绍尔群岛',
-            'Nauru': '瑙鲁', 'Tuvalu': '图瓦卢', 'New Caledonia': '新喀里多尼亚', 
-            'French Polynesia': '法属波利尼西亚',
-            
-            // 特殊地区
-            'Aland Islands': '奥兰群岛', 'Anguilla': '安圭拉', 'Antarctica': '南极洲', 
-            'Aruba': '阿鲁巴', 'Ascension And Tristan Da Cunha Saint Helena': '圣赫勒拿', 
-            'Bermuda': '百慕大', 'Bonaire': '博奈尔', 'British Virgin Islands': '英属维尔京群岛', 
-            'Christmas Island': '圣诞岛', 'Curacao': '库拉索', 'Gibraltar': '直布罗陀', 
-            'Greenland': '格陵兰', 'Guadeloupe': '瓜德罗普', 'Guam': '关岛', 'Guernsey': '根西岛', 
-            'Isle Of Man': '马恩岛', 'Martinique': '马提尼克', 'Mayotte': '马约特', 
-            'Montserrat': '蒙特塞拉特', 'Niue': '纽埃', 'Reunion': '留尼汪', 
-            'Saint Pierre And Miquelon': '圣皮埃尔和密克隆', 'Svalbard And Jan Mayen': '斯瓦尔巴', 
-            'The Cayman Islands': '开曼群岛', 'The Cocos Keeling Islands': '科科斯群岛', 
-            'The Cook Islands': '库克群岛', 'The Falkland Islands Malvinas': '福克兰群岛', 
-            'The Faroe Islands': '法罗群岛', 'The French Southern Territories': '法属南部领地', 
-            'The Holy See': '梵蒂冈', 'The Turks And Caicos Islands': '特克斯和凯科斯群岛', 
-            'US Virgin Islands': '美属维尔京群岛', 'Wallis And Futuna': '瓦利斯和富图纳'
-        };
-
-        // 扩展分类映射
-        const genreMapping = {
-            // 音乐分类
-            'pop': '流行音乐', 'rock': '摇滚音乐', 'classical': '古典音乐', 'jazz': '爵士音乐',
-            'electronic': '电子音乐', 'country': '乡村音乐', 'folk': '民谣音乐', 'blues': '蓝调音乐',
-            'hiphop': '嘻哈音乐', 'rap': '说唱音乐', 'metal': '金属音乐', 'indie': '独立音乐',
-            'dance': '舞曲音乐', 'latin': '拉丁音乐', 'world': '世界音乐', 'oldies': '经典老歌',
-            'top40': '流行金曲', 'hits': '热门金曲', 'rnb': '节奏蓝调', 'r&b': '节奏蓝调', 
-            'edm': '电子舞曲', 'kpop': '韩流音乐', 'jpop': '日流音乐', 'cpop': '华语流行',
-            
-            // 资讯节目
-            'news': '新闻资讯', 'talk': '谈话节目', 'business': '财经节目', 'politics': '政治节目', 
-            'sports': '体育节目', 'weather': '天气预报', 'traffic': '交通信息', 'current affairs': '时事评论',
-            
-            // 文化教育
-            'education': '教育节目', 'culture': '文化节目', 'religious': '宗教节目', 'history': '历史节目',
-            'science': '科学节目', 'technology': '科技节目', 'arts': '艺术节目', 'literature': '文学节目',
-            
-            // 娱乐生活
-            'entertainment': '娱乐节目', 'comedy': '喜剧节目', 'lifestyle': '生活节目', 'health': '健康节目',
-            'fashion': '时尚节目', 'food': '美食节目', 'travel': '旅游节目', 'fitness': '健身节目',
-            
-            // 特殊分类
-            'children': '儿童节目', 'family': '家庭节目', 'community': '社区节目', 'local': '本地节目',
-            'regional': '区域节目', 'national': '全国节目', 'international': '国际节目', 'public': '公共广播',
-            'college': '大学电台', 'student': '学生电台'
-        };
-
-        // 热门分类列表
-        const popularGenres = ['流行音乐', '新闻资讯', '摇滚音乐', '古典音乐', '谈话节目', '体育节目'];
-
-        // 地区国家映射 - 7个洲 - 扩展版
-        const regionCountries = {
-            'asia': [
-                'China', 'Japan', 'South Korea', 'North Korea', 'India', 'Indonesia', 'Thailand', 'Vietnam', 
-                'Malaysia', 'Philippines', 'Singapore', 'Taiwan', 'Hong Kong', 'Macao', 'Pakistan', 'Bangladesh', 
-                'Sri Lanka', 'Nepal', 'Myanmar', 'Cambodia', 'Laos', 'Mongolia', 'Afghanistan', 'Bhutan',
-                'Brunei', 'Maldives', 'Timor-Leste', 'Kazakhstan', 'Uzbekistan', 'Turkmenistan', 'Kyrgyzstan', 
-                'Tajikistan', 'Iran', 'Iraq', 'Saudi Arabia', 'United Arab Emirates', 'Turkey', 'Israel', 
-                'Lebanon', 'Jordan', 'Syria', 'Yemen', 'Oman', 'Qatar', 'Kuwait', 'Bahrain', 'Palestine', 
-                'Cyprus', 'Armenia', 'Azerbaijan', 'Georgia'
-            ],
-            
-            'europe': [
-                'United Kingdom', 'Germany', 'France', 'Italy', 'Spain', 'Netherlands', 'Sweden', 
-                'Norway', 'Finland', 'Denmark', 'Switzerland', 'Austria', 'Russia', 'Belgium', 
-                'Ireland', 'Portugal', 'Poland', 'Ukraine', 'Czech Republic', 'Hungary', 'Romania',
-                'Greece', 'Bulgaria', 'Serbia', 'Croatia', 'Slovakia', 'Belarus', 'Lithuania',
-                'Latvia', 'Estonia', 'Slovenia', 'Luxembourg', 'Malta', 'Iceland', 'Albania',
-                'Bosnia and Herzegovina', 'Macedonia', 'Montenegro', 'Kosovo', 'Moldova',
-                'Andorra', 'Monaco', 'San Marino', 'Vatican City', 'Liechtenstein'
-            ],
-            
-            'north-america': [
-                'United States', 'Canada', 'Mexico', 'Cuba', 'Dominican Republic', 'Haiti', 'Jamaica',
-                'Bahamas', 'Puerto Rico', 'Guatemala', 'Honduras', 'El Salvador', 'Nicaragua', 
-                'Costa Rica', 'Panama', 'Trinidad and Tobago', 'Barbados', 'Belize', 'Saint Lucia',
-                'Grenada', 'Saint Vincent and the Grenadines', 'Antigua and Barbuda', 'Dominica',
-                'Saint Kitts and Nevis'
-            ],
-            
-            'south-america': [
-                'Brazil', 'Argentina', 'Chile', 'Colombia', 'Peru', 'Venezuela', 'Ecuador', 'Bolivia',
-                'Paraguay', 'Uruguay', 'Guyana', 'Suriname', 'French Guiana'
-            ],
-            
-            'africa': [
-                'South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Morocco', 'Ethiopia', 'Ghana', 
-                'Tanzania', 'Algeria', 'Uganda', 'Sudan', 'Angola', 'Mozambique', 'Madagascar',
-                'Cameroon', "Côte d'Ivoire", 'Democratic Republic of the Congo', 'Republic of the Congo',
-                'Zimbabwe', 'Zambia', 'Senegal', 'Mali', 'Burkina Faso', 'Niger', 'Chad', 'Somalia',
-                'Rwanda', 'Burundi', 'Tunisia', 'Libya', 'Namibia', 'Botswana', 'Lesotho', 'Eswatini',
-                'Mauritania', 'Benin', 'Togo', 'Sierra Leone', 'Liberia', 'Central African Republic',
-                'South Sudan', 'Eritrea', 'Djibouti', 'Comoros', 'Cape Verde', 'Sao Tome and Principe',
-                'Mauritius', 'Seychelles', 'Guinea', 'Guinea-Bissau', 'Equatorial Guinea', 'Gabon',
-                'Gambia', 'Western Sahara'
-            ],
-            
-            'oceania': [
-                'Australia', 'New Zealand', 'Fiji', 'Papua New Guinea', 'Samoa', 'Tonga', 'Vanuatu',
-                'Solomon Islands', 'Kiribati', 'Micronesia', 'Palau', 'Marshall Islands', 'Nauru', 'Tuvalu',
-                'New Caledonia', 'French Polynesia'
-            ]
-        };
-
-        // 从地区JSON文件加载数据
-        async function loadPreprocessedData() {
-            console.log('开始加载地区数据...');
-            const loadingElement = document.getElementById('radio-list');
-            loadingElement.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载电台数据...</div>';
-            
-            try {
-                // 直接加载地区数据
-                const stations = await loadRegionalData('all');
+        // 模块化重构 - 主应用类
+        class GlobalRadioApp {
+            constructor() {
+                this.stationManager = new StationManager();
+                this.mapManager = new MapManager();
+                this.audioManager = new AudioManager();
+                this.uiManager = new UIManager(this);
+                this.searchEngine = new SearchEngine();
+                this.storageManager = new StorageManager();
+                this.errorHandler = new ErrorHandler();
                 
-                if (stations && stations.length > 0) {
-                    console.log(`✅ 从地区文件加载了 ${stations.length} 个电台`);
-                    processStationsData(stations);
-                    updateDataSource('ZYDS.NET', '所有地区');
+                this.currentRegion = 'all';
+                this.currentQuality = 'auto';
+                this.currentGenre = 'all';
+                this.activeTab = 'all';
+                this.displayedCount = 0;
+                this.displayLimit = 200;
+            }
+
+            async init() {
+                try {
+                    // 显示骨架屏
+                    this.uiManager.showSkeleton();
+                    
+                    // 初始化各个模块
+                    await this.mapManager.init();
+                    this.uiManager.initCustomSelect();
+                    this.uiManager.attachEventListeners();
+                    
+                    // 渐进式加载数据
+                    await this.loadData();
+                    
+                    // 检查URL参数
+                    this.checkUrlParams();
+                    
+                } catch (error) {
+                    this.errorHandler.handleInitError(error);
+                }
+            }
+
+            async loadData() {
+                // 先加载核心数据
+                await this.stationManager.loadEssentialData();
+                this.uiManager.updateStats();
+                this.uiManager.renderRadioList();
+                this.mapManager.updateMarkers(this.stationManager.getStations().slice(0, 50));
+                
+                // 然后加载剩余数据
+                setTimeout(() => {
+                    this.stationManager.loadRemainingData();
+                    this.uiManager.updateStats();
+                }, 1000);
+            }
+
+            checkUrlParams() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const stationId = urlParams.get('station');
+                
+                if (stationId) {
+                    setTimeout(() => {
+                        const station = this.stationManager.getStationById(stationId);
+                        if (station) {
+                            this.uiManager.showWelcomeNotification(station);
+                            this.audioManager.playStation(station);
+                            this.uiManager.scrollToStation(stationId);
+                        }
+                    }, 1000);
+                }
+            }
+
+            cleanup() {
+                this.mapManager.cleanup();
+                this.audioManager.cleanup();
+                this.uiManager.cleanup();
+            }
+        }
+
+        // 电台管理类
+        class StationManager {
+            constructor() {
+                this.stations = [];
+                this.filteredStations = [];
+                this.displayedStations = [];
+                this.favorites = [];
+                this.history = [];
+                this.countries = [];
+                this.languages = [];
+            }
+
+            async loadEssentialData() {
+                try {
+                    // 尝试从缓存加载
+                    const cached = this.storageManager.getWithExpiry('essentialStations');
+                    if (cached) {
+                        this.stations = cached;
+                        this.extractFilterOptions();
+                        return;
+                    }
+
+                    // 加载核心数据（前50个）
+                    const stations = await this.loadRegionalData('all', 50);
+                    this.processStationsData(stations);
+                    
+                    // 缓存核心数据
+                    this.storageManager.setWithExpiry('essentialStations', stations, 30 * 60 * 1000); // 30分钟
+                    
+                } catch (error) {
+                    throw new Error(`加载核心数据失败: ${error.message}`);
+                }
+            }
+
+            async loadRemainingData() {
+                try {
+                    const stations = await this.loadRegionalData('all');
+                    this.processStationsData(stations);
+                } catch (error) {
+                    console.warn('加载剩余数据失败:', error);
+                }
+            }
+
+            async loadRegionalData(region = 'all', limit = null) {
+                const DATA_SOURCES = {
+                    asia: 'data/asia-stations.json',
+                    europe: 'data/europe-stations.json',
+                    'north-america': 'data/north-america-stations.json',
+                    'south-america': 'data/south-america-stations.json',
+                    africa: 'data/africa-stations.json',
+                    oceania: 'data/oceania-stations.json'
+                };
+
+                let allStations = [];
+                const seenUuids = new Set();
+                
+                const sourcesToLoad = region === 'all' ? Object.values(DATA_SOURCES) : [DATA_SOURCES[region]];
+                
+                for (const source of sourcesToLoad) {
+                    try {
+                        const response = await fetch(source);
+                        if (!response.ok) continue;
+                        
+                        const data = await response.json();
+                        const stations = data.stations || [];
+                        
+                        stations.forEach(station => {
+                            if (station && station.stationuuid && !seenUuids.has(station.stationuuid)) {
+                                seenUuids.add(station.stationuuid);
+                                allStations.push(station);
+                            }
+                        });
+                        
+                    } catch (error) {
+                        console.warn(`无法加载地区数据 ${source}:`, error);
+                    }
+                    
+                    if (limit && allStations.length >= limit) {
+                        break;
+                    }
+                }
+                
+                return limit ? allStations.slice(0, limit) : allStations;
+            }
+
+            processStationsData(stations) {
+                const uniqueStationsMap = new Map();
+                stations.forEach(station => {
+                    if (station && station.stationuuid) {
+                        uniqueStationsMap.set(station.stationuuid, station);
+                    }
+                });
+                
+                // 合并新数据，避免重复
+                const newStations = Array.from(uniqueStationsMap.values()).filter(station => 
+                    station && (station.url_resolved || station.url)
+                );
+                
+                // 使用Set来去重
+                const existingIds = new Set(this.stations.map(s => s.stationuuid));
+                const uniqueNewStations = newStations.filter(station => !existingIds.has(station.stationuuid));
+                
+                this.stations = [...this.stations, ...uniqueNewStations];
+                this.filteredStations = [...this.stations];
+                this.extractFilterOptions();
+            }
+
+            extractFilterOptions() {
+                this.extractCountries();
+                this.extractLanguages();
+            }
+
+            extractCountries() {
+                const countrySet = new Set();
+                this.stations.forEach(station => {
+                    if (station.country) {
+                        const chineseName = this.getChineseCountryName(station.country);
+                        countrySet.add(chineseName);
+                    }
+                });
+                this.countries = Array.from(countrySet).sort();
+            }
+
+            extractLanguages() {
+                const languageSet = new Set();
+                const languageMapping = {
+                    'chinese': '中文', 'english': '英语', 'french': '法语', 'russian': '俄语',
+                    'spanish': '西班牙语', 'arabic': '阿拉伯语', 'german': '德语', 'japanese': '日语'
+                };
+                
+                this.stations.forEach(station => {
+                    if (station.language) {
+                        const stationLanguages = station.language.split(',').map(lang => lang.trim().toLowerCase());
+                        stationLanguages.forEach(lang => {
+                            if (lang && languageMapping[lang]) {
+                                languageSet.add(languageMapping[lang]);
+                            }
+                        });
+                    }
+                });
+                this.languages = Array.from(languageSet).sort();
+            }
+
+            getChineseCountryName(englishName) {
+                const countryNameMapping = {
+                    'China': '中国', 'United States': '美国', 'United Kingdom': '英国', 'Japan': '日本',
+                    'Germany': '德国', 'France': '法国', 'Australia': '澳大利亚', 'Canada': '加拿大',
+                    'Brazil': '巴西', 'Russia': '俄罗斯'
+                };
+                return countryNameMapping[englishName] || englishName;
+            }
+
+            getStations() {
+                return this.stations;
+            }
+
+            getStationById(id) {
+                return this.stations.find(station => station.stationuuid === id);
+            }
+
+            filterStations(criteria) {
+                this.filteredStations = this.stations.filter(station => {
+                    const matchesSearch = !criteria.searchTerm || 
+                        (station.name && station.name.toLowerCase().includes(criteria.searchTerm)) ||
+                        (station.country && station.country.toLowerCase().includes(criteria.searchTerm)) ||
+                        (station.tags && station.tags.toLowerCase().includes(criteria.searchTerm));
+                    
+                    const matchesCountry = !criteria.country || 
+                        this.getChineseCountryName(station.country) === criteria.country;
+                    
+                    return matchesSearch && matchesCountry;
+                });
+                
+                return this.filteredStations;
+            }
+
+            addToHistory(station) {
+                const existingIndex = this.history.findIndex(item => 
+                    item.station.stationuuid === station.stationuuid
+                );
+                
+                if (existingIndex !== -1) {
+                    this.history.splice(existingIndex, 1);
+                }
+                
+                this.history.push({
+                    station: station,
+                    timestamp: Date.now()
+                });
+                
+                if (this.history.length > 50) {
+                    this.history = this.history.slice(-50);
+                }
+                
+                this.storageManager.setWithExpiry('radioHistory', this.history);
+            }
+
+            toggleFavorite(stationId) {
+                const station = this.getStationById(stationId);
+                if (!station) return false;
+                
+                const index = this.favorites.findIndex(fav => fav.stationuuid === stationId);
+                
+                if (index === -1) {
+                    this.favorites.push(station);
+                } else {
+                    this.favorites.splice(index, 1);
+                }
+                
+                this.storageManager.setWithExpiry('radioFavorites', this.favorites);
+                return index === -1; // 返回是否添加了收藏
+            }
+        }
+
+        // 地图管理类
+        class MapManager {
+            constructor() {
+                this.map = null;
+                this.markers = [];
+                this.markerLayer = null;
+            }
+
+            init() {
+                return new Promise((resolve) => {
+                    this.map = L.map('map').setView([20, 0], 3);
+                    
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(this.map);
+                    
+                    this.markerLayer = L.layerGroup().addTo(this.map);
+                    resolve();
+                });
+            }
+
+            updateMarkers(stations) {
+                // 清除现有标记
+                this.markerLayer.clearLayers();
+                this.markers = [];
+                
+                const displayLimit = 100; // 限制标记数量以提高性能
+                const stationsToShow = stations.slice(0, displayLimit);
+                
+                // 使用requestAnimationFrame分批处理
+                this.processMarkersBatch(stationsToShow, 0, 20);
+            }
+
+            processMarkersBatch(stations, startIndex, batchSize) {
+                const endIndex = Math.min(startIndex + batchSize, stations.length);
+                
+                for (let i = startIndex; i < endIndex; i++) {
+                    const station = stations[i];
+                    if (station.geo_lat && station.geo_long) {
+                        this.createMarker(station);
+                    }
+                }
+                
+                if (endIndex < stations.length) {
+                    requestAnimationFrame(() => {
+                        this.processMarkersBatch(stations, endIndex, batchSize);
+                    });
+                }
+            }
+
+            createMarker(station) {
+                const flagEmoji = this.getFlagEmoji(station.countrycode);
+                const countryName = app.stationManager.getChineseCountryName(station.country);
+                
+                const marker = L.marker([station.geo_lat, station.geo_long])
+                    .addTo(this.markerLayer)
+                    .bindPopup(`
+                        <div style="color: black; min-width: 200px;">
+                            <b>${station.name || '未知电台'}</b><br>
+                            ${countryName || ''}<br>
+                            <small>${this.formatGenres(station.tags)}</small><br>
+                            <button onclick="app.audioManager.playStation('${station.stationuuid}')" 
+                                    style="background:#e52e71;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-top:5px;">
+                                播放
+                            </button>
+                        </div>
+                    `);
+                
+                marker.on('click', () => {
+                    app.audioManager.playStation(station.stationuuid);
+                });
+                
+                this.markers.push(marker);
+                return marker;
+            }
+
+            getFlagEmoji(countryCode) {
+                if (!countryCode) return '🌐';
+                const codePoints = countryCode.toUpperCase().split('').map(char => 127397 + char.charCodeAt());
+                return String.fromCodePoint(...codePoints);
+            }
+
+            formatGenres(tags) {
+                if (!tags) return '未分类';
+                const genreList = tags.split(',').slice(0, 2);
+                return genreList.join(' · ');
+            }
+
+            cleanup() {
+                if (this.map) {
+                    this.map.remove();
+                    this.map = null;
+                }
+                this.markers = [];
+            }
+        }
+
+        // 音频管理类
+        class AudioManager {
+            constructor() {
+                this.audio = new Audio();
+                this.currentStation = null;
+                this.isPlaying = false;
+                this.retryCount = 0;
+                this.maxRetries = 3;
+                this.setupAudioEvents();
+            }
+
+            setupAudioEvents() {
+                this.audio.addEventListener('waiting', () => this.showBuffering());
+                this.audio.addEventListener('canplay', () => this.hideBuffering());
+                this.audio.addEventListener('error', (e) => this.handleError(e));
+                this.audio.addEventListener('ended', () => this.onPlaybackEnded());
+                this.audio.addEventListener('loadstart', () => this.onLoadStart());
+            }
+
+            async playStation(stationId) {
+                const station = app.stationManager.getStationById(stationId);
+                if (!station) {
+                    this.errorHandler.showNotification('未找到该电台', 'error');
+                    return;
+                }
+
+                this.currentStation = station;
+                app.uiManager.updatePlayerInfo(station);
+                app.stationManager.addToHistory(station);
+
+                try {
+                    await this.playWithRetry(station);
+                    this.isPlaying = true;
+                    app.uiManager.updatePlayButton(true);
+                } catch (error) {
+                    this.errorHandler.handleStationError(error, station);
+                }
+            }
+
+            async playWithRetry(station, retryCount = 0) {
+                const streamUrl = station.url_resolved || station.url;
+                if (!streamUrl) {
+                    throw new Error('电台没有有效的流媒体URL');
+                }
+
+                try {
+                    this.audio.src = streamUrl;
+                    await this.audio.play();
+                    this.retryCount = 0;
+                } catch (error) {
+                    if (retryCount < this.maxRetries) {
+                        await this.delay(1000 * (retryCount + 1));
+                        return this.playWithRetry(station, retryCount + 1);
+                    }
+                    throw error;
+                }
+            }
+
+            togglePlayPause() {
+                if (!this.currentStation) return;
+
+                if (this.isPlaying) {
+                    this.audio.pause();
+                    this.isPlaying = false;
+                } else {
+                    this.audio.play().catch(error => {
+                        this.errorHandler.handleStationError(error, this.currentStation);
+                    });
+                    this.isPlaying = true;
+                }
+                app.uiManager.updatePlayButton(this.isPlaying);
+            }
+
+            stop() {
+                this.audio.pause();
+                this.audio.currentTime = 0;
+                this.isPlaying = false;
+                app.uiManager.updatePlayButton(false);
+            }
+
+            setVolume(volume) {
+                this.audio.volume = volume / 100;
+            }
+
+            showBuffering() {
+                app.uiManager.showBufferingIndicator();
+            }
+
+            hideBuffering() {
+                app.uiManager.hideBufferingIndicator();
+            }
+
+            onLoadStart() {
+                this.retryCount = 0;
+            }
+
+            onPlaybackEnded() {
+                this.isPlaying = false;
+                app.uiManager.updatePlayButton(false);
+            }
+
+            handleError(error) {
+                console.error('Audio error:', error);
+                if (this.retryCount < this.maxRetries) {
+                    this.retryCount++;
+                    setTimeout(() => {
+                        if (this.currentStation) {
+                            this.playWithRetry(this.currentStation, this.retryCount);
+                        }
+                    }, 1000 * this.retryCount);
+                } else {
+                    this.errorHandler.handleStationError(error, this.currentStation);
+                }
+            }
+
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            cleanup() {
+                this.audio.pause();
+                this.audio.src = '';
+                this.audio = null;
+            }
+        }
+
+        // UI管理类
+        class UIManager {
+            constructor(app) {
+                this.app = app;
+                this.eventListeners = [];
+                this.debounceTimeouts = new Map();
+            }
+
+            initCustomSelect() {
+                const customSelect = document.getElementById('genre-select');
+                customSelect.innerHTML = `
+                    <div class="select-selected" style="font-weight: bold; color: #ff8a00;">所有分类</div>
+                    <div class="select-items">
+                        <div class="select-header">
+                            <div class="select-item active" data-value="all" style="background: rgba(255, 138, 0, 0.2); font-weight: bold;">
+                                <i class="fas fa-globe"></i> 所有分类
+                            </div>
+                        </div>
+                        <div class="select-category">
+                            <div class="category-title"><i class="fas fa-fire"></i> 热门分类</div>
+                            <div class="select-hot-grid">
+                                <div class="select-item hot-genre" data-value="流行音乐">流行音乐</div>
+                                <div class="select-item hot-genre" data-value="新闻资讯">新闻资讯</div>
+                                <div class="select-item hot-genre" data-value="摇滚音乐">摇滚音乐</div>
+                                <div class="select-item hot-genre" data-value="谈话节目">谈话节目</div>
+                                <div class="select-item hot-genre" data-value="古典音乐">古典音乐</div>
+                                <div class="select-item hot-genre" data-value="体育节目">体育节目</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                this.setupCustomSelectEvents(customSelect);
+            }
+
+            setupCustomSelectEvents(customSelect) {
+                const selectSelected = customSelect.querySelector('.select-selected');
+                const selectItems = customSelect.querySelector('.select-items');
+                const selectItemsAll = customSelect.querySelectorAll('.select-item');
+                
+                this.addEventListener(selectSelected, 'click', (e) => {
+                    e.stopPropagation();
+                    selectItems.classList.toggle('active');
+                    selectSelected.classList.toggle('select-arrow-active');
+                });
+                
+                selectItemsAll.forEach(item => {
+                    this.addEventListener(item, 'click', () => {
+                        selectItemsAll.forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+                        selectSelected.textContent = item.textContent;
+                        selectItems.classList.remove('active');
+                        selectSelected.classList.remove('select-arrow-active');
+                        this.app.currentGenre = item.dataset.value;
+                        this.performSearch();
+                    });
+                });
+            }
+
+            attachEventListeners() {
+                // 搜索相关
+                this.addEventListener(document.getElementById('search-input'), 'input', 
+                    this.debounce(() => this.performSearch(), 300));
+                
+                this.addEventListener(document.getElementById('country-filter'), 'change', 
+                    () => this.performSearch());
+                
+                this.addEventListener(document.getElementById('language-filter'), 'change', 
+                    () => this.performSearch());
+                
+                // 播放控制
+                this.addEventListener(document.getElementById('play-pause-btn'), 'click', 
+                    () => this.app.audioManager.togglePlayPause());
+                
+                this.addEventListener(document.getElementById('stop-btn'), 'click', 
+                    () => this.app.audioManager.stop());
+                
+                this.addEventListener(document.querySelector('.volume-slider'), 'input', 
+                    (e) => this.app.audioManager.setVolume(e.target.value));
+                
+                // 音质选择
+                this.addEventListener(document.getElementById('quality-select'), 'change', 
+                    (e) => {
+                        this.app.currentQuality = e.target.value;
+                        this.performSearch();
+                    });
+                
+                // 分享功能
+                this.addEventListener(document.getElementById('share-btn'), 'click', 
+                    () => this.toggleShareMenu());
+                
+                // 标签页切换
+                document.querySelectorAll('.tab').forEach(tab => {
+                    this.addEventListener(tab, 'click', () => {
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                        
+                        tab.classList.add('active');
+                        const tabId = tab.dataset.tab;
+                        document.getElementById(`${tabId}-stations`).classList.add('active');
+                        
+                        this.app.activeTab = tabId;
+                        this.updateTabs();
+                    });
+                });
+                
+                // 地区选择
+                document.querySelectorAll('.region-btn').forEach(btn => {
+                    this.addEventListener(btn, 'click', async () => {
+                        document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.app.currentRegion = btn.dataset.region;
+                        
+                        this.showSkeleton();
+                        await this.app.stationManager.loadRegionalData(this.app.currentRegion);
+                        this.performSearch();
+                    });
+                });
+            }
+
+            addEventListener(element, type, handler) {
+                element.addEventListener(type, handler);
+                this.eventListeners.push({ element, type, handler });
+            }
+
+            debounce(func, wait) {
+                return (...args) => {
+                    const key = func.toString();
+                    clearTimeout(this.debounceTimeouts.get(key));
+                    this.debounceTimeouts.set(key, setTimeout(() => func.apply(this, args), wait));
+                };
+            }
+
+            performSearch() {
+                const searchTerm = document.getElementById('search-input').value.toLowerCase();
+                const countryFilter = document.getElementById('country-filter').value;
+                
+                const criteria = {
+                    searchTerm,
+                    country: countryFilter,
+                    genre: this.app.currentGenre,
+                    quality: this.app.currentQuality,
+                    region: this.app.currentRegion
+                };
+                
+                const filteredStations = this.app.stationManager.filterStations(criteria);
+                this.renderRadioList(filteredStations);
+                this.app.mapManager.updateMarkers(filteredStations.slice(0, 100));
+                this.updateStats();
+            }
+
+            renderRadioList(stations = null) {
+                const container = document.getElementById('radio-list');
+                const stationsToRender = stations || this.app.stationManager.filteredStations;
+                
+                if (stationsToRender.length === 0) {
+                    container.innerHTML = '<div class="loading">未找到匹配的电台</div>';
                     return;
                 }
                 
-                // 如果本地数据不可用，使用备用API
-                console.log('ZYDS.NET数据不可用，使用备用API...');
-                await loadFallbackData();
+                container.innerHTML = '';
                 
-            } catch (error) {
-                console.error('数据加载失败:', error);
-                await loadFallbackData();
-            }
-        }
-
-        // 加载地区数据
-        async function loadRegionalData(region = 'all') {
-            const regionalSources = [
-                DATA_SOURCES.asia,
-                DATA_SOURCES.europe,
-                DATA_SOURCES['north-america'],
-                DATA_SOURCES['south-america'],
-                DATA_SOURCES.africa,
-                DATA_SOURCES.oceania
-            ];
-            
-            let allStations = [];
-            const seenUuids = new Set();
-            
-            // 如果是特定地区，只加载该地区数据
-            const sourcesToLoad = region === 'all' ? regionalSources : [DATA_SOURCES[region]];
-            
-            for (const source of sourcesToLoad) {
-                try {
-                    const response = await fetch(source);
-                    if (!response.ok) continue;
-                    
-                    const data = await response.json();
-                    const stations = data.stations || [];
-                    
-                    // 严格去重
-                    stations.forEach(station => {
-                        if (station && station.stationuuid && !seenUuids.has(station.stationuuid)) {
-                            seenUuids.add(station.stationuuid);
-                            allStations.push(station);
-                        }
-                    });
-                    
-                    console.log(`✅ 从 ${source} 加载了 ${stations.length} 个电台，去重后新增 ${allStations.length} 个`);
-                    
-                } catch (error) {
-                    console.warn(`无法加载地区数据 ${source}:`, error);
-                }
-            }
-            
-            console.log(`📊 地区数据总计: ${allStations.length} 个唯一电台`);
-            return allStations;
-        }
-
-        // 加载特定地区数据
-        async function loadRegionData(region) {
-            try {
-                updateDataSource('ZYDS.NET', regionNames[region]);
-                
-                const stations = await loadRegionalData(region);
-                if (stations && stations.length > 0) {
-                    // 更新全局数据
-                    allStations = stations;
-                    
-                    // 重置筛选状态
-                    filteredStations = [...allStations];
-                    displayedCount = 0;
-                    displayedStations = [];
-                    
-                    // 重新提取筛选选项
-                    extractFilterOptions();
-                    
-                    // 更新地图
-                    updateMapMarkers(allStations.slice(0, 200));
-                    
-                    // 重新渲染列表
-                    if (activeTab === 'all') {
-                        loadMoreStations();
-                    }
-                    
-                    console.log(`✅ 加载 ${region} 地区数据成功: ${stations.length} 个电台`);
-                    return true;
-                }
-            } catch (error) {
-                console.error(`加载 ${region} 地区数据失败:`, error);
-            }
-            return false;
-        }
-
-        // 加载备用API数据
-        async function loadFallbackData() {
-            console.log('正在从Radio Browser API获取数据...');
-            updateDataSource('Zyds Radio API', regionNames[currentRegion]);
-            
-            try {
-                const response = await fetch(DATA_SOURCES.fallback);
-                const stations = await response.json();
-                
-                if (stations && stations.length > 0) {
-                    processStationsData(stations);
-                    console.log(`✅ 从API加载了 ${stations.length} 个电台`);
-                } else {
-                    throw new Error('API返回空数据');
-                }
-            } catch (error) {
-                console.error('备用API加载失败:', error);
-                // 最后使用模拟数据
-                const mockStations = generateMockStations();
-                processStationsData(mockStations);
-                updateDataSource('模拟数据', regionNames[currentRegion]);
-            }
-        }
-
-        // 生成模拟电台数据
-        function generateMockStations() {
-            const stations = [];
-            const countries = ['中国', '美国', '英国', '日本', '德国', '法国', '澳大利亚', '加拿大', '巴西', '俄罗斯'];
-            const languages = ['中文', '英语', '日语', '德语', '法语', '西班牙语'];
-            const genres = ['流行音乐', '新闻资讯', '谈话节目', '体育节目', '古典音乐', '摇滚音乐'];
-            
-            for (let i = 1; i <= 100; i++) {
-                const country = countries[Math.floor(Math.random() * countries.length)];
-                const language = languages[Math.floor(Math.random() * languages.length)];
-                const genre = genres[Math.floor(Math.random() * genres.length)];
-                
-                // 模拟音质信息
-                const qualityTags = ['high', 'medium', 'low'];
-                const quality = qualityTags[Math.floor(Math.random() * qualityTags.length)];
-                
-                stations.push({
-                    stationuuid: `station-${i}`,
-                    name: `${country}${genre}电台${i}`,
-                    country: country,
-                    countrycode: getCountryCode(country),
-                    url_resolved: `https://example.com/stream${i}.mp3`,
-                    tags: `${genre},${quality}`,
-                    language: language,
-                    votes: Math.floor(Math.random() * 1000),
-                    geo_lat: 20 + Math.random() * 50,
-                    geo_long: -120 + Math.random() * 240,
-                    bitrate: quality === 'high' ? 320 : (quality === 'medium' ? 128 : 64)
+                stationsToRender.slice(0, this.app.displayLimit).forEach(station => {
+                    const radioItem = this.createRadioItem(station);
+                    container.appendChild(radioItem);
                 });
-            }
-            
-            return stations;
-        }
-
-        // 获取国家代码
-        function getCountryCode(country) {
-            const codes = {
-                '中国': 'CN', '美国': 'US', '英国': 'GB', '日本': 'JP', 
-                '德国': 'DE', '法国': 'FR', '澳大利亚': 'AU', '加拿大': 'CA',
-                '巴西': 'BR', '俄罗斯': 'RU'
-            };
-            return codes[country] || 'UN';
-        }
-
-        // 获取中文国家名称 - 改进版本
-        function getChineseCountryName(englishName) {
-            if (!englishName) return '未知国家';
-            
-            // 清理国家名称（移除 "The" 等前缀）
-            const cleanName = englishName.replace(/^The\s+/i, '').trim();
-            
-            // 1. 直接映射
-            if (countryNameMapping[englishName]) {
-                return countryNameMapping[englishName];
-            }
-            
-            // 2. 清理后的名称映射
-            if (countryNameMapping[cleanName]) {
-                return countryNameMapping[cleanName];
-            }
-            
-            // 3. 特殊处理老挝的复杂名称
-            if (englishName.includes('Lao Peoples')) {
-                return '老挝';
-            }
-            
-            // 4. 处理"And"和"The"等连接词
-            const normalizedName = englishName
-                .replace(/\s+And\s+/gi, ' and ')
-                .replace(/\s+The\s+/gi, ' the ')
-                .replace(/^\s*The\s+/i, '');
-            
-            if (countryNameMapping[normalizedName]) {
-                return countryNameMapping[normalizedName];
-            }
-            
-            // 5. 模糊匹配 - 处理包含额外信息的国家名
-            for (const [key, value] of Object.entries(countryNameMapping)) {
-                const normalizedKey = key.toLowerCase().replace(/\s+and\s+/g, ' ').replace(/\s+the\s+/g, ' ');
-                const normalizedInput = englishName.toLowerCase().replace(/\s+and\s+/g, ' ').replace(/\s+the\s+/g, ' ');
                 
-                if (normalizedInput.includes(normalizedKey) || normalizedKey.includes(normalizedInput)) {
-                    return value;
-                }
+                this.attachRadioItemEvents();
             }
-            
-            // 6. 返回原名称（作为最后手段）
-            console.warn(`未找到国家映射: ${englishName}`);
-            return englishName;
-        }
 
-        // 处理电台数据 - 严格去重
-        function processStationsData(stations) {
-            // 严格去重 - 基于 stationuuid
-            const uniqueStationsMap = new Map();
-            stations.forEach(station => {
-                if (station && station.stationuuid) {
-                    uniqueStationsMap.set(station.stationuuid, station);
-                }
-            });
-            
-            allStations = Array.from(uniqueStationsMap.values()).filter(station => 
-                station && (station.url_resolved || station.url)
-            );
-            
-            console.log(`原始数据: ${stations.length} 个, 去重后: ${allStations.length} 个`);
-            
-            updateStats();
-            extractFilterOptions();
-            
-            displayedCount = 0;
-            displayedStations = [];
-            filteredStations = [...allStations];
-            
-            loadMoreStations();
-            updateMapMarkers(allStations.slice(0, 500));
-        }
-
-        // 提取筛选选项
-        function extractFilterOptions() {
-            extractCountries();
-            extractLanguages();
-        }
-
-        // 提取国家列表 - 修复版本
-        function extractCountries() {
-            const countrySet = new Set();
-            allStations.forEach(station => {
-                if (station.country) {
-                    // 将英文国家名转换为中文 - 确保这里正确调用
-                    const chineseName = getChineseCountryName(station.country);
-                    countrySet.add(chineseName);
-                }
-            });
-            
-            countries = Array.from(countrySet).sort();
-            
-            const countryFilter = document.getElementById('country-filter');
-            countryFilter.innerHTML = '<option value="">所有国家</option>';
-            
-            countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country;
-                option.textContent = country;
-                countryFilter.appendChild(option);
-            });
-        }
-
-        // 加载更多电台
-        function loadMoreStations() {
-            const startIndex = displayedCount;
-            const endIndex = Math.min(displayedCount + 200, filteredStations.length);
-            
-            if (startIndex >= filteredStations.length) {
-                document.getElementById('load-more-btn').style.display = 'none';
-                return;
-            }
-            
-            const stationsToAdd = filteredStations.slice(startIndex, endIndex);
-            displayedStations = displayedStations.concat(stationsToAdd);
-            displayedCount = endIndex;
-            
-            renderRadioList(displayedStations, document.getElementById('radio-list'), 'all');
-            updateStats();
-            updateLoadMoreButton();
-        }
-
-        // 更新加载更多按钮
-        function updateLoadMoreButton() {
-            const loadMoreBtn = document.getElementById('load-more-btn');
-            if (displayedCount >= filteredStations.length) {
-                loadMoreBtn.style.display = 'none';
-            } else {
-                loadMoreBtn.style.display = 'block';
-                const remaining = filteredStations.length - displayedCount;
-                loadMoreBtn.textContent = `加载更多 (${remaining} 个电台)`;
-            }
-        }
-
-        // 更新统计信息
-        function updateStats() {
-            const totalDisplay = `${allStations.length.toLocaleString()} 电台 / ${countries.length} 国家`;
-            document.getElementById('total-stations').textContent = totalDisplay;
-            
-            const currentDisplayCount = Math.min(displayedCount, filteredStations.length);
-            const displayedCountText = `显示: ${currentDisplayCount}/${filteredStations.length}`;
-            document.getElementById('filtered-stations').textContent = displayedCountText;
-        }
-
-        // 格式化分类显示
-        function formatGenre(genre) {
-            const genreLower = genre.toLowerCase();
-            if (genreMapping[genreLower]) {
-                return genreMapping[genreLower];
-            }
-            
-            // 模糊匹配
-            const fuzzyMap = {
-                'oldies': '经典老歌', 'top40': '流行金曲', 'hits': '热门金曲',
-                'rnb': '节奏蓝调', 'r&b': '节奏蓝调', 'edm': '电子舞曲',
-                'kpop': '韩流音乐', 'jpop': '日流音乐', 'cpop': '华语流行'
-            };
-            
-            for (const [key, value] of Object.entries(fuzzyMap)) {
-                if (genreLower.includes(key)) {
-                    return value;
-                }
-            }
-            
-            return genre;
-        }
-
-        // 格式化标签显示
-        function formatGenres(tags) {
-            if (!tags) return '未分类';
-            
-            const genreList = tags.split(',').slice(0, 2).map(genre => {
-                return formatGenre(genre.trim());
-            });
-            
-            return genreList.join(' · ');
-        }
-
-        // 更新数据源显示
-        function updateDataSource(source, region = '所有地区') {
-            const sourceElement = document.getElementById('data-source');
-            if (sourceElement) {
-                sourceElement.textContent = `数据来源: ${source} | 地区: ${region}`;
-            }
-        }
-
-        // 提取语言列表
-        function extractLanguages() {
-            const languageSet = new Set();
-            
-            allStations.forEach(station => {
-                if (station.language) {
-                    const stationLanguages = station.language.split(',').map(lang => lang.trim().toLowerCase());
-                    stationLanguages.forEach(lang => {
-                        if (lang && languageMapping[lang]) {
-                            languageSet.add(languageMapping[lang]);
-                        } else if (lang) {
-                            // 将未映射的语言归类为"其他语言"
-                            languageSet.add('其他语言');
-                        }
-                    });
-                }
-            });
-            
-            languages = Array.from(languageSet).sort();
-            
-            const languageFilter = document.getElementById('language-filter');
-            languageFilter.innerHTML = '<option value="">所有语言</option>';
-            
-            languages.forEach(language => {
-                const option = document.createElement('option');
-                option.value = language;
-                option.textContent = language;
-                languageFilter.appendChild(option);
-            });
-        }
-
-        // 渲染电台列表
-        function renderRadioList(stations = displayedStations, container = document.getElementById('radio-list'), listType = 'all') {
-            if (!container) return;
-            
-            if (stations.length === 0) {
-                if (listType === 'favorites') {
-                    container.innerHTML = '<div class="loading">暂无收藏的电台</div>';
-                } else if (listType === 'history') {
-                    container.innerHTML = '<div class="loading">暂无播放历史</div>';
-                } else {
-                    container.innerHTML = '<div class="loading">未找到匹配的电台</div>';
-                }
-                return;
-            }
-            
-            container.innerHTML = '';
-            
-            stations.forEach(station => {
+            createRadioItem(station) {
+                const flagEmoji = this.app.mapManager.getFlagEmoji(station.countrycode);
+                const isFavorite = this.app.stationManager.favorites.some(fav => fav.stationuuid === station.stationuuid);
+                const countryName = this.app.stationManager.getChineseCountryName(station.country);
+                const isActive = this.app.audioManager.currentStation?.stationuuid === station.stationuuid;
+                
                 const radioItem = document.createElement('div');
-                radioItem.className = 'radio-item';
-                if (currentStation && currentStation.stationuuid === station.stationuuid) {
-                    radioItem.classList.add('active');
-                }
+                radioItem.className = `radio-item ${isActive ? 'active' : ''}`;
                 radioItem.dataset.id = station.stationuuid;
-                
-                const flagEmoji = getFlagEmoji(station.countrycode);
-                const isFavorite = favoriteStations.some(fav => fav.stationuuid === station.stationuuid);
-                
-                // 将国家名转换为中文显示
-                const countryName = getChineseCountryName(station.country);
+                radioItem.setAttribute('role', 'button');
+                radioItem.setAttribute('tabindex', '0');
+                radioItem.setAttribute('aria-label', `播放 ${station.name}, 来自${countryName}的电台`);
                 
                 radioItem.innerHTML = `
-                    <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${station.stationuuid}">
+                    <button class="favorite-btn ${isFavorite ? 'active' : ''}" 
+                            data-id="${station.stationuuid}"
+                            aria-pressed="${isFavorite}"
+                            aria-label="${isFavorite ? '取消收藏' : '收藏'}该电台">
                         <i class="fas fa-heart"></i>
                     </button>
                     <div class="radio-flag">${flagEmoji}</div>
                     <div class="radio-info">
                         <div class="radio-name">${station.name || '未知电台'}</div>
                         <div class="radio-country">${countryName || '未知国家'}</div>
-                        <div class="radio-genre">${formatGenres(station.tags)}</div>
+                        <div class="radio-genre">${this.formatGenres(station.tags)}</div>
                     </div>
-                    <button class="play-btn" data-id="${station.stationuuid}">
+                    <button class="play-btn" data-id="${station.stationuuid}" aria-label="播放电台">
                         <i class="fas fa-play"></i>
                     </button>
                 `;
                 
-                container.appendChild(radioItem);
-            });
-            
-            attachEventListeners();
-        }
+                return radioItem;
+            }
 
-        // 附加事件监听器
-        function attachEventListeners() {
-            document.querySelectorAll('.play-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const stationId = this.dataset.id;
-                    playStation(stationId);
-                });
-            });
-            
-            document.querySelectorAll('.favorite-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const stationId = this.dataset.id;
-                    toggleFavorite(stationId);
-                });
-            });
-            
-            document.querySelectorAll('.radio-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const stationId = this.dataset.id;
-                    playStation(stationId);
-                });
-            });
-        }
-
-        // 播放电台
-        function playStation(stationId) {
-            const station = allStations.find(s => s.stationuuid === stationId);
-            if (!station) return;
-            
-            currentStation = station;
-            document.getElementById('current-station').textContent = station.name || '未知电台';
-            
-            // 将国家名转换为中文显示
-            const countryName = getChineseCountryName(station.country);
-            document.getElementById('current-country').textContent = `${countryName || '未知国家'} • ${formatGenres(station.tags)}`;
-            
-            const playPauseBtn = document.getElementById('play-pause-btn');
-            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            isPlaying = true;
-            
-            addToHistory(station);
-            
-            // 更新电台列表高亮
-            document.querySelectorAll('.radio-item').forEach(item => {
-                item.classList.remove('active');
-                if (item.dataset.id === stationId) {
-                    item.classList.add('active');
-                }
-            });
-            
-            // 检测并显示音质信息
-            detectAndDisplayQuality(station);
-            
-            // 修复地图跳转逻辑
-            if (station.geo_lat && station.geo_long) {
-                // 确保地图视图平滑跳转
-                map.setView([station.geo_lat, station.geo_long], 6, {
-                    animate: true,
-                    duration: 1.0,
-                    easeLinearity: 0.25
+            attachRadioItemEvents() {
+                document.querySelectorAll('.play-btn').forEach(btn => {
+                    this.addEventListener(btn, 'click', (e) => {
+                        e.stopPropagation();
+                        const stationId = btn.dataset.id;
+                        this.app.audioManager.playStation(stationId);
+                    });
                 });
                 
-                // 高亮对应的地图标记
-                markers.forEach(marker => {
-                    const markerLat = marker.getLatLng().lat;
-                    const markerLng = marker.getLatLng().lng;
-                    
-                    // 使用容差比较，避免浮点数精度问题
-                    const latDiff = Math.abs(markerLat - station.geo_lat);
-                    const lngDiff = Math.abs(markerLng - station.geo_long);
-                    
-                    if (latDiff < 0.001 && lngDiff < 0.001) {
-                        marker.openPopup();
-                        
-                        // 添加视觉反馈
-                        marker.setIcon(L.divIcon({
-                            className: 'pulsing-marker',
-                            html: '<div style="background-color: #e52e71; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px #e52e71;"></div>',
-                            iconSize: [20, 20],
-                            iconAnchor: [10, 10]
-                        }));
-                        
-                        // 3秒后恢复原样式
-                        setTimeout(() => {
-                            marker.setIcon(new L.Icon.Default());
-                        }, 3000);
-                    }
+                document.querySelectorAll('.favorite-btn').forEach(btn => {
+                    this.addEventListener(btn, 'click', (e) => {
+                        e.stopPropagation();
+                        const stationId = btn.dataset.id;
+                        const isNowFavorite = this.app.stationManager.toggleFavorite(stationId);
+                        btn.classList.toggle('active', isNowFavorite);
+                        btn.setAttribute('aria-pressed', isNowFavorite);
+                    });
                 });
-            } else {
-                console.warn('电台缺少经纬度信息:', station.name);
-            }
-            
-            // 音频播放逻辑
-            audioPlayer.pause();
-            
-            const streamUrl = station.url_resolved || station.url;
-            if (streamUrl) {
-                audioPlayer.src = streamUrl;
-                audioPlayer.play().catch(error => {
-                    console.error('播放失败:', error);
-                    document.getElementById('current-station').textContent = '播放失败，请尝试其他电台';
-                    document.getElementById('current-station').style.color = '#e52e71';
-                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                    isPlaying = false;
+                
+                document.querySelectorAll('.radio-item').forEach(item => {
+                    this.addEventListener(item, 'click', () => {
+                        const stationId = item.dataset.id;
+                        this.app.audioManager.playStation(stationId);
+                    });
                     
-                    setTimeout(() => {
-                        if (document.getElementById('current-station')) {
-                            document.getElementById('current-station').style.color = '';
+                    // 键盘导航支持
+                    this.addEventListener(item, 'keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            const stationId = item.dataset.id;
+                            this.app.audioManager.playStation(stationId);
                         }
-                    }, 3000);
-                });
-            } else {
-                console.error('电台没有有效的流媒体URL:', station);
-            }
-            
-            // 自动滚动到当前播放的电台
-            scrollToCurrentStation(stationId);
-        }
-
-        // 自动滚动到当前播放的电台
-        function scrollToCurrentStation(stationId) {
-            const radioList = document.getElementById('radio-list');
-            const currentItem = radioList.querySelector(`[data-id="${stationId}"]`);
-            
-            if (currentItem) {
-                currentItem.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
+                    });
                 });
             }
-        }
 
-        // 检测并显示音质信息
-        function detectAndDisplayQuality(station) {
-            const qualityIndicator = document.getElementById('quality-indicator');
-            let quality = '未知';
-            
-            // 从标签中检测音质信息
-            if (station.tags) {
-                const tags = station.tags.toLowerCase().split(',');
-                if (tags.includes('high') || tags.includes('hq') || tags.includes('320')) {
-                    quality = '高音质';
-                } else if (tags.includes('medium') || tags.includes('128')) {
-                    quality = '中音质';
-                } else if (tags.includes('low') || tags.includes('64')) {
-                    quality = '低音质';
-                }
+            formatGenres(tags) {
+                if (!tags) return '未分类';
+                const genreList = tags.split(',').slice(0, 2);
+                return genreList.join(' · ');
             }
-            
-            // 从比特率检测音质
-            if (station.bitrate) {
-                if (station.bitrate >= 256) {
-                    quality = '高音质';
-                } else if (station.bitrate >= 128) {
-                    quality = '中音质';
-                } else {
-                    quality = '低音质';
-                }
-            }
-            
-            qualityIndicator.textContent = `(${quality})`;
-        }
 
-        // 初始化地图
-        function initMap() {
-            map = L.map('map').setView([20, 0], 3);
-            
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            
-            // 添加地图点击事件
-            map.on('click', function(e) {
-                // 清除之前的选择
+            updateStats() {
+                const stations = this.app.stationManager.getStations();
+                const filteredStations = this.app.stationManager.filteredStations;
+                
+                const totalDisplay = `${stations.length.toLocaleString()} 电台 / ${this.app.stationManager.countries.length} 国家`;
+                document.getElementById('total-stations').textContent = totalDisplay;
+                
+                const displayedCountText = `显示: ${Math.min(this.app.displayLimit, filteredStations.length)}/${filteredStations.length}`;
+                document.getElementById('filtered-stations').textContent = displayedCountText;
+            }
+
+            updatePlayerInfo(station) {
+                document.getElementById('current-station').textContent = station.name || '未知电台';
+                const countryName = this.app.stationManager.getChineseCountryName(station.country);
+                document.getElementById('current-country').textContent = `${countryName || '未知国家'} • ${this.formatGenres(station.tags)}`;
+                
+                // 更新活跃状态
                 document.querySelectorAll('.radio-item').forEach(item => {
                     item.classList.remove('active');
+                    if (item.dataset.id === station.stationuuid) {
+                        item.classList.add('active');
+                    }
                 });
-                
-                // 查找附近的电台
-                const nearbyStations = findStationsNearLocation(e.latlng.lat, e.latlng.lng, 500);
-                
-                if (nearbyStations.length > 0) {
-                    // 更新电台列表显示附近的电台
-                    filteredStations = nearbyStations;
-                    displayedCount = 0;
-                    displayedStations = [];
-                    
-                    if (activeTab === 'all') {
-                        loadMoreStations();
-                    }
-                    
-                    // 更新国家信息
-                    document.getElementById('selected-country').textContent = '附近电台';
-                    document.getElementById('country-station-count').textContent = `找到 ${nearbyStations.length} 个电台`;
-                    
-                    // 更新地图标记
-                    updateMapMarkers(nearbyStations.slice(0, 200));
-                }
-            });
-        }
+            }
 
-        // 查找附近电台
-        function findStationsNearLocation(lat, lng, radiusKm) {
-            return allStations.filter(station => {
-                if (!station.geo_lat || !station.geo_long) return false;
-                
-                const distance = calculateDistance(lat, lng, station.geo_lat, station.geo_long);
-                return distance <= radiusKm;
-            });
-        }
+            updatePlayButton(isPlaying) {
+                const playPauseBtn = document.getElementById('play-pause-btn');
+                playPauseBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+            }
 
-        // 计算两点间距离（公里）
-        function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371;
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = 
-                Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-
-        // 更新地图标记 - 优化版本
-        function updateMapMarkers(stations) {
-            // 清除现有标记
-            markers.forEach(marker => map.removeLayer(marker));
-            markers = [];
-            
-            const displayLimit = 300; // 增加显示数量限制
-            
-            // 使用requestAnimationFrame分批处理，避免阻塞UI
-            const batchSize = 50;
-            let index = 0;
-            
-            function processBatch() {
-                const batchEnd = Math.min(index + batchSize, Math.min(stations.length, displayLimit));
-                
-                for (let i = index; i < batchEnd; i++) {
-                    const station = stations[i];
-                    if (station.geo_lat && station.geo_long) {
-                        const flagEmoji = getFlagEmoji(station.countrycode);
-                        const countryName = getChineseCountryName(station.country);
-                        
-                        const marker = L.marker([station.geo_lat, station.geo_long])
-                            .addTo(map)
-                            .bindPopup(`
-                                <div style="color: black; min-width: 200px;">
-                                    <b>${station.name || '未知电台'}</b><br>
-                                    ${countryName || ''}<br>
-                                    <small>${formatGenres(station.tags)}</small><br>
-                                    <button onclick="window.playStationFromMap('${station.stationuuid}')" 
-                                            style="background:#e52e71;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-top:5px;">
-                                        播放
-                                    </button>
-                                </div>
-                            `);
-                        
-                        // 添加点击事件
-                        marker.on('click', function() {
-                            playStation(station.stationuuid);
-                        });
-                        
-                        markers.push(marker);
-                    }
-                }
-                
-                index = batchEnd;
-                
-                if (index < Math.min(stations.length, displayLimit)) {
-                    requestAnimationFrame(processBatch);
-                } else {
-                    console.log(`更新了 ${markers.length} 个地图标记`);
+            showBufferingIndicator() {
+                let indicator = document.querySelector('.buffering');
+                if (!indicator) {
+                    indicator = document.createElement('div');
+                    indicator.className = 'buffering';
+                    document.querySelector('.player-info').appendChild(indicator);
                 }
             }
-            
-            processBatch();
-        }
 
-        // 从地图播放电台
-        window.playStationFromMap = function(stationId) {
-            playStation(stationId);
-        };
-
-        // 防抖搜索
-        function debounceSearch() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(performSearch, 300);
-        }
-
-        // 执行搜索 - 优化版本
-        function performSearch() {
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            const countryFilter = document.getElementById('country-filter').value;
-            const languageFilter = document.getElementById('language-filter').value;
-            
-            // 显示加载状态
-            const radioList = document.getElementById('radio-list');
-            radioList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在搜索电台...</div>';
-            
-            // 使用setTimeout让UI有机会更新
-            setTimeout(() => {
-                filteredStations = allStations.filter(station => {
-                    const matchesSearch = searchTerm === '' || 
-                        (station.name && station.name.toLowerCase().includes(searchTerm)) || 
-                        (station.country && station.country.toLowerCase().includes(searchTerm)) ||
-                        (station.tags && station.tags.toLowerCase().includes(searchTerm));
-                    
-                    // 国家筛选 - 支持中英文匹配
-                    let matchesCountry = true;
-                    if (countryFilter !== '') {
-                        const englishCountryName = Object.keys(countryNameMapping).find(
-                            key => countryNameMapping[key] === countryFilter
-                        ) || countryFilter;
-                        matchesCountry = station.country && (
-                            station.country.toLowerCase().includes(englishCountryName.toLowerCase()) ||
-                            (getChineseCountryName(station.country) && getChineseCountryName(station.country) === countryFilter)
-                        );
-                    }
-                    
-                    let matchesLanguage = true;
-                    if (languageFilter !== '') {
-                        const englishKeyword = Object.keys(languageMapping).find(key => 
-                            languageMapping[key] === languageFilter
-                        ) || '';
-                        matchesLanguage = station.language && 
-                            station.language.toLowerCase().includes(englishKeyword.toLowerCase());
-                    }
-                    
-                    let matchesGenre = true;
-                    if (currentGenre !== 'all' && currentGenre !== '') {
-                        const englishKeyword = Object.keys(genreMapping).find(key => 
-                            genreMapping[key] === currentGenre
-                        ) || '';
-                        matchesGenre = station.tags && 
-                            station.tags.toLowerCase().includes(englishKeyword.toLowerCase());
-                    }
-                    
-                    // 修复：地区筛选
-                    let matchesRegion = true;
-                    if (currentRegion !== 'all') {
-                        const regionCountriesList = getRegionCountries(currentRegion);
-                        matchesRegion = regionCountriesList.some(country => {
-                            const chineseCountryName = getChineseCountryName(country);
-                            const stationChineseName = getChineseCountryName(station.country);
-                            
-                            return station.country && (
-                                station.country.toLowerCase().includes(country.toLowerCase()) ||
-                                stationChineseName.includes(chineseCountryName) ||
-                                chineseCountryName.includes(stationChineseName)
-                            );
-                        });
-                    }
-                    
-                    // 音质筛选
-                    let matchesQuality = true;
-                    if (currentQuality !== 'auto') {
-                        if (currentQuality === 'high') {
-                            matchesQuality = station.tags && (
-                                station.tags.toLowerCase().includes('high') || 
-                                station.tags.toLowerCase().includes('hq') ||
-                                station.tags.toLowerCase().includes('320')
-                            );
-                        } else if (currentQuality === 'medium') {
-                            matchesQuality = station.tags && (
-                                station.tags.toLowerCase().includes('medium') || 
-                                station.tags.toLowerCase().includes('128')
-                            );
-                        } else if (currentQuality === 'low') {
-                            matchesQuality = station.tags && (
-                                station.tags.toLowerCase().includes('low') || 
-                                station.tags.toLowerCase().includes('64')
-                            );
-                        }
-                    }
-                    
-                    return matchesSearch && matchesCountry && matchesLanguage && matchesGenre && matchesRegion && matchesQuality;
-                });
-                
-                displayedCount = 0;
-                displayedStations = [];
-                
-                if (activeTab === 'all') {
-                    loadMoreStations();
+            hideBufferingIndicator() {
+                const indicator = document.querySelector('.buffering');
+                if (indicator) {
+                    indicator.remove();
                 }
-                
-                // 延迟更新地图标记，避免阻塞UI
-                clearTimeout(mapUpdateTimeout);
-                mapUpdateTimeout = setTimeout(() => {
-                    updateMapMarkers(filteredStations.slice(0, 200));
-                }, 100);
-                
-                updateCountryInfo();
-            }, 10);
-        }
+            }
 
-        // 获取地区对应的国家列表
-        function getRegionCountries(region) {
-            return regionCountries[region] || [];
-        }
-
-        // 更新国家信息显示
-        function updateCountryInfo() {
-            const countryName = document.getElementById('selected-country');
-            const countryCount = document.getElementById('country-station-count');
-            
-            if (currentRegion !== 'all') {
-                countryName.textContent = `${regionNames[currentRegion]}地区电台`;
-                countryCount.textContent = `找到 ${filteredStations.length} 个电台`;
-                
-                // 更新国家筛选器为当前地区的国家
-                updateCountryFilterForRegion(currentRegion);
-            } else if (document.getElementById('country-filter').value) {
-                const selectedCountry = document.getElementById('country-filter').value;
-                countryName.textContent = `${selectedCountry}电台`;
-                countryCount.textContent = `找到 ${filteredStations.length} 个电台`;
-            } else {
-                countryName.textContent = '全球电台';
-                countryCount.textContent = `点击地图上的标记或使用筛选器选择电台 (${filteredStations.length} 个电台)`;
-                
-                // 重置国家筛选器为所有国家
-                resetCountryFilter();
-            }
-        }
-
-        // 更新国家筛选器为指定地区的国家
-        function updateCountryFilterForRegion(region) {
-            const regionCountriesList = getRegionCountries(region);
-            const countryFilter = document.getElementById('country-filter');
-            
-            // 保存当前选中的国家
-            const currentSelected = countryFilter.value;
-            
-            countryFilter.innerHTML = '<option value="">所有国家</option>';
-            
-            // 获取该地区国家的中文名称
-            const regionCountryNames = regionCountriesList.map(country => 
-                getChineseCountryName(country)
-            ).sort();
-            
-            regionCountryNames.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country;
-                option.textContent = country;
-                countryFilter.appendChild(option);
-            });
-            
-            // 如果之前选中的国家在当前地区中，保持选中状态
-            if (regionCountryNames.includes(currentSelected)) {
-                countryFilter.value = currentSelected;
-            } else {
-                countryFilter.value = '';
-            }
-        }
-
-        // 重置国家筛选器为所有国家
-        function resetCountryFilter() {
-            const countryFilter = document.getElementById('country-filter');
-            const currentSelected = countryFilter.value;
-            
-            countryFilter.innerHTML = '<option value="">所有国家</option>';
-            
-            countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country;
-                option.textContent = country;
-                countryFilter.appendChild(option);
-            });
-            
-            // 保持之前选中的国家
-            if (countries.includes(currentSelected)) {
-                countryFilter.value = currentSelected;
-            }
-        }
-
-        // 加载本地数据
-        function loadLocalData() {
-            const storedFavorites = localStorage.getItem('radioFavorites');
-            const storedHistory = localStorage.getItem('radioHistory');
-            
-            if (storedFavorites) {
-                favoriteStations = JSON.parse(storedFavorites);
-            }
-            
-            if (storedHistory) {
-                historyStations = JSON.parse(storedHistory);
-            }
-        }
-
-        // 保存数据到localStorage
-        function saveLocalData() {
-            localStorage.setItem('radioFavorites', JSON.stringify(favoriteStations));
-            localStorage.setItem('radioHistory', JSON.stringify(historyStations));
-        }
-
-        // 切换收藏状态
-        function toggleFavorite(stationId) {
-            const station = allStations.find(s => s.stationuuid === stationId);
-            if (!station) return;
-            
-            const index = favoriteStations.findIndex(fav => fav.stationuuid === stationId);
-            
-            if (index === -1) {
-                favoriteStations.push(station);
-            } else {
-                favoriteStations.splice(index, 1);
-            }
-            
-            saveLocalData();
-            
-            if (activeTab === 'all') {
-                renderRadioList();
-            } else if (activeTab === 'favorites') {
-                updateTabs();
-            }
-        }
-
-        // 添加到播放历史
-        function addToHistory(station) {
-            const existingIndex = historyStations.findIndex(item => 
-                item.station.stationuuid === station.stationuuid
-            );
-            
-            if (existingIndex !== -1) {
-                historyStations.splice(existingIndex, 1);
-            }
-            
-            historyStations.push({
-                station: station,
-                timestamp: Date.now()
-            });
-            
-            if (historyStations.length > 50) {
-                historyStations = historyStations.slice(-50);
-            }
-            
-            saveLocalData();
-            
-            if (activeTab === 'history') {
-                updateTabs();
-            }
-        }
-
-        // 根据国家代码获取国旗emoji
-        function getFlagEmoji(countryCode) {
-            if (!countryCode) return '🌐';
-            
-            const codePoints = countryCode
-                .toUpperCase()
-                .split('')
-                .map(char => 127397 + char.charCodeAt());
-            return String.fromCodePoint(...codePoints);
-        }
-
-        // 更新标签页内容
-        function updateTabs() {
-            if (activeTab === 'favorites') {
-                renderRadioList(favoriteStations, document.getElementById('favorites-list'), 'favorites');
-            } else if (activeTab === 'history') {
-                renderHistoryList();
-            }
-        }
-
-        // 渲染历史列表
-        function renderHistoryList() {
-            const historyList = document.getElementById('history-list');
-            
-            if (historyStations.length === 0) {
-                historyList.innerHTML = '<div class="loading">暂无播放历史</div>';
-                return;
-            }
-            
-            historyList.innerHTML = '';
-            
-            const recentHistory = historyStations.slice(-20).reverse();
-            
-            recentHistory.forEach(item => {
-                const historyItem = document.createElement('div');
-                historyItem.className = 'history-item';
-                historyItem.dataset.id = item.station.stationuuid;
-                
-                const flagEmoji = getFlagEmoji(item.station.countrycode);
-                const timeString = new Date(item.timestamp).toLocaleString();
-                const countryName = getChineseCountryName(item.station.country);
-                
-                historyItem.innerHTML = `
-                    <div class="radio-flag">${flagEmoji}</div>
-                    <div class="radio-info">
-                        <div class="radio-name">${item.station.name || '未知电台'}</div>
-                        <div class="radio-country">${countryName || '未知国家'}</div>
-                        <div class="history-time">${timeString}</div>
+            showSkeleton() {
+                const container = document.getElementById('radio-list');
+                container.innerHTML = `
+                    <div class="skeleton-item">
+                        <div class="skeleton-flag"></div>
+                        <div class="skeleton-info">
+                            <div class="skeleton-name"></div>
+                            <div class="skeleton-details"></div>
+                        </div>
                     </div>
-                    <button class="play-btn" data-id="${item.station.stationuuid}">
-                        <i class="fas fa-play"></i>
-                    </button>
+                `.repeat(10);
+            }
+
+            showWelcomeNotification(station) {
+                const existingNotification = document.querySelector('.welcome-notification');
+                if (existingNotification) {
+                    existingNotification.remove();
+                }
+                
+                const countryName = this.app.stationManager.getChineseCountryName(station.country);
+                const genre = this.formatGenres(station.tags);
+                const notification = document.createElement('div');
+                notification.className = 'welcome-notification';
+                notification.innerHTML = `
+                    <i class="fas fa-broadcast-tower"></i>
+                    <div class="welcome-content">
+                        <div class="welcome-title">欢迎收听朋友分享的电台</div>
+                        <div class="welcome-details">
+                            ${station.name} · ${countryName} · ${genre}
+                        </div>
+                    </div>
+                    <button class="close-btn"><i class="fas fa-times"></i></button>
                 `;
                 
-                historyList.appendChild(historyItem);
-            });
-            
-            attachEventListeners();
+                document.body.appendChild(notification);
+                
+                this.addEventListener(notification.querySelector('.close-btn'), 'click', () => {
+                    notification.remove();
+                });
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 8000);
+            }
+
+            scrollToStation(stationId) {
+                const radioList = document.getElementById('radio-list');
+                const stationElement = radioList.querySelector(`[data-id="${stationId}"]`);
+                
+                if (stationElement) {
+                    stationElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    stationElement.style.backgroundColor = 'rgba(255, 138, 0, 0.2)';
+                    
+                    setTimeout(() => {
+                        stationElement.style.backgroundColor = '';
+                    }, 3000);
+                }
+            }
+
+            toggleShareMenu() {
+                const shareMenu = document.getElementById('share-menu');
+                shareMenu.classList.toggle('active');
+            }
+
+            updateTabs() {
+                if (this.app.activeTab === 'favorites') {
+                    this.renderRadioList(this.app.stationManager.favorites);
+                } else if (this.app.activeTab === 'history') {
+                    this.renderHistoryList();
+                }
+            }
+
+            renderHistoryList() {
+                const historyList = document.getElementById('history-list');
+                const history = this.app.stationManager.history;
+                
+                if (history.length === 0) {
+                    historyList.innerHTML = '<div class="loading">暂无播放历史</div>';
+                    return;
+                }
+                
+                historyList.innerHTML = '';
+                const recentHistory = history.slice(-20).reverse();
+                
+                recentHistory.forEach(item => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.dataset.id = item.station.stationuuid;
+                    
+                    const flagEmoji = this.app.mapManager.getFlagEmoji(item.station.countrycode);
+                    const timeString = new Date(item.timestamp).toLocaleString();
+                    const countryName = this.app.stationManager.getChineseCountryName(item.station.country);
+                    
+                    historyItem.innerHTML = `
+                        <div class="radio-flag">${flagEmoji}</div>
+                        <div class="radio-info">
+                            <div class="radio-name">${item.station.name || '未知电台'}</div>
+                            <div class="radio-country">${countryName || '未知国家'}</div>
+                            <div class="history-time">${timeString}</div>
+                        </div>
+                        <button class="play-btn" data-id="${item.station.stationuuid}">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    `;
+                    
+                    historyList.appendChild(historyItem);
+                });
+                
+                this.attachRadioItemEvents();
+            }
+
+            cleanup() {
+                // 清理所有事件监听器
+                this.eventListeners.forEach(({ element, type, handler }) => {
+                    element.removeEventListener(type, handler);
+                });
+                this.eventListeners = [];
+                
+                // 清理防抖定时器
+                this.debounceTimeouts.forEach(timeout => clearTimeout(timeout));
+                this.debounceTimeouts.clear();
+            }
         }
 
-        // 播放控制
-        function togglePlayPause() {
-            if (!currentStation) {
-                if (filteredStations.length > 0) {
-                    playStation(filteredStations[0].stationuuid);
-                }
-                return;
+        // 搜索引擎类
+        class SearchEngine {
+            constructor() {
+                this.index = null;
             }
-            
-            if (isPlaying) {
-                document.getElementById('play-pause-btn').innerHTML = '<i class="fas fa-play"></i>';
-                audioPlayer.pause();
-            } else {
-                document.getElementById('play-pause-btn').innerHTML = '<i class="fas fa-pause"></i>';
-                audioPlayer.play().catch(error => {
-                    console.error('播放失败:', error);
-                    document.getElementById('play-pause-btn').innerHTML = '<i class="fas fa-play"></i>';
+
+            buildIndex(stations) {
+                // 简化的搜索索引实现
+                this.index = stations.map(station => ({
+                    ...station,
+                    searchableText: `${station.name} ${station.country} ${station.tags} ${station.language}`.toLowerCase()
+                }));
+            }
+
+            search(query) {
+                if (!this.index || !query) return this.index || [];
+                
+                const searchTerms = query.toLowerCase().split(' ');
+                return this.index.filter(station => {
+                    return searchTerms.every(term => station.searchableText.includes(term));
                 });
             }
-            
-            isPlaying = !isPlaying;
         }
 
-        function stopPlayback() {
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0;
-            isPlaying = false;
-            document.getElementById('play-pause-btn').innerHTML = '<i class="fas fa-play"></i>';
+        // 存储管理类
+        class StorageManager {
+            setWithExpiry(key, value, ttl = 24 * 60 * 60 * 1000) {
+                try {
+                    const item = {
+                        value: this.compress(value),
+                        expiry: Date.now() + ttl
+                    };
+                    localStorage.setItem(key, JSON.stringify(item));
+                } catch (error) {
+                    console.warn('存储数据失败:', error);
+                    // 如果存储失败，尝试不使用压缩
+                    try {
+                        const item = {
+                            value: value,
+                            expiry: Date.now() + ttl
+                        };
+                        localStorage.setItem(key, JSON.stringify(item));
+                    } catch (e) {
+                        console.error('存储数据彻底失败:', e);
+                    }
+                }
+            }
+
+            getWithExpiry(key) {
+                try {
+                    const itemStr = localStorage.getItem(key);
+                    if (!itemStr) return null;
+                    
+                    const item = JSON.parse(itemStr);
+                    if (Date.now() > item.expiry) {
+                        localStorage.removeItem(key);
+                        return null;
+                    }
+                    
+                    return this.decompress(item.value);
+                } catch (error) {
+                    console.warn('读取存储数据失败:', error);
+                    return null;
+                }
+            }
+
+            compress(obj) {
+                try {
+                    return LZString.compress(JSON.stringify(obj));
+                } catch (error) {
+                    console.warn('压缩数据失败，返回原始数据:', error);
+                    return obj;
+                }
+            }
+
+            decompress(str) {
+                try {
+                    if (typeof str === 'string' && str.startsWith('{"')) {
+                        return JSON.parse(str);
+                    }
+                    return JSON.parse(LZString.decompress(str));
+                } catch (error) {
+                    console.warn('解压缩数据失败，返回原始数据:', error);
+                    return str;
+                }
+            }
         }
 
-        function updateVolume() {
-            audioPlayer.volume = document.querySelector('.volume-slider').value / 100;
+        // 错误处理类
+        class ErrorHandler {
+            handleInitError(error) {
+                console.error('应用初始化失败:', error);
+                this.showNotification('应用初始化失败，请刷新页面重试', 'error');
+            }
+
+            handleStationError(error, station) {
+                console.error('Station error:', error, station);
+                
+                let message = `无法播放 ${station?.name || '该电台'}，请尝试其他电台`;
+                
+                if (error.message.includes('Failed to fetch')) {
+                    message = '网络连接失败，请检查网络设置';
+                } else if (error.message.includes('404')) {
+                    message = '电台资源不存在或已失效';
+                }
+                
+                this.showNotification(message, 'error');
+            }
+
+            showNotification(message, type = 'info') {
+                // 移除可能已存在的通知
+                const existingNotification = document.querySelector('.notification');
+                if (existingNotification) {
+                    existingNotification.remove();
+                }
+                
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 5000);
+            }
         }
 
         // 分享功能
-        function toggleShareMenu() {
-            const shareMenu = document.getElementById('share-menu');
-            shareMenu.classList.toggle('active');
-        }
-
-        // 分享功能 - 优化版本
         function shareStation(platform) {
-            if (!currentStation) {
-                alert('请先选择一个电台');
+            if (!app.audioManager.currentStation) {
+                app.errorHandler.showNotification('请先选择一个电台', 'warning');
                 return;
             }
             
-            const stationName = currentStation.name;
-            const countryName = getChineseCountryName(currentStation.country);
-            const genre = formatGenres(currentStation.tags);
+            const station = app.audioManager.currentStation;
+            const stationName = station.name;
+            const countryName = app.stationManager.getChineseCountryName(station.country);
+            const genre = app.uiManager.formatGenres(station.tags);
             
-            // 生成带参数的分享链接
-            const shareUrl = generateShareUrl();
-            
-            // 优化的分享文本
+            const shareUrl = `${window.location.origin}${window.location.pathname}?station=${station.stationuuid}`;
             const shareText = `🎧 我正在通过全球广播电台收听 ${stationName} (${countryName}) - ${genre}`;
             const fullShareContent = `${shareText}\n\n📻 电台流媒体地址: ${shareUrl}\n🌐 发现更多全球电台: ${window.location.origin}${window.location.pathname}`;
-            
-            let shareTargetUrl = '';
             
             switch(platform) {
                 case 'copy-link':
                     navigator.clipboard.writeText(fullShareContent).then(() => {
-                        showShareSuccess('电台信息已复制到剪贴板！');
+                        app.errorHandler.showNotification('电台信息已复制到剪贴板！', 'success');
                     }).catch(() => {
-                        // 备用方案
                         const textArea = document.createElement('textarea');
                         textArea.value = fullShareContent;
                         document.body.appendChild(textArea);
                         textArea.select();
                         document.execCommand('copy');
                         document.body.removeChild(textArea);
-                        showShareSuccess('电台信息已复制到剪贴板！');
+                        app.errorHandler.showNotification('电台信息已复制到剪贴板！', 'success');
                     });
                     break;
                 case 'wechat':
                     showWechatShareGuide(fullShareContent);
                     break;
-                case 'weibo':
-                    shareTargetUrl = `https://service.weibo.com/share/share.php?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}&pic=&ralateUid=&language=zh_cn`;
-                    window.open(shareTargetUrl, '_blank', 'width=600,height=400');
-                    showShareSuccess('已打开微博分享页面');
-                    break;
-                case 'qq':
-                    shareTargetUrl = `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}&source=全球广播电台&desc=${encodeURIComponent(`来自${countryName}的${genre}电台`)}`;
-                    window.open(shareTargetUrl, '_blank', 'width=600,height=400');
-                    showShareSuccess('已打开QQ分享页面');
-                    break;
-                case 'twitter':
-                    shareTargetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}&hashtags=广播电台,在线收听`;
-                    window.open(shareTargetUrl, '_blank', 'width=600,height=400');
-                    showShareSuccess('已打开Twitter分享页面');
-                    break;
-                case 'facebook':
-                    shareTargetUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
-                    window.open(shareTargetUrl, '_blank', 'width=600,height=400');
-                    showShareSuccess('已打开Facebook分享页面');
-                    break;
+                default:
+                    app.errorHandler.showNotification('分享功能开发中', 'info');
             }
             
-            // 关闭分享菜单
             document.getElementById('share-menu').classList.remove('active');
         }
 
-        // 生成分享链接
-        function generateShareUrl() {
-            if (!currentStation) return window.location.href;
-            return `${window.location.origin}${window.location.pathname}?station=${currentStation.stationuuid}`;
-        }
-
-        // 显示微信分享指引
         function showWechatShareGuide(content) {
             const modal = document.createElement('div');
             modal.className = 'wechat-share-guide';
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.8);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 1003;
-            `;
             
             const guideBox = document.createElement('div');
-            guideBox.style.cssText = `
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                border-radius: 15px;
-                padding: 20px;
-                max-width: 400px;
-                width: 90%;
-                text-align: center;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-            `;
-            
             guideBox.innerHTML = `
                 <div style="margin-bottom: 15px;">
                     <i class="fab fa-weixin" style="font-size: 3rem; color: #09BB07;"></i>
@@ -2558,15 +2357,14 @@
             modal.appendChild(guideBox);
             document.body.appendChild(modal);
             
-            // 事件监听
-            modal.querySelector('#copy-wechat-btn').addEventListener('click', () => {
+            document.getElementById('copy-wechat-btn').addEventListener('click', () => {
                 navigator.clipboard.writeText(content).then(() => {
-                    showShareSuccess('内容已复制到剪贴板！');
+                    app.errorHandler.showNotification('内容已复制到剪贴板！', 'success');
                     modal.remove();
                 });
             });
             
-            modal.querySelector('#close-wechat-btn').addEventListener('click', () => modal.remove());
+            document.getElementById('close-wechat-btn').addEventListener('click', () => modal.remove());
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.remove();
@@ -2574,316 +2372,22 @@
             });
         }
 
-        // 显示分享成功提示
-        function showShareSuccess(message) {
-            // 移除可能已存在的提示
-            const existingSuccess = document.querySelector('.share-success');
-            if (existingSuccess) {
-                existingSuccess.remove();
-            }
-            
-            const successElement = document.createElement('div');
-            successElement.className = 'share-success';
-            successElement.innerHTML = `
-                <i class="fas fa-check-circle"></i>
-                <span>${message}</span>
-            `;
-            
-            document.body.appendChild(successElement);
-            
-            // 3秒后自动移除
-            setTimeout(() => {
-                if (successElement.parentNode) {
-                    successElement.remove();
-                }
-            }, 3000);
-        }
+        // 全局应用实例
+        const app = new GlobalRadioApp();
 
-        // 检查URL参数并自动播放电台
-        function checkUrlParams() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const stationId = urlParams.get('station');
-            
-            if (stationId) {
-                console.log(`检测到分享链接，尝试播放电台: ${stationId}`);
-                
-                // 延迟执行，确保电台数据已加载
-                setTimeout(() => {
-                    const station = allStations.find(s => s.stationuuid === stationId);
-                    if (station) {
-                        // 显示欢迎提示
-                        showWelcomeNotification(station);
-                        
-                        // 自动播放电台
-                        playStation(stationId);
-                        
-                        // 滚动到该电台位置
-                        scrollToStation(stationId);
-                    } else {
-                        console.warn(`未找到ID为 ${stationId} 的电台`);
-                    }
-                }, 1000);
-            }
-        }
-
-        // 显示欢迎提示
-        function showWelcomeNotification(station) {
-            // 移除可能已存在的通知
-            const existingNotification = document.querySelector('.welcome-notification');
-            if (existingNotification) {
-                existingNotification.remove();
-            }
-            
-            const countryName = getChineseCountryName(station.country);
-            const genre = formatGenres(station.tags);
-            const notification = document.createElement('div');
-            notification.className = 'welcome-notification';
-            notification.innerHTML = `
-                <i class="fas fa-broadcast-tower"></i>
-                <div class="welcome-content">
-                    <div class="welcome-title">欢迎收听朋友分享的电台</div>
-                    <div class="welcome-details">
-                        ${station.name} · ${countryName} · ${genre}
-                    </div>
-                </div>
-                <button class="close-btn"><i class="fas fa-times"></i></button>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // 添加关闭按钮事件
-            notification.querySelector('.close-btn').addEventListener('click', function() {
-                notification.remove();
-            });
-            
-            // 8秒后自动关闭
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.remove();
-                }
-            }, 8000);
-        }
-
-        // 滚动到指定电台
-        function scrollToStation(stationId) {
-            const radioList = document.getElementById('radio-list');
-            const stationElement = radioList.querySelector(`[data-id="${stationId}"]`);
-            
-            if (stationElement) {
-                stationElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // 添加高亮效果
-                stationElement.style.backgroundColor = 'rgba(255, 138, 0, 0.2)';
-                stationElement.style.borderColor = 'rgba(255, 138, 0, 0.5)';
-                
-                setTimeout(() => {
-                    stationElement.style.backgroundColor = '';
-                    stationElement.style.borderColor = '';
-                }, 3000);
-            }
-        }
-
-        // 自定义下拉菜单功能 - 优化版本
-        function initCustomSelect() {
-            const customSelect = document.getElementById('genre-select');
-            
-            // 重新构建下拉菜单HTML
-            customSelect.innerHTML = `
-                <div class="select-selected" style="font-weight: bold; color: #ff8a00;">所有分类</div>
-                <div class="select-items">
-                    <!-- 顶部：所有分类选项 -->
-                    <div class="select-header">
-                        <div class="select-item active" data-value="all" style="background: rgba(255, 138, 0, 0.2); font-weight: bold;">
-                            <i class="fas fa-globe"></i> 所有分类
-                        </div>
-                    </div>
-                    
-                    <!-- 热门分类 -->
-                    <div class="select-category">
-                        <div class="category-title">
-                            <i class="fas fa-fire"></i> 热门分类
-                        </div>
-                        <div class="select-hot-grid">
-                            <div class="select-item hot-genre" data-value="流行音乐">流行音乐</div>
-                            <div class="select-item hot-genre" data-value="新闻资讯">新闻资讯</div>
-                            <div class="select-item hot-genre" data-value="摇滚音乐">摇滚音乐</div>
-                            <div class="select-item hot-genre" data-value="谈话节目">谈话节目</div>
-                            <div class="select-item hot-genre" data-value="古典音乐">古典音乐</div>
-                            <div class="select-item hot-genre" data-value="体育节目">体育节目</div>
-                        </div>
-                    </div>
-                    
-                    <!-- 重新分类的分类 -->
-                    <div class="select-columns">
-                        <!-- 第一列：音乐分类 -->
-                        <div class="select-category">
-                            <div class="category-title">
-                                <i class="fas fa-music"></i> 音乐分类
-                            </div>
-                            <div class="select-item" data-value="流行音乐">流行音乐</div>
-                            <div class="select-item" data-value="摇滚音乐">摇滚音乐</div>
-                            <div class="select-item" data-value="古典音乐">古典音乐</div>
-                            <div class="select-item" data-value="爵士音乐">爵士音乐</div>
-                            <div class="select-item" data-value="电子音乐">电子音乐</div>
-                            <div class="select-item" data-value="乡村音乐">乡村音乐</div>
-                            <div class="select-item" data-value="民谣音乐">民谣音乐</div>
-                            <div class="select-item" data-value="蓝调音乐">蓝调音乐</div>
-                            <div class="select-item" data-value="嘻哈音乐">嘻哈音乐</div>
-                            <div class="select-item" data-value="世界音乐">世界音乐</div>
-                        </div>
-                        
-                        <!-- 第二列：资讯节目 -->
-                        <div class="select-category">
-                            <div class="category-title">
-                                <i class="fas fa-newspaper"></i> 资讯节目
-                            </div>
-                            <div class="select-item" data-value="新闻资讯">新闻资讯</div>
-                            <div class="select-item" data-value="谈话节目">谈话节目</div>
-                            <div class="select-item" data-value="体育节目">体育节目</div>
-                            <div class="select-item" data-value="财经节目">财经节目</div>
-                            <div class="select-item" data-value="政治节目">政治节目</div>
-                            <div class="select-item" data-value="时事评论">时事评论</div>
-                            <div class="select-item" data-value="天气预报">天气预报</div>
-                            <div class="select-item" data-value="交通信息">交通信息</div>
-                        </div>
-                        
-                        <!-- 第三列：其他分类 -->
-                        <div class="select-category">
-                            <div class="category-title">
-                                <i class="fas fa-star"></i> 其他分类
-                            </div>
-                            <div class="select-item" data-value="教育节目">教育节目</div>
-                            <div class="select-item" data-value="文化节目">文化节目</div>
-                            <div class="select-item" data-value="宗教节目">宗教节目</div>
-                            <div class="select-item" data-value="娱乐节目">娱乐节目</div>
-                            <div class="select-item" data-value="喜剧节目">喜剧节目</div>
-                            <div class="select-item" data-value="生活节目">生活节目</div>
-                            <div class="select-item" data-value="健康节目">健康节目</div>
-                            <div class="select-item" data-value="儿童节目">儿童节目</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            // 其余事件监听代码保持不变...
-            const selectSelected = customSelect.querySelector('.select-selected');
-            const selectItems = customSelect.querySelector('.select-items');
-            const selectItemsAll = customSelect.querySelectorAll('.select-item');
-            
-            selectSelected.addEventListener('click', function(e) {
-                e.stopPropagation();
-                selectItems.classList.toggle('active');
-                this.classList.toggle('select-arrow-active');
-            });
-            
-            selectItemsAll.forEach(item => {
-                item.addEventListener('click', function() {
-                    selectItemsAll.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    selectSelected.textContent = this.textContent;
-                    if (this.dataset.value === 'all') {
-                        selectSelected.style.fontWeight = 'bold';
-                        selectSelected.style.color = '#ff8a00';
-                    } else {
-                        selectSelected.style.fontWeight = '';
-                        selectSelected.style.color = 'white';
-                    }
-                    
-                    currentGenre = this.dataset.value;
-                    selectItems.classList.remove('active');
-                    selectSelected.classList.remove('select-arrow-active');
-                    performSearch();
-                });
-            });
-            
-            document.addEventListener('click', function() {
-                selectItems.classList.remove('active');
-                selectSelected.classList.remove('select-arrow-active');
-            });
-        }
-
-        // 初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            initMap();
-            loadLocalData();
-            initCustomSelect();
-            
-            // 初始加载所有地区数据
-            loadPreprocessedData();
-            
-            // 检查URL参数并自动播放电台
-            checkUrlParams();
-            
-            // 事件监听器
-            document.getElementById('search-input').addEventListener('input', debounceSearch);
-            document.getElementById('country-filter').addEventListener('change', performSearch);
-            document.getElementById('language-filter').addEventListener('change', performSearch);
-            document.getElementById('load-more-btn').addEventListener('click', loadMoreStations);
-
-            // 地区选择联动 - 修改为加载对应地区数据
-            document.querySelectorAll('.region-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentRegion = this.dataset.region;
-                    
-                    // 显示加载状态
-                    const radioList = document.getElementById('radio-list');
-                    radioList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载地区数据...</div>';
-                    
-                    // 延迟加载以避免UI阻塞
-                    setTimeout(async () => {
-                        await loadRegionData(currentRegion);
-                        performSearch(); // 重新应用搜索筛选
-                        updateCountryInfo();
-                    }, 10);
-                });
-            });
-
-            // 音质选择
-            document.getElementById('quality-select').addEventListener('change', function() {
-                currentQuality = this.value;
-                performSearch();
-            });
-
-            // 分享功能
-            document.getElementById('share-btn').addEventListener('click', toggleShareMenu);
-            document.querySelectorAll('.share-option').forEach(option => {
-                option.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const platform = this.dataset.platform;
-                    shareStation(platform);
-                });
-            });
-
-            // 点击其他地方关闭分享菜单
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.share-container')) {
-                    document.getElementById('share-menu').classList.remove('active');
-                }
-            });
-
-            // 标签页切换
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    
-                    this.classList.add('active');
-                    const tabId = this.dataset.tab;
-                    document.getElementById(`${tabId}-stations`).classList.add('active');
-                    
-                    activeTab = tabId;
-                    updateTabs();
-                });
-            });
-
-            // 播放控制
-            document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
-            document.getElementById('stop-btn').addEventListener('click', stopPlayback);
-            document.querySelector('.volume-slider').addEventListener('input', updateVolume);
+        // 初始化应用
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
         });
+
+        // 页面卸载时清理资源
+        window.addEventListener('beforeunload', () => {
+            app.cleanup();
+        });
+
+        // 导出到全局，供HTML事件使用
+        window.shareStation = shareStation;
+        window.app = app;
     </script>
 </body>
 </html>
