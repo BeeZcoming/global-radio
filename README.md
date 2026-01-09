@@ -1,1 +1,1 @@
-资源大师网（<a href>zyds.net</a href>）演示地址：radio.zyds.net   
+资源大师网（zyds.net）演示地址：radio.zyds.net   
