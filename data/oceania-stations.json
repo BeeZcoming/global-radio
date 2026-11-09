@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-11-09T08:16:33.022842",
-  "totalStations": 1852,
+  "lastUpdated": "2026-11-09T12:36:31.114703",
+  "totalStations": 1853,
   "region": "oceania",
   "countries": [
     "Australia",
@@ -32,7 +32,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:06:21",
-      "clickcount": 8,
+      "clickcount": 13,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -44,11 +44,11 @@
       "url_resolved": "http://abc.streamguys1.com/live/rnnsw/icecast.audio",
       "tags": "abc, features, information",
       "language": "english",
-      "votes": 4736,
+      "votes": 4737,
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:30:33",
-      "clickcount": 26,
+      "clickcount": 29,
       "bitrate": 56,
       "codec": "AAC+"
     },
@@ -60,11 +60,11 @@
       "url_resolved": "https://theproganrockmachine.out.airtime.pro/theproganrockmachine_b",
       "tags": "progressive rock",
       "language": "",
-      "votes": 3901,
+      "votes": 3902,
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:34:06",
-      "clickcount": 8,
+      "clickcount": 6,
       "bitrate": 64,
       "codec": "MP3"
     },
@@ -80,7 +80,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 03:55:20",
-      "clickcount": 17,
+      "clickcount": 16,
       "bitrate": 64,
       "codec": "MP3"
     },
@@ -96,7 +96,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:30:45",
-      "clickcount": 13,
+      "clickcount": 14,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -108,11 +108,11 @@
       "url_resolved": "http://procyon.shoutca.st:8032/;",
       "tags": "80s, easy listening",
       "language": "english",
-      "votes": 2403,
+      "votes": 2404,
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:09:07",
-      "clickcount": 11,
+      "clickcount": 9,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -144,7 +144,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:19:36",
-      "clickcount": 19,
+      "clickcount": 17,
       "bitrate": 97,
       "codec": "AAC+"
     },
@@ -160,7 +160,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:47:55",
-      "clickcount": 5,
+      "clickcount": 4,
       "bitrate": 320,
       "codec": "MP3"
     },
@@ -176,7 +176,7 @@
       "geo_lat": -33.94153531741429,
       "geo_long": 151.0341758204815,
       "lastchecktime": "2026-11-06 17:38:58",
-      "clickcount": 55,
+      "clickcount": 58,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -192,7 +192,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 03:55:20",
-      "clickcount": 7,
+      "clickcount": 6,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -240,7 +240,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:59:09",
-      "clickcount": 11,
+      "clickcount": 12,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -256,7 +256,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:35:50",
-      "clickcount": 15,
+      "clickcount": 14,
       "bitrate": 56,
       "codec": "AAC+"
     },
@@ -288,7 +288,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:42:14",
-      "clickcount": 5,
+      "clickcount": 6,
       "bitrate": 256,
       "codec": "MP3"
     },
@@ -336,7 +336,7 @@
       "geo_lat": -35.81335872633349,
       "geo_long": 141.85546875000003,
       "lastchecktime": "2026-11-07 01:16:50",
-      "clickcount": 5,
+      "clickcount": 3,
       "bitrate": 320,
       "codec": "MP3"
     },
@@ -352,7 +352,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:41:25",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -368,7 +368,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:45:08",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -416,7 +416,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:06:26",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -432,7 +432,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 20:00:37",
-      "clickcount": 5,
+      "clickcount": 6,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -448,7 +448,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:41:46",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 33,
       "codec": "AAC+"
     },
@@ -464,7 +464,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:42:38",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -480,7 +480,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:36:17",
-      "clickcount": 16,
+      "clickcount": 15,
       "bitrate": 320,
       "codec": "AAC+"
     },
@@ -496,7 +496,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:37:29",
-      "clickcount": 10,
+      "clickcount": 11,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -528,7 +528,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 22:12:20",
-      "clickcount": 7,
+      "clickcount": 9,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -540,11 +540,11 @@
       "url_resolved": "https://onlineradiobox.com/json/au/islandwhitsundays/play?platform=web",
       "tags": "classic hits, 新闻, pop music",
       "language": "english",
-      "votes": 549,
+      "votes": 550,
       "geo_lat": -20.269695972061033,
       "geo_long": 148.7201288560193,
       "lastchecktime": "2026-11-06 00:59:19",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -576,7 +576,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:24:03",
-      "clickcount": 11,
+      "clickcount": 10,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -608,7 +608,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 03:14:03",
-      "clickcount": 8,
+      "clickcount": 9,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -624,7 +624,7 @@
       "geo_lat": -33.816240359555486,
       "geo_long": 151.19012475013736,
       "lastchecktime": "2026-11-06 12:02:58",
-      "clickcount": 11,
+      "clickcount": 9,
       "bitrate": 97,
       "codec": "AAC+"
     },
@@ -656,7 +656,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 01:30:04",
-      "clickcount": 15,
+      "clickcount": 10,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -688,7 +688,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:07:05",
-      "clickcount": 4,
+      "clickcount": 5,
       "bitrate": 128,
       "codec": "AAC"
     },
@@ -704,7 +704,7 @@
       "geo_lat": 15.987151551423228,
       "geo_long": 36.17187380790711,
       "lastchecktime": "2026-11-06 17:58:04",
-      "clickcount": 7,
+      "clickcount": 9,
       "bitrate": 311,
       "codec": "UNKNOWN"
     },
@@ -720,7 +720,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:36:17",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 64,
       "codec": "AAC"
     },
@@ -752,7 +752,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 21:46:02",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 48,
       "codec": "MP3"
     },
@@ -768,7 +768,7 @@
       "geo_lat": -33.91261299281873,
       "geo_long": 151.07417553663254,
       "lastchecktime": "2026-11-06 18:48:28",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 0,
       "codec": "MP3"
     },
@@ -816,7 +816,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:59:09",
-      "clickcount": 5,
+      "clickcount": 4,
       "bitrate": 50,
       "codec": "AAC"
     },
@@ -832,7 +832,7 @@
       "geo_lat": -36.84603710059265,
       "geo_long": 174.75007742643356,
       "lastchecktime": "2026-11-06 01:08:17",
-      "clickcount": 7,
+      "clickcount": 8,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -848,7 +848,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:47:16",
-      "clickcount": 8,
+      "clickcount": 9,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -880,7 +880,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:51:19",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 0,
       "codec": "AAC"
     },
@@ -896,7 +896,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:39:55",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "AAC"
     },
@@ -912,7 +912,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 23:32:05",
-      "clickcount": 8,
+      "clickcount": 10,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -992,7 +992,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:36:05",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 33,
       "codec": "AAC+"
     },
@@ -1008,7 +1008,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:30:25",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 320,
       "codec": "MP3"
     },
@@ -1024,7 +1024,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:00:38",
-      "clickcount": 5,
+      "clickcount": 4,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -1056,7 +1056,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 08:52:21",
-      "clickcount": 9,
+      "clickcount": 6,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -1072,7 +1072,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 01:37:23",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -1104,7 +1104,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 08:09:17",
-      "clickcount": 6,
+      "clickcount": 5,
       "bitrate": 48,
       "codec": "MP3"
     },
@@ -1120,7 +1120,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 08:56:54",
-      "clickcount": 3,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -1152,7 +1152,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 02:37:58",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 56,
       "codec": "AAC+"
     },
@@ -1173,6 +1173,22 @@
       "codec": "MP3"
     },
     {
+      "stationuuid": "dbc8afb2-b62d-4e2f-8620-b81fab471288",
+      "name": "Newstalk ZB",
+      "country": "New Zealand",
+      "countrycode": "NZ",
+      "url_resolved": "https://playerservices.streamtheworld.com/api/livestream-redirect/NZME_01AAC.m3u8?aw_0_1st.playerid=iHeartRadioWebPlayer&aw_0_1st.skey=9631949606&clientType=web&companionAds=false&deviceName=web-desktop&dist=iheart&host=webapp.NZ&listenerId=&playedFrom=157&pname=live_profile&profileId=9631949606&stationid=6187&terminalId=162&territory=NZ",
+      "tags": "legacy media, talkback hosts",
+      "language": "english",
+      "votes": 250,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-06 12:58:56",
+      "clickcount": 22,
+      "bitrate": 64,
+      "codec": "AAC+"
+    },
+    {
       "stationuuid": "8c94ab1f-c79d-4f18-85db-e8aed2db5450",
       "name": "Triple M 80s",
       "country": "Australia",
@@ -1184,24 +1200,8 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:15:22",
-      "clickcount": 4,
+      "clickcount": 5,
       "bitrate": 33,
-      "codec": "AAC+"
-    },
-    {
-      "stationuuid": "dbc8afb2-b62d-4e2f-8620-b81fab471288",
-      "name": "Newstalk ZB",
-      "country": "New Zealand",
-      "countrycode": "NZ",
-      "url_resolved": "https://playerservices.streamtheworld.com/api/livestream-redirect/NZME_01AAC.m3u8?aw_0_1st.playerid=iHeartRadioWebPlayer&aw_0_1st.skey=9631949606&clientType=web&companionAds=false&deviceName=web-desktop&dist=iheart&host=webapp.NZ&listenerId=&playedFrom=157&pname=live_profile&profileId=9631949606&stationid=6187&terminalId=162&territory=NZ",
-      "tags": "legacy media, talkback hosts",
-      "language": "english",
-      "votes": 249,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-06 12:58:56",
-      "clickcount": 18,
-      "bitrate": 64,
       "codec": "AAC+"
     },
     {
@@ -1248,7 +1248,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:02:59",
-      "clickcount": 14,
+      "clickcount": 15,
       "bitrate": 128,
       "codec": "AAC"
     },
@@ -1276,7 +1276,7 @@
       "url_resolved": "https://cast4.asurahosting.com/proxy/2sm1269/stream",
       "tags": "talkback",
       "language": "english",
-      "votes": 235,
+      "votes": 236,
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:37:20",
@@ -1296,7 +1296,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:29:45",
-      "clickcount": 5,
+      "clickcount": 6,
       "bitrate": 320,
       "codec": "AAC+"
     },
@@ -1312,7 +1312,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 01:13:25",
-      "clickcount": 7,
+      "clickcount": 8,
       "bitrate": 320,
       "codec": "AAC+"
     },
@@ -1344,7 +1344,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 22:03:45",
-      "clickcount": 5,
+      "clickcount": 4,
       "bitrate": 65,
       "codec": "AAC"
     },
@@ -1360,7 +1360,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 22:03:45",
-      "clickcount": 6,
+      "clickcount": 5,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -1408,7 +1408,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:00:22",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "AAC"
     },
@@ -1424,7 +1424,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:06:37",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -1440,7 +1440,7 @@
       "geo_lat": -37.76750553285758,
       "geo_long": 144.97996866703036,
       "lastchecktime": "2026-11-07 02:22:40",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 0,
       "codec": "AAC"
     },
@@ -1456,7 +1456,7 @@
       "geo_lat": -28.410084343940035,
       "geo_long": 134.18602659150002,
       "lastchecktime": "2026-11-06 22:00:57",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 192,
       "codec": "MP3"
     },
@@ -1488,7 +1488,7 @@
       "geo_lat": -36.87788876938578,
       "geo_long": 174.7673492676169,
       "lastchecktime": "2026-11-06 22:43:51",
-      "clickcount": 10,
+      "clickcount": 16,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -1520,7 +1520,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:04:18",
-      "clickcount": 21,
+      "clickcount": 20,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -1552,7 +1552,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:18:44",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -1632,7 +1632,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:07:34",
-      "clickcount": 2,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -1648,7 +1648,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 07:27:48",
-      "clickcount": 4,
+      "clickcount": 2,
       "bitrate": 48,
       "codec": "MP3"
     },
@@ -1680,7 +1680,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 08:12:22",
-      "clickcount": 6,
+      "clickcount": 9,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -1712,7 +1712,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:51:47",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 256,
       "codec": "MP3"
     },
@@ -1728,7 +1728,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:18:39",
-      "clickcount": 5,
+      "clickcount": 8,
       "bitrate": 33,
       "codec": "AAC+"
     },
@@ -1744,7 +1744,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:41:25",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -1760,7 +1760,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:02:59",
-      "clickcount": 10,
+      "clickcount": 8,
       "bitrate": 96,
       "codec": "MP3"
     },
@@ -1776,7 +1776,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 08:19:17",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -1872,7 +1872,7 @@
       "geo_lat": -33.87059148680871,
       "geo_long": 151.20740890502933,
       "lastchecktime": "2026-11-06 02:59:56",
-      "clickcount": 10,
+      "clickcount": 11,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -1888,7 +1888,7 @@
       "geo_lat": -31.9523,
       "geo_long": 115.8613,
       "lastchecktime": "2026-11-06 00:22:54",
-      "clickcount": 4,
+      "clickcount": 5,
       "bitrate": 128,
       "codec": "AAC"
     },
@@ -1968,7 +1968,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 02:28:32",
-      "clickcount": 4,
+      "clickcount": 5,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -1984,7 +1984,7 @@
       "geo_lat": -33.8200131927063,
       "geo_long": 151.18505708634035,
       "lastchecktime": "2026-11-06 00:48:15",
-      "clickcount": 4,
+      "clickcount": 5,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -2048,7 +2048,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:49:12",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -2064,7 +2064,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 22:07:06",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -2128,7 +2128,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:35:26",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -2160,7 +2160,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:25:14",
-      "clickcount": 0,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -2176,7 +2176,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 22:07:06",
-      "clickcount": 3,
+      "clickcount": 5,
       "bitrate": 56,
       "codec": "AAC+"
     },
@@ -2224,7 +2224,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:56:42",
-      "clickcount": 5,
+      "clickcount": 6,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -2240,7 +2240,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 23:58:12",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -2256,7 +2256,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:52:47",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 320,
       "codec": "AAC+"
     },
@@ -2288,7 +2288,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:21:53",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -2304,9 +2304,25 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-08 03:04:27",
-      "clickcount": 11,
+      "clickcount": 14,
       "bitrate": 130,
       "codec": "AAC"
+    },
+    {
+      "stationuuid": "241e1e0d-dbd0-4797-9fb9-ed3b391ac60a",
+      "name": "Nightride FM Chillsynth",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "https://stream.nightride.fm/chillsynth.mp3",
+      "tags": "chillsynth, chillwave, instrumental",
+      "language": "",
+      "votes": 127,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-06 22:04:41",
+      "clickcount": 11,
+      "bitrate": 320,
+      "codec": "MP3"
     },
     {
       "stationuuid": "fb7bbb5a-462c-46ed-a656-ae399d8e728f",
@@ -2336,24 +2352,8 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:45:24",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
-      "codec": "MP3"
-    },
-    {
-      "stationuuid": "241e1e0d-dbd0-4797-9fb9-ed3b391ac60a",
-      "name": "Nightride FM Chillsynth",
-      "country": "Australia",
-      "countrycode": "AU",
-      "url_resolved": "https://stream.nightride.fm/chillsynth.mp3",
-      "tags": "chillsynth, chillwave, instrumental",
-      "language": "",
-      "votes": 126,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-06 22:04:41",
-      "clickcount": 10,
-      "bitrate": 320,
       "codec": "MP3"
     },
     {
@@ -2496,7 +2496,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:58:04",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -2512,7 +2512,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:15:26",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -2528,7 +2528,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:44:15",
-      "clickcount": 11,
+      "clickcount": 14,
       "bitrate": 96,
       "codec": "MP3"
     },
@@ -2544,7 +2544,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:25:44",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -2592,7 +2592,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:36:17",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -2624,7 +2624,7 @@
       "geo_lat": -37.814253664444614,
       "geo_long": 144.941681637436,
       "lastchecktime": "2026-11-06 00:16:28",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -2688,7 +2688,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 22:12:19",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -2704,7 +2704,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:02:29",
-      "clickcount": 2,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -2752,7 +2752,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:01:25",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -2784,7 +2784,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:32:04",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -2880,7 +2880,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 22:22:27",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 0,
       "codec": "OGG"
     },
@@ -2960,7 +2960,7 @@
       "geo_lat": -31.95180356685888,
       "geo_long": 115.87331771850587,
       "lastchecktime": "2026-11-06 15:46:26",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 56,
       "codec": "AAC+"
     },
@@ -2976,7 +2976,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:31:00",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -2992,7 +2992,7 @@
       "geo_lat": -19.260538578805495,
       "geo_long": 146.81396194873952,
       "lastchecktime": "2026-11-06 06:07:47",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -3008,7 +3008,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:24:25",
-      "clickcount": 5,
+      "clickcount": 4,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -3024,7 +3024,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:10:48",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -3040,7 +3040,7 @@
       "geo_lat": -37.81456232410907,
       "geo_long": 144.96331214904788,
       "lastchecktime": "2026-11-07 03:11:45",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -3088,7 +3088,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 02:12:06",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -3104,7 +3104,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 13:01:14",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 256,
       "codec": "MP3"
     },
@@ -3136,9 +3136,25 @@
       "geo_lat": -36.86317362230059,
       "geo_long": 174.7324848175049,
       "lastchecktime": "2026-11-06 08:55:10",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 80,
       "codec": "AAC+"
+    },
+    {
+      "stationuuid": "9572f71b-9657-4d02-94f4-c9fe05ba26d3",
+      "name": "2GB - Sydney - 873 AM (MP3)",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "http://playerservices.streamtheworld.com/api/livestream-redirect/2GB.mp3",
+      "tags": "新闻, talk radio",
+      "language": "english",
+      "votes": 91,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-06 10:55:06",
+      "clickcount": 15,
+      "bitrate": 48,
+      "codec": "MP3"
     },
     {
       "stationuuid": "389c5442-4834-4c9a-95de-1776b60877ac",
@@ -3168,7 +3184,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:26:48",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -3189,22 +3205,6 @@
       "codec": "AAC+"
     },
     {
-      "stationuuid": "9572f71b-9657-4d02-94f4-c9fe05ba26d3",
-      "name": "2GB - Sydney - 873 AM (MP3)",
-      "country": "Australia",
-      "countrycode": "AU",
-      "url_resolved": "http://playerservices.streamtheworld.com/api/livestream-redirect/2GB.mp3",
-      "tags": "新闻, talk radio",
-      "language": "english",
-      "votes": 90,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-06 10:55:06",
-      "clickcount": 13,
-      "bitrate": 48,
-      "codec": "MP3"
-    },
-    {
       "stationuuid": "d44c03de-5d38-48de-b59a-6968ffcdad63",
       "name": "ABC Radio National HLS",
       "country": "Australia",
@@ -3216,7 +3216,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 01:40:01",
-      "clickcount": 10,
+      "clickcount": 12,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -3248,7 +3248,7 @@
       "geo_lat": -19.296141175914332,
       "geo_long": 146.79116878797066,
       "lastchecktime": "2026-11-06 20:47:49",
-      "clickcount": 7,
+      "clickcount": 6,
       "bitrate": 192,
       "codec": "MP3"
     },
@@ -3264,7 +3264,7 @@
       "geo_lat": -37.91471159927373,
       "geo_long": 145.33495892929454,
       "lastchecktime": "2026-11-07 02:01:29",
-      "clickcount": 7,
+      "clickcount": 6,
       "bitrate": 64,
       "codec": "MP3"
     },
@@ -3440,7 +3440,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:23:54",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -3472,7 +3472,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:05:39",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -3488,7 +3488,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:05:21",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -3520,7 +3520,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:37:04",
-      "clickcount": 2,
+      "clickcount": 0,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -3536,7 +3536,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:19:36",
-      "clickcount": 1,
+      "clickcount": 3,
       "bitrate": 48,
       "codec": "AAC"
     },
@@ -3584,7 +3584,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 23:05:46",
-      "clickcount": 2,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -3616,7 +3616,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 03:12:30",
-      "clickcount": 6,
+      "clickcount": 5,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -3664,7 +3664,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 02:30:04",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -3792,7 +3792,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:05:21",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -3824,7 +3824,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:40:15",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -3856,7 +3856,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:31:02",
-      "clickcount": 19,
+      "clickcount": 21,
       "bitrate": 0,
       "codec": "MP3"
     },
@@ -3920,7 +3920,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 03:14:03",
-      "clickcount": 1,
+      "clickcount": 3,
       "bitrate": 64,
       "codec": "AAC"
     },
@@ -3984,7 +3984,7 @@
       "geo_lat": -41.27278259499812,
       "geo_long": 174.7760226743494,
       "lastchecktime": "2026-11-06 23:35:26",
-      "clickcount": 7,
+      "clickcount": 11,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -4032,7 +4032,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:15:05",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -4064,7 +4064,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:36:15",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -4112,7 +4112,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:38:16",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -4272,9 +4272,25 @@
       "geo_lat": -27.46153472641937,
       "geo_long": 153.0134408253137,
       "lastchecktime": "2026-11-06 16:16:59",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 115,
       "codec": "AAC"
+    },
+    {
+      "stationuuid": "90d91f17-5c1c-4189-a218-e7a0cfff4732",
+      "name": "MIBL Radio — Instrumental",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "https://www.miblradio.com.au/mibl2",
+      "tags": "24/7, ai music, ambient",
+      "language": "english,persian",
+      "votes": 66,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-06 06:32:41",
+      "clickcount": 11,
+      "bitrate": 320,
+      "codec": "MP3"
     },
     {
       "stationuuid": "8fd83c4f-9d79-4629-b6cc-8cf985ee61ad",
@@ -4325,22 +4341,6 @@
       "codec": "MP3"
     },
     {
-      "stationuuid": "90d91f17-5c1c-4189-a218-e7a0cfff4732",
-      "name": "MIBL Radio — Instrumental",
-      "country": "Australia",
-      "countrycode": "AU",
-      "url_resolved": "https://www.miblradio.com.au/mibl2",
-      "tags": "24/7, ai music, ambient",
-      "language": "english,persian",
-      "votes": 65,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-06 06:32:41",
-      "clickcount": 14,
-      "bitrate": 320,
-      "codec": "MP3"
-    },
-    {
       "stationuuid": "a8fa8771-648a-4b70-8ee6-5994b8b2a315",
       "name": "Sleep Radio",
       "country": "New Zealand",
@@ -4352,7 +4352,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:46:09",
-      "clickcount": 10,
+      "clickcount": 11,
       "bitrate": 256,
       "codec": "MP3"
     },
@@ -4592,7 +4592,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:48:02",
-      "clickcount": 4,
+      "clickcount": 7,
       "bitrate": 48,
       "codec": "MP3"
     },
@@ -4608,7 +4608,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:33:08",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -4704,7 +4704,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 22:09:30",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -4768,7 +4768,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 01:50:55",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -4784,7 +4784,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 01:22:59",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -4800,7 +4800,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:55:37",
-      "clickcount": 14,
+      "clickcount": 12,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -4832,7 +4832,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:51:47",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -4912,7 +4912,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:32:04",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -5024,7 +5024,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 22:58:47",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -5040,8 +5040,24 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:11:47",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
+      "codec": "AAC+"
+    },
+    {
+      "stationuuid": "fbca431c-aaf1-406c-8d35-fab8f5cdd0a3",
+      "name": "The 80s iHeartRadio Australia (AAC+)",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "http://playerservices.streamtheworld.com/api/livestream-redirect/ARN_IHRT8AAC.aac",
+      "tags": "1980's, 1980s, 80's",
+      "language": "english",
+      "votes": 53,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-06 23:24:24",
+      "clickcount": 6,
+      "bitrate": 48,
       "codec": "AAC+"
     },
     {
@@ -5056,7 +5072,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:45:22",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -5072,24 +5088,8 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:43:21",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
-      "codec": "AAC+"
-    },
-    {
-      "stationuuid": "fbca431c-aaf1-406c-8d35-fab8f5cdd0a3",
-      "name": "The 80s iHeartRadio Australia (AAC+)",
-      "country": "Australia",
-      "countrycode": "AU",
-      "url_resolved": "http://playerservices.streamtheworld.com/api/livestream-redirect/ARN_IHRT8AAC.aac",
-      "tags": "1980's, 1980s, 80's",
-      "language": "english",
-      "votes": 52,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-06 23:24:24",
-      "clickcount": 4,
-      "bitrate": 48,
       "codec": "AAC+"
     },
     {
@@ -5104,7 +5104,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 08:30:22",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 192,
       "codec": "MP3"
     },
@@ -5184,7 +5184,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 12:58:56",
-      "clickcount": 6,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -5200,7 +5200,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:36:17",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 0,
       "codec": "MP3"
     },
@@ -5216,7 +5216,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:13:48",
-      "clickcount": 3,
+      "clickcount": 5,
       "bitrate": 256,
       "codec": "AAC"
     },
@@ -5232,7 +5232,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:16:27",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -5248,7 +5248,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:23:54",
-      "clickcount": 13,
+      "clickcount": 14,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -5328,7 +5328,7 @@
       "geo_lat": -16.915700673138073,
       "geo_long": 145.76647412802444,
       "lastchecktime": "2026-11-06 19:32:54",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -5413,6 +5413,22 @@
       "codec": "MP3"
     },
     {
+      "stationuuid": "89885017-3c53-46e3-af16-2a192ce61664",
+      "name": "MIBL Radio",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "https://www.miblradio.com.au/mibl",
+      "tags": "24/7, ai music, ambient",
+      "language": "english,persian",
+      "votes": 48,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-06 07:03:44",
+      "clickcount": 3,
+      "bitrate": 320,
+      "codec": "MP3"
+    },
+    {
       "stationuuid": "4b899059-7bb3-4ed3-9345-5c432c0afe48",
       "name": "ABC Radio South West WA",
       "country": "Australia",
@@ -5424,7 +5440,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:10:48",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 56,
       "codec": "AAC+"
     },
@@ -5440,24 +5456,8 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 02:02:20",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
-      "codec": "MP3"
-    },
-    {
-      "stationuuid": "89885017-3c53-46e3-af16-2a192ce61664",
-      "name": "MIBL Radio",
-      "country": "Australia",
-      "countrycode": "AU",
-      "url_resolved": "https://www.miblradio.com.au/mibl",
-      "tags": "24/7, ai music, ambient",
-      "language": "english,persian",
-      "votes": 47,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-06 07:03:44",
-      "clickcount": 5,
-      "bitrate": 320,
       "codec": "MP3"
     },
     {
@@ -5584,7 +5584,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 22:03:45",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 0,
       "codec": "UNKNOWN"
     },
@@ -5680,7 +5680,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 02:24:45",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -5696,7 +5696,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:10:10",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -5776,7 +5776,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 07:47:35",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -5792,7 +5792,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 01:37:23",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -5968,7 +5968,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 22:36:10",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -5984,7 +5984,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:38:17",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -6048,7 +6048,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:45:21",
-      "clickcount": 4,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -6064,7 +6064,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:47:06",
-      "clickcount": 8,
+      "clickcount": 10,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -6128,7 +6128,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:22:54",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 320,
       "codec": "MP3"
     },
@@ -6160,7 +6160,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 16:21:54",
-      "clickcount": 5,
+      "clickcount": 4,
       "bitrate": 24,
       "codec": "AAC"
     },
@@ -6272,7 +6272,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:31:00",
-      "clickcount": 4,
+      "clickcount": 5,
       "bitrate": 128,
       "codec": "AAC"
     },
@@ -6288,7 +6288,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:43:54",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -6304,7 +6304,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:41:16",
-      "clickcount": 3,
+      "clickcount": 5,
       "bitrate": 0,
       "codec": "UNKNOWN"
     },
@@ -6352,7 +6352,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:34:06",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -6400,7 +6400,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 07:08:32",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -6432,7 +6432,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 22:36:10",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -6512,7 +6512,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 01:55:46",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 150,
       "codec": "AAC"
     },
@@ -6528,7 +6528,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:36:35",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -6624,7 +6624,7 @@
       "geo_lat": -37.69503524197649,
       "geo_long": 144.55735445022586,
       "lastchecktime": "2026-11-06 08:02:29",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 192,
       "codec": "MP3"
     },
@@ -6773,6 +6773,22 @@
       "codec": "UNKNOWN"
     },
     {
+      "stationuuid": "365ec4e4-e490-4ee2-a114-1162fc4deed9",
+      "name": "LiSTNR - Morning Yoga (HLS)",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "http://sa47.scastream.com.au/live/morning-yoga.stream/playlist.m3u8",
+      "tags": "music",
+      "language": "english",
+      "votes": 36,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-06 00:52:47",
+      "clickcount": 5,
+      "bitrate": 63,
+      "codec": "AAC+"
+    },
+    {
       "stationuuid": "38cb9b9e-97f9-4a72-a517-d363d96348a1",
       "name": "Mix 106.3 Canberra",
       "country": "Australia",
@@ -6784,7 +6800,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:55:09",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -6832,7 +6848,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:51:47",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 52,
       "codec": "AAC"
     },
@@ -6848,7 +6864,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:38:27",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -6880,7 +6896,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:44:04",
-      "clickcount": 4,
+      "clickcount": 2,
       "bitrate": 0,
       "codec": "AAC"
     },
@@ -6928,7 +6944,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:34:55",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -6960,7 +6976,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:47:16",
-      "clickcount": 8,
+      "clickcount": 7,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -6976,25 +6992,9 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:17:28",
-      "clickcount": 6,
+      "clickcount": 5,
       "bitrate": 128,
       "codec": "MP3"
-    },
-    {
-      "stationuuid": "365ec4e4-e490-4ee2-a114-1162fc4deed9",
-      "name": "LiSTNR - Morning Yoga (HLS)",
-      "country": "Australia",
-      "countrycode": "AU",
-      "url_resolved": "http://sa47.scastream.com.au/live/morning-yoga.stream/playlist.m3u8",
-      "tags": "music",
-      "language": "english",
-      "votes": 35,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-06 00:52:47",
-      "clickcount": 4,
-      "bitrate": 63,
-      "codec": "AAC+"
     },
     {
       "stationuuid": "0c144adf-06dd-481e-b425-be47c76cc0be",
@@ -7104,7 +7104,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 01:23:52",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -7120,7 +7120,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:13:23",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -7136,7 +7136,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 22:45:48",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -7312,7 +7312,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:44:52",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 134,
       "codec": "MP3"
     },
@@ -7424,7 +7424,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:57:49",
-      "clickcount": 5,
+      "clickcount": 4,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -7504,7 +7504,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:24:24",
-      "clickcount": 2,
+      "clickcount": 4,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -7568,7 +7568,7 @@
       "geo_lat": -17.746070780233776,
       "geo_long": 168.33389282226565,
       "lastchecktime": "2026-11-06 17:24:03",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -7664,7 +7664,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:07:34",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -7792,7 +7792,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:24:03",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "MP3"
     },
@@ -7840,7 +7840,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:47:50",
-      "clickcount": 3,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -7904,7 +7904,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:56:51",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -7936,7 +7936,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:08:40",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -7952,7 +7952,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:54:43",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -7984,7 +7984,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 12:18:25",
-      "clickcount": 2,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -8032,7 +8032,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:29:34",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 96,
       "codec": "MP3"
     },
@@ -8064,7 +8064,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:56:42",
-      "clickcount": 6,
+      "clickcount": 5,
       "bitrate": 49,
       "codec": "AAC+"
     },
@@ -8080,7 +8080,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:54:58",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -8192,7 +8192,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 02:17:36",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 0,
       "codec": "UNKNOWN"
     },
@@ -8256,7 +8256,7 @@
       "geo_lat": -19.65847910602953,
       "geo_long": 147.41004376482348,
       "lastchecktime": "2026-11-07 01:16:50",
-      "clickcount": 0,
+      "clickcount": 2,
       "bitrate": 64,
       "codec": "AAC"
     },
@@ -8272,7 +8272,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 01:05:00",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -8416,7 +8416,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 13:00:38",
-      "clickcount": 6,
+      "clickcount": 4,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -8480,7 +8480,7 @@
       "geo_lat": -32.521477648413274,
       "geo_long": 115.7351303100586,
       "lastchecktime": "2026-11-06 09:36:04",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -8496,7 +8496,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:31:33",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -8528,7 +8528,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 20:23:43",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -8608,7 +8608,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 23:31:17",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 0,
       "codec": "UNKNOWN"
     },
@@ -8656,7 +8656,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:45:22",
-      "clickcount": 8,
+      "clickcount": 6,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -8704,7 +8704,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 20:37:23",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -8720,7 +8720,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:05:32",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -8912,7 +8912,7 @@
       "geo_lat": -35.214209694830764,
       "geo_long": 148.1615462731619,
       "lastchecktime": "2026-11-07 00:05:32",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -8944,7 +8944,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 20:59:49",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "OGG"
     },
@@ -8960,7 +8960,7 @@
       "geo_lat": -27.606968902457528,
       "geo_long": 153.1120949255748,
       "lastchecktime": "2026-11-06 17:43:13",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -8976,7 +8976,7 @@
       "geo_lat": -34.06728249159762,
       "geo_long": 150.81552669000467,
       "lastchecktime": "2026-11-07 00:01:50",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -8992,7 +8992,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:23:20",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -9024,7 +9024,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:27:47",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -9088,7 +9088,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 02:22:40",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -9120,7 +9120,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 07:08:32",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -9168,7 +9168,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 08:34:42",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -9248,7 +9248,7 @@
       "geo_lat": -38.14677452258894,
       "geo_long": 144.361206527279,
       "lastchecktime": "2026-11-06 01:42:13",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -9344,7 +9344,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 02:53:23",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -9376,7 +9376,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:45:24",
-      "clickcount": 1,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -9424,7 +9424,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:05:50",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -9472,7 +9472,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:59:49",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -9504,7 +9504,7 @@
       "geo_lat": -37.91300095212903,
       "geo_long": 144.90966796875003,
       "lastchecktime": "2026-11-06 16:16:59",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -9552,7 +9552,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 12:58:56",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 320,
       "codec": "AAC+"
     },
@@ -9568,7 +9568,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:21:14",
-      "clickcount": 4,
+      "clickcount": 5,
       "bitrate": 320,
       "codec": "AAC+"
     },
@@ -9616,7 +9616,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:24:12",
-      "clickcount": 4,
+      "clickcount": 6,
       "bitrate": 192,
       "codec": "MP3"
     },
@@ -9632,7 +9632,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:47:10",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -9680,7 +9680,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:07:47",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -9808,7 +9808,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 03:55:20",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 0,
       "codec": "UNKNOWN"
     },
@@ -9856,7 +9856,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 01:56:40",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "AAC"
     },
@@ -9888,7 +9888,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 02:21:58",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 320,
       "codec": "AAC+"
     },
@@ -9936,7 +9936,7 @@
       "geo_lat": -37.8239761875819,
       "geo_long": 144.96653079986575,
       "lastchecktime": "2026-11-06 18:06:26",
-      "clickcount": 11,
+      "clickcount": 15,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -10016,7 +10016,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:00:38",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -10032,7 +10032,7 @@
       "geo_lat": -37.68903678658054,
       "geo_long": 176.1404101388368,
       "lastchecktime": "2026-11-06 15:03:28",
-      "clickcount": 6,
+      "clickcount": 5,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -10112,7 +10112,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 20:23:43",
-      "clickcount": 3,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -10272,8 +10272,24 @@
       "geo_lat": -17.74083892258535,
       "geo_long": 168.31604003906253,
       "lastchecktime": "2026-11-06 00:22:54",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 90,
+      "codec": "MP3"
+    },
+    {
+      "stationuuid": "a8dd839f-0a3c-475f-8892-696284f0307c",
+      "name": "LGF TALK GUINEE",
+      "country": "Guinea",
+      "countrycode": "GN",
+      "url_resolved": "https://stream.zeno.fm/xirmzwnnpintv",
+      "tags": "未分类",
+      "language": "",
+      "votes": 19,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-06 15:54:07",
+      "clickcount": 5,
+      "bitrate": 128,
       "codec": "MP3"
     },
     {
@@ -10288,7 +10304,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 22:04:41",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -10405,6 +10421,22 @@
       "codec": "MP3"
     },
     {
+      "stationuuid": "a66f3f7e-a44b-4c7b-a840-2e7a41203726",
+      "name": "702 ABC Sydney",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "https://streaming.abc-cdn.net.au/audio/hls/localsydney.m3u8?source=web",
+      "tags": "本地, local information, local news",
+      "language": "english",
+      "votes": 18,
+      "geo_lat": -33.81640169931104,
+      "geo_long": 151.00389897823337,
+      "lastchecktime": "2026-11-06 17:32:17",
+      "clickcount": 10,
+      "bitrate": 115,
+      "codec": "AAC"
+    },
+    {
       "stationuuid": "c93a5edc-9952-45af-bbd9-6540853bbf41",
       "name": "91.2 Oamaru FM",
       "country": "New Zealand",
@@ -10432,7 +10464,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:11:07",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -10464,7 +10496,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:05:18",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 64,
       "codec": "MP3"
     },
@@ -10624,7 +10656,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 23:50:45",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 0,
       "codec": "UNKNOWN"
     },
@@ -10641,22 +10673,6 @@
       "geo_long": 176.91833496093753,
       "lastchecktime": "2026-11-06 06:16:34",
       "clickcount": 1,
-      "bitrate": 128,
-      "codec": "MP3"
-    },
-    {
-      "stationuuid": "a8dd839f-0a3c-475f-8892-696284f0307c",
-      "name": "LGF TALK GUINEE",
-      "country": "Guinea",
-      "countrycode": "GN",
-      "url_resolved": "https://stream.zeno.fm/xirmzwnnpintv",
-      "tags": "未分类",
-      "language": "",
-      "votes": 18,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-06 15:54:07",
-      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -10912,7 +10928,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:23:20",
-      "clickcount": 2,
+      "clickcount": 4,
       "bitrate": 141,
       "codec": "MP3"
     },
@@ -10947,22 +10963,6 @@
       "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
-    },
-    {
-      "stationuuid": "a66f3f7e-a44b-4c7b-a840-2e7a41203726",
-      "name": "702 ABC Sydney",
-      "country": "Australia",
-      "countrycode": "AU",
-      "url_resolved": "https://streaming.abc-cdn.net.au/audio/hls/localsydney.m3u8?source=web",
-      "tags": "本地, local information, local news",
-      "language": "english",
-      "votes": 17,
-      "geo_lat": -33.81640169931104,
-      "geo_long": 151.00389897823337,
-      "lastchecktime": "2026-11-06 17:32:17",
-      "clickcount": 9,
-      "bitrate": 115,
-      "codec": "AAC"
     },
     {
       "stationuuid": "faf2eda3-3549-44a2-97ca-8e70bd0852aa",
@@ -11056,7 +11056,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:18:39",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -11104,7 +11104,7 @@
       "geo_lat": -37.774191786184545,
       "geo_long": 147.65625000000003,
       "lastchecktime": "2026-11-06 12:02:58",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 0,
       "codec": "UNKNOWN"
     },
@@ -11120,7 +11120,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:51:27",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 192,
       "codec": "AAC"
     },
@@ -11168,7 +11168,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 20:23:43",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -11248,7 +11248,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:32:09",
-      "clickcount": 0,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -11312,7 +11312,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:37:13",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 192,
       "codec": "MP3"
     },
@@ -11360,7 +11360,7 @@
       "geo_lat": -34.913187717353985,
       "geo_long": 138.59321594238284,
       "lastchecktime": "2026-11-06 23:44:59",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 192,
       "codec": "AAC"
     },
@@ -11392,7 +11392,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:48:02",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -11632,7 +11632,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:30:33",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -11648,7 +11648,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 13:42:28",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -11664,7 +11664,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:33:53",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -11680,7 +11680,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:25:16",
-      "clickcount": 1,
+      "clickcount": 3,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -11728,7 +11728,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 22:22:51",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -11744,7 +11744,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:13:48",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -11797,6 +11797,22 @@
       "codec": "MP3"
     },
     {
+      "stationuuid": "0e6ffd8d-fd01-4589-928d-9c5e34ae00f9",
+      "name": "No Life Radio",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "http://listen.nolife-radio.com/",
+      "tags": "retro",
+      "language": "",
+      "votes": 16,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-07 01:42:45",
+      "clickcount": 1,
+      "bitrate": 96,
+      "codec": "MP3"
+    },
+    {
       "stationuuid": "62964133-5f43-4268-a9e7-ad7c47bce10b",
       "name": "non fiction, comedy, western, history       Australian Digital Radio Network Old Time Radio Channel 3",
       "country": "Australia",
@@ -11824,7 +11840,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:48:16",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -11888,7 +11904,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:02:42",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -11952,7 +11968,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:01:43",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -12000,7 +12016,7 @@
       "geo_lat": -17.67941448940385,
       "geo_long": 168.43466877937317,
       "lastchecktime": "2026-11-06 22:42:10",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -12037,6 +12053,22 @@
       "codec": "AAC+"
     },
     {
+      "stationuuid": "66c818fa-ca2b-48db-9996-99689510843e",
+      "name": "LGF FUN GUINEE",
+      "country": "Guinea",
+      "countrycode": "GN",
+      "url_resolved": "https://stream.zeno.fm/6y3sswt61pcuv",
+      "tags": "未分类",
+      "language": "",
+      "votes": 15,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-06 20:47:49",
+      "clickcount": 5,
+      "bitrate": 128,
+      "codec": "MP3"
+    },
+    {
       "stationuuid": "3b837064-aa55-4622-bce4-5b007ce8e462",
       "name": "LiSTNR - Heart 60s (HLS)",
       "country": "Australia",
@@ -12064,7 +12096,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 13:33:02",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 65,
       "codec": "AAC+"
     },
@@ -12082,22 +12114,6 @@
       "lastchecktime": "2026-11-06 06:11:27",
       "clickcount": 1,
       "bitrate": 128,
-      "codec": "MP3"
-    },
-    {
-      "stationuuid": "0e6ffd8d-fd01-4589-928d-9c5e34ae00f9",
-      "name": "No Life Radio",
-      "country": "Australia",
-      "countrycode": "AU",
-      "url_resolved": "http://listen.nolife-radio.com/",
-      "tags": "retro",
-      "language": "",
-      "votes": 15,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-07 01:42:45",
-      "clickcount": 0,
-      "bitrate": 96,
       "codec": "MP3"
     },
     {
@@ -12128,7 +12144,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 22:12:27",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -12256,7 +12272,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:56:04",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -12512,7 +12528,7 @@
       "geo_lat": -27.771051193172273,
       "geo_long": 137.10937500000003,
       "lastchecktime": "2026-11-06 00:05:51",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 192,
       "codec": "MP3"
     },
@@ -12565,22 +12581,6 @@
       "codec": "AAC+"
     },
     {
-      "stationuuid": "66c818fa-ca2b-48db-9996-99689510843e",
-      "name": "LGF FUN GUINEE",
-      "country": "Guinea",
-      "countrycode": "GN",
-      "url_resolved": "https://stream.zeno.fm/6y3sswt61pcuv",
-      "tags": "未分类",
-      "language": "",
-      "votes": 14,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-06 20:47:49",
-      "clickcount": 2,
-      "bitrate": 128,
-      "codec": "MP3"
-    },
-    {
       "stationuuid": "25ca30bb-b994-4d32-bfb6-ac0c392f9af4",
       "name": "LiSTNR - Chill Electronic (HLS)",
       "country": "Australia",
@@ -12592,7 +12592,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:47:55",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 63,
       "codec": "AAC+"
     },
@@ -12624,7 +12624,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 03:03:28",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 320,
       "codec": "AAC+"
     },
@@ -12640,7 +12640,7 @@
       "geo_lat": -37.79921521166685,
       "geo_long": 144.9857729673386,
       "lastchecktime": "2026-11-07 01:25:04",
-      "clickcount": 5,
+      "clickcount": 6,
       "bitrate": 192,
       "codec": "AAC"
     },
@@ -12672,7 +12672,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:06:05",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -13104,7 +13104,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 13:42:28",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 48,
       "codec": "MP3"
     },
@@ -13120,7 +13120,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 01:15:53",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -13171,6 +13171,22 @@
       "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
+    },
+    {
+      "stationuuid": "20a4b05b-aca0-43f9-82ca-32787f0efd8a",
+      "name": "ABC NewsRadio",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "https://streaming.abc-cdn.net.au/audio/hls/newsradio.m3u8?source=web",
+      "tags": "national news, national radio, 新闻",
+      "language": "english",
+      "votes": 12,
+      "geo_lat": -33.88218241163919,
+      "geo_long": 151.20164752006534,
+      "lastchecktime": "2026-11-05 23:01:49",
+      "clickcount": 13,
+      "bitrate": 115,
+      "codec": "AAC"
     },
     {
       "stationuuid": "0e5481d6-dae8-4f93-a58f-6b77af6438f5",
@@ -13328,7 +13344,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 23:01:49",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -13424,7 +13440,7 @@
       "geo_lat": -37.68495892891954,
       "geo_long": 176.166128218174,
       "lastchecktime": "2026-11-06 14:47:06",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -13536,7 +13552,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 23:11:23",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 170,
       "codec": "MP3"
     },
@@ -13616,7 +13632,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:38:32",
-      "clickcount": 1,
+      "clickcount": 3,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -13635,22 +13651,6 @@
       "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
-    },
-    {
-      "stationuuid": "20a4b05b-aca0-43f9-82ca-32787f0efd8a",
-      "name": "ABC NewsRadio",
-      "country": "Australia",
-      "countrycode": "AU",
-      "url_resolved": "https://streaming.abc-cdn.net.au/audio/hls/newsradio.m3u8?source=web",
-      "tags": "national news, national radio, 新闻",
-      "language": "english",
-      "votes": 11,
-      "geo_lat": -33.88218241163919,
-      "geo_long": 151.20164752006534,
-      "lastchecktime": "2026-11-05 23:01:49",
-      "clickcount": 10,
-      "bitrate": 115,
-      "codec": "AAC"
     },
     {
       "stationuuid": "873d5a34-04ff-4b85-aa17-856b90b1f7a0",
@@ -13952,7 +13952,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:31:33",
-      "clickcount": 5,
+      "clickcount": 7,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -13984,7 +13984,7 @@
       "geo_lat": -21.1419307,
       "geo_long": -175.2182008,
       "lastchecktime": "2026-11-05 22:34:05",
-      "clickcount": 5,
+      "clickcount": 4,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -14000,7 +14000,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:37:29",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -14064,7 +14064,7 @@
       "geo_lat": -31.93848918289204,
       "geo_long": 115.86181640625,
       "lastchecktime": "2026-11-06 17:18:09",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -14128,7 +14128,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:39:33",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -14256,7 +14256,7 @@
       "geo_lat": -31.951543210673822,
       "geo_long": 115.87334454059602,
       "lastchecktime": "2026-11-06 08:02:29",
-      "clickcount": 10,
+      "clickcount": 7,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -14544,7 +14544,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 02:57:05",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -14672,7 +14672,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:45:16",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -14805,6 +14805,22 @@
       "codec": "AAC"
     },
     {
+      "stationuuid": "0adc9de1-f627-4fde-9823-56fa61bd2c43",
+      "name": "Littoral FM Guinee live",
+      "country": "Guinea",
+      "countrycode": "GN",
+      "url_resolved": "https://stream.zeno.fm/q94z1t5hsm5tv",
+      "tags": "未分类",
+      "language": "",
+      "votes": 10,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "2026-11-06 18:31:19",
+      "clickcount": 4,
+      "bitrate": 128,
+      "codec": "MP3"
+    },
+    {
       "stationuuid": "1f5832af-7167-4aed-a967-5f55687f8caa",
       "name": "NetFM - Sydney (MP3)",
       "country": "Australia",
@@ -14880,7 +14896,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:08:13",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -14896,7 +14912,7 @@
       "geo_lat": -36.84685274238634,
       "geo_long": 174.75900650024417,
       "lastchecktime": "2026-11-06 05:15:05",
-      "clickcount": 5,
+      "clickcount": 6,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -14944,7 +14960,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:10:05",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 96,
       "codec": "MP3"
     },
@@ -14976,7 +14992,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:46:30",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -14992,7 +15008,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:30:27",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -15232,7 +15248,7 @@
       "geo_lat": -21.1419307,
       "geo_long": -175.2182008,
       "lastchecktime": "2026-11-06 05:59:13",
-      "clickcount": 1,
+      "clickcount": 3,
       "bitrate": 320,
       "codec": "MP3"
     },
@@ -15296,7 +15312,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:43:54",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -15488,7 +15504,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:04:46",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -15584,7 +15600,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:25:50",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -15744,7 +15760,7 @@
       "geo_lat": -21.1419307,
       "geo_long": -175.2182008,
       "lastchecktime": "2026-11-06 05:11:32",
-      "clickcount": 2,
+      "clickcount": 4,
       "bitrate": 64,
       "codec": "MP3"
     },
@@ -15840,25 +15856,9 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:21:07",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 65,
       "codec": "AAC+"
-    },
-    {
-      "stationuuid": "0adc9de1-f627-4fde-9823-56fa61bd2c43",
-      "name": "Littoral FM Guinee live",
-      "country": "Guinea",
-      "countrycode": "GN",
-      "url_resolved": "https://stream.zeno.fm/q94z1t5hsm5tv",
-      "tags": "未分类",
-      "language": "",
-      "votes": 9,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "2026-11-06 18:31:19",
-      "clickcount": 1,
-      "bitrate": 128,
-      "codec": "MP3"
     },
     {
       "stationuuid": "ddfff858-d44c-4a05-8584-4b44ac4e7a27",
@@ -15936,7 +15936,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 22:42:18",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -15984,7 +15984,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:39:33",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 160,
       "codec": "AAC"
     },
@@ -16016,7 +16016,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:45:17",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -16048,7 +16048,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:15:22",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -16128,7 +16128,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:15:48",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -16160,7 +16160,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:52:13",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -16256,7 +16256,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 01:42:45",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 320,
       "codec": "MP3"
     },
@@ -16272,7 +16272,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 09:04:31",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 0,
       "codec": "AAC"
     },
@@ -16384,7 +16384,7 @@
       "geo_lat": -37.82483636371815,
       "geo_long": 144.95910644531253,
       "lastchecktime": "2026-11-06 03:41:28",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -16400,7 +16400,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:51:19",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -16416,7 +16416,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:43:21",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -16736,7 +16736,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:07:05",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 320,
       "codec": "AAC+"
     },
@@ -16752,7 +16752,7 @@
       "geo_lat": -36.84588942887061,
       "geo_long": 174.8031234741211,
       "lastchecktime": "2026-11-06 15:20:18",
-      "clickcount": 6,
+      "clickcount": 8,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -16960,7 +16960,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 13:59:48",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -16992,7 +16992,7 @@
       "geo_lat": -37.79934237456226,
       "geo_long": 144.98961389064792,
       "lastchecktime": "2026-11-06 23:53:47",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 192,
       "codec": "AAC+"
     },
@@ -17216,7 +17216,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 03:11:45",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -17680,7 +17680,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:42:35",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -17696,7 +17696,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 01:07:44",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -17824,7 +17824,7 @@
       "geo_lat": -41.3234954647835,
       "geo_long": 174.81326803101808,
       "lastchecktime": "2026-11-06 20:03:43",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -18032,7 +18032,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:42:42",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "MP3"
     },
@@ -18144,7 +18144,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:43:13",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -18176,7 +18176,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:39:20",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 0,
       "codec": "AAC"
     },
@@ -18272,7 +18272,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:14:47",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -18432,7 +18432,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 17:43:13",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -18720,7 +18720,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:03:28",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -18816,7 +18816,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 12:05:28",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -19008,7 +19008,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 08:53:11",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -19120,7 +19120,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:45:22",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -19152,7 +19152,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:46:09",
-      "clickcount": 2,
+      "clickcount": 0,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -19184,7 +19184,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:27:47",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 65,
       "codec": "AAC+"
     },
@@ -19264,7 +19264,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 13:33:02",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -19280,7 +19280,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 07:14:37",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 63,
       "codec": "AAC+"
     },
@@ -19312,7 +19312,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 01:13:25",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 65,
       "codec": "AAC+"
     },
@@ -19328,7 +19328,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:59:13",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 65,
       "codec": "AAC+"
     },
@@ -19360,7 +19360,7 @@
       "geo_lat": -43.542654767647285,
       "geo_long": 172.61292815208438,
       "lastchecktime": "2026-11-06 08:22:43",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -19376,7 +19376,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 07:08:32",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -19392,7 +19392,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 23:49:56",
-      "clickcount": 6,
+      "clickcount": 8,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -19520,7 +19520,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:15:23",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 134,
       "codec": "MP3"
     },
@@ -19552,7 +19552,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:54:15",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 320,
       "codec": "MP3"
     },
@@ -19616,7 +19616,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:11:27",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "MP3"
     },
@@ -19664,7 +19664,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 12:05:28",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 0,
       "codec": "UNKNOWN"
     },
@@ -19728,7 +19728,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:36:35",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -19744,7 +19744,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:59:50",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 0,
       "codec": "MP3"
     },
@@ -19760,7 +19760,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:04:07",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC"
     },
@@ -19776,7 +19776,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 12:23:55",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -19952,7 +19952,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:34:06",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -20064,7 +20064,7 @@
       "geo_lat": -33.881798,
       "geo_long": 151.201327,
       "lastchecktime": "2026-11-06 12:49:04",
-      "clickcount": 6,
+      "clickcount": 7,
       "bitrate": 238,
       "codec": "AAC"
     },
@@ -20080,7 +20080,7 @@
       "geo_lat": -36.74592752103735,
       "geo_long": 174.72656250000003,
       "lastchecktime": "2026-11-05 23:10:31",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 192,
       "codec": "MP3"
     },
@@ -20352,7 +20352,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-04 15:51:07",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC"
     },
@@ -20640,7 +20640,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:03:56",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -20784,7 +20784,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:01:53",
-      "clickcount": 5,
+      "clickcount": 3,
       "bitrate": 24,
       "codec": "MP3"
     },
@@ -20848,7 +20848,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 20:52:20",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -20880,7 +20880,7 @@
       "geo_lat": -36.84687849935388,
       "geo_long": 174.7590118646622,
       "lastchecktime": "2026-11-05 22:58:47",
-      "clickcount": 3,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -21008,7 +21008,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:19:32",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -21184,7 +21184,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:54:58",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -21232,7 +21232,7 @@
       "geo_lat": -27.475717538098053,
       "geo_long": 153.0201423168183,
       "lastchecktime": "2026-11-05 23:05:46",
-      "clickcount": 7,
+      "clickcount": 9,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -21296,7 +21296,7 @@
       "geo_lat": -34.88818391007526,
       "geo_long": 138.6138689517975,
       "lastchecktime": "2026-11-06 15:09:32",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -21744,7 +21744,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:42:40",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -21760,7 +21760,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:15:23",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -22000,7 +22000,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 01:13:25",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -22240,7 +22240,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 16:02:37",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -22336,7 +22336,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 19:32:54",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -22416,7 +22416,7 @@
       "geo_lat": -9.459718349922948,
       "geo_long": 147.19164894172317,
       "lastchecktime": "2026-11-04 16:57:56",
-      "clickcount": 3,
+      "clickcount": 5,
       "bitrate": 0,
       "codec": "MP3"
     },
@@ -22464,7 +22464,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 02:26:30",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -22624,7 +22624,7 @@
       "geo_lat": -33.86984,
       "geo_long": 151.20828,
       "lastchecktime": "2026-11-06 06:55:24",
-      "clickcount": 5,
+      "clickcount": 6,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -22752,7 +22752,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 01:15:25",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 96,
       "codec": "MP3"
     },
@@ -23136,7 +23136,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 01:49:44",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -23536,7 +23536,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:48:16",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 32,
       "codec": "AAC+"
     },
@@ -23632,7 +23632,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:34:55",
-      "clickcount": 7,
+      "clickcount": 9,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -23728,7 +23728,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:10:08",
-      "clickcount": 0,
+      "clickcount": 2,
       "bitrate": 64,
       "codec": "MP3"
     },
@@ -23920,7 +23920,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:37:36",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -24176,7 +24176,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-05 04:42:11",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -24208,7 +24208,7 @@
       "geo_lat": -33.86984,
       "geo_long": 151.20828,
       "lastchecktime": "2026-11-06 14:17:28",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -24224,7 +24224,7 @@
       "geo_lat": -12.46044,
       "geo_long": 130.84105,
       "lastchecktime": "2026-11-06 07:56:36",
-      "clickcount": 4,
+      "clickcount": 3,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -24240,7 +24240,7 @@
       "geo_lat": -31.9559,
       "geo_long": 115.86058,
       "lastchecktime": "2026-11-06 05:41:46",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -24384,7 +24384,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 04:09:40",
-      "clickcount": 1,
+      "clickcount": 3,
       "bitrate": 48,
       "codec": "AAC+"
     },
@@ -24464,7 +24464,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 08:59:28",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -24496,7 +24496,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:06:37",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -24624,7 +24624,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:08:32",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -24784,7 +24784,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 00:05:32",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -24944,7 +24944,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:12:35",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -24960,7 +24960,7 @@
       "geo_lat": -35.06785853761012,
       "geo_long": 138.8576548802606,
       "lastchecktime": "2026-11-06 03:51:08",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 24,
       "codec": "AAC"
     },
@@ -25152,7 +25152,7 @@
       "geo_lat": -36.84843,
       "geo_long": 174.7622,
       "lastchecktime": "2026-11-06 23:44:59",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -25312,7 +25312,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 23:19:36",
-      "clickcount": 3,
+      "clickcount": 2,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -25392,7 +25392,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 11:46:09",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC"
     },
@@ -25424,7 +25424,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 08:30:58",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 192,
       "codec": "MP3"
     },
@@ -25472,7 +25472,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 05:36:11",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "AAC"
     },
@@ -25504,7 +25504,7 @@
       "geo_lat": 51.88200141852462,
       "geo_long": 0.26367187500000006,
       "lastchecktime": "2026-11-06 15:20:18",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -25520,7 +25520,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:36:15",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -25712,7 +25712,7 @@
       "geo_lat": -33.86984,
       "geo_long": 151.20828,
       "lastchecktime": "2026-11-06 04:31:18",
-      "clickcount": 3,
+      "clickcount": 4,
       "bitrate": 238,
       "codec": "AAC"
     },
@@ -25760,7 +25760,7 @@
       "geo_lat": -27.46896,
       "geo_long": 153.0235,
       "lastchecktime": "2026-11-06 13:41:40",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -25792,7 +25792,7 @@
       "geo_lat": -31.965,
       "geo_long": 141.45111,
       "lastchecktime": "2026-11-06 09:04:31",
-      "clickcount": 6,
+      "clickcount": 5,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -26064,7 +26064,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 13:59:48",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -26096,7 +26096,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 03:51:08",
-      "clickcount": 2,
+      "clickcount": 4,
       "bitrate": 320,
       "codec": "MP3"
     },
@@ -26144,7 +26144,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-04 23:40:03",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -26160,7 +26160,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 15:21:48",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 63,
       "codec": "AAC+"
     },
@@ -26304,7 +26304,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-08 21:31:31",
-      "clickcount": 3,
+      "clickcount": 1,
       "bitrate": 0,
       "codec": "MP3"
     },
@@ -26464,7 +26464,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:21:17",
-      "clickcount": 5,
+      "clickcount": 3,
       "bitrate": 130,
       "codec": "AAC"
     },
@@ -26512,7 +26512,7 @@
       "geo_lat": -6.8791574089038825,
       "geo_long": -63.257723194311005,
       "lastchecktime": "2026-11-04 16:57:56",
-      "clickcount": 5,
+      "clickcount": 4,
       "bitrate": 0,
       "codec": "MP3"
     },
@@ -26528,7 +26528,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 18:18:44",
-      "clickcount": 0,
+      "clickcount": 2,
       "bitrate": 0,
       "codec": "UNKNOWN"
     },
@@ -26736,7 +26736,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 21:03:37",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "MP3"
     },
@@ -27040,7 +27040,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 20:00:37",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 66,
       "codec": "AAC"
     },
@@ -27091,22 +27091,6 @@
       "clickcount": 0,
       "bitrate": 128,
       "codec": "MP3"
-    },
-    {
-      "stationuuid": "cdbe909d-f9b8-4a1f-be38-fb978f6a781b",
-      "name": "Totally Radio - Classical",
-      "country": "Australia",
-      "countrycode": "AU",
-      "url_resolved": "https://totallyradio.com.au/channel?id=6965f4ad0381e846558b6ed9",
-      "tags": "未分类",
-      "language": "",
-      "votes": 1,
-      "geo_lat": null,
-      "geo_long": null,
-      "lastchecktime": "",
-      "clickcount": 3,
-      "bitrate": 0,
-      "codec": ""
     },
     {
       "stationuuid": "b4dfd71f-4809-419d-9b12-3a24a1d20f68",
@@ -27216,7 +27200,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-08 20:07:08",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 24,
       "codec": "AAC+"
     },
@@ -27248,7 +27232,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 14:48:41",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 64,
       "codec": "AAC"
     },
@@ -27344,7 +27328,7 @@
       "geo_lat": -35.260250458755856,
       "geo_long": 149.1334176063538,
       "lastchecktime": "2026-11-06 12:49:04",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -27440,7 +27424,7 @@
       "geo_lat": -28.032930317585123,
       "geo_long": 153.4105968475342,
       "lastchecktime": "2026-11-07 22:52:34",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 192,
       "codec": "MP3"
     },
@@ -27472,7 +27456,7 @@
       "geo_lat": -12.46044,
       "geo_long": 130.84105,
       "lastchecktime": "2026-11-07 02:17:36",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 238,
       "codec": "AAC"
     },
@@ -27808,7 +27792,7 @@
       "geo_lat": -28.78297,
       "geo_long": 114.6239,
       "lastchecktime": "2026-11-06 03:28:02",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -27840,7 +27824,7 @@
       "geo_lat": -34.92818,
       "geo_long": 138.59993,
       "lastchecktime": "2026-11-06 10:52:18",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -27920,7 +27904,7 @@
       "geo_lat": -28.80776,
       "geo_long": 153.27919,
       "lastchecktime": "2026-11-06 02:53:23",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 115,
       "codec": "AAC"
     },
@@ -28208,7 +28192,7 @@
       "geo_lat": -12.46044,
       "geo_long": 130.84105,
       "lastchecktime": "2026-11-06 15:00:31",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -28224,7 +28208,7 @@
       "geo_lat": -34.92818,
       "geo_long": 138.59993,
       "lastchecktime": "2026-11-07 00:18:56",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 252,
       "codec": "AAC"
     },
@@ -28288,7 +28272,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-08 21:31:31",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 64,
       "codec": "AAC+"
     },
@@ -28352,7 +28336,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 00:34:55",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 96,
       "codec": "MP3"
     },
@@ -28480,7 +28464,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 03:28:02",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 96,
       "codec": "AAC+"
     },
@@ -28592,7 +28576,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-08 22:07:07",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 128,
       "codec": "AAC+"
     },
@@ -28611,6 +28595,22 @@
       "clickcount": 0,
       "bitrate": 256,
       "codec": "MP3"
+    },
+    {
+      "stationuuid": "7a5f5282-56ac-46f9-941b-45da15cf3f9f",
+      "name": "Howdy FM",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "https://listen.howdyfm.com/listen/howdyfm/stream.aac",
+      "tags": "乡村",
+      "language": "english",
+      "votes": 0,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "",
+      "clickcount": 3,
+      "bitrate": 0,
+      "codec": ""
     },
     {
       "stationuuid": "f982c773-528f-428c-90a2-217deb9d303c",
@@ -28640,7 +28640,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-07 09:32:40",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 32,
       "codec": "AAC+"
     },
@@ -28704,7 +28704,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 06:33:26",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 63,
       "codec": "AAC+"
     },
@@ -28768,7 +28768,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-08 17:02:13",
-      "clickcount": 4,
+      "clickcount": 2,
       "bitrate": 96,
       "codec": "MP3"
     },
@@ -28848,7 +28848,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-04 19:37:59",
-      "clickcount": 1,
+      "clickcount": 2,
       "bitrate": 0,
       "codec": "MP3"
     },
@@ -29056,7 +29056,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:15:23",
-      "clickcount": 2,
+      "clickcount": 3,
       "bitrate": 24,
       "codec": "AAC+"
     },
@@ -29296,7 +29296,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 10:32:09",
-      "clickcount": 2,
+      "clickcount": 1,
       "bitrate": 66,
       "codec": "AAC"
     },
@@ -29424,7 +29424,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-06 22:22:27",
-      "clickcount": 0,
+      "clickcount": 1,
       "bitrate": 320,
       "codec": "MP3"
     },
@@ -29471,10 +29471,10 @@
       "votes": 0,
       "geo_lat": null,
       "geo_long": null,
-      "lastchecktime": "",
+      "lastchecktime": "2026-11-09 09:28:02",
       "clickcount": 2,
-      "bitrate": 0,
-      "codec": ""
+      "bitrate": 128,
+      "codec": "MP3"
     },
     {
       "stationuuid": "f4c96fa4-2f75-4576-944e-d0d734a83584",
@@ -29487,10 +29487,10 @@
       "votes": 0,
       "geo_lat": null,
       "geo_long": null,
-      "lastchecktime": "",
+      "lastchecktime": "2026-11-09 09:28:02",
       "clickcount": 2,
-      "bitrate": 0,
-      "codec": ""
+      "bitrate": 128,
+      "codec": "MP3"
     },
     {
       "stationuuid": "f9a70426-137d-4f9c-a85e-2ec75009f95d",
@@ -29503,10 +29503,10 @@
       "votes": 0,
       "geo_lat": null,
       "geo_long": null,
-      "lastchecktime": "",
+      "lastchecktime": "2026-11-09 09:28:02",
       "clickcount": 3,
-      "bitrate": 0,
-      "codec": ""
+      "bitrate": 128,
+      "codec": "MP3"
     },
     {
       "stationuuid": "2e71a59a-d6c7-4fb5-b707-0c4f8d84de3d",
@@ -29557,6 +29557,22 @@
       "codec": "AAC+"
     },
     {
+      "stationuuid": "ee93aadd-7c23-45f6-b612-d99ba102287a",
+      "name": "Tune1 Perth",
+      "country": "Australia",
+      "countrycode": "AU",
+      "url_resolved": "https://stream.aiir.com/tjxdl0dy3viuv",
+      "tags": "87.6 fm, australian, club",
+      "language": "english",
+      "votes": 0,
+      "geo_lat": null,
+      "geo_long": null,
+      "lastchecktime": "",
+      "clickcount": 2,
+      "bitrate": 0,
+      "codec": ""
+    },
+    {
       "stationuuid": "7ebc0ebd-4202-40a8-b73c-025af350035b",
       "name": "UGFM Radio Murrindindi 106.9",
       "country": "Australia",
@@ -29600,7 +29616,7 @@
       "geo_lat": null,
       "geo_long": null,
       "lastchecktime": "2026-11-08 20:07:08",
-      "clickcount": 1,
+      "clickcount": 0,
       "bitrate": 0,
       "codec": "MP3"
     },
